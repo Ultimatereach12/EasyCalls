@@ -20,22 +20,17 @@ public class  network {
 
 
 
-
-
-
-
             OkHttpClient.Builder builder = new OkHttpClient.Builder()
-
                     .connectTimeout(30, TimeUnit.SECONDS)
+                     .retryOnConnectionFailure(true)
                     .readTimeout(30, TimeUnit.SECONDS)
-                    .writeTimeout(15, TimeUnit.SECONDS);
+                    .writeTimeout(30, TimeUnit.SECONDS);
 
             OkHttpClient okHttpClient = builder.build();
 
             retrofit = new Retrofit.Builder()
                     .baseUrl(Url.BASE_URL_NEW)
                     .addConverterFactory(GsonConverterFactory.create())
-
                     .client(okHttpClient)
                     .build();
 

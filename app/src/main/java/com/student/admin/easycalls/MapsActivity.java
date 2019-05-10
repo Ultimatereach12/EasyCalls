@@ -3,10 +3,13 @@ package com.student.admin.easycalls;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -15,19 +18,23 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.PowerManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.webkit.PermissionRequest;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -69,6 +76,7 @@ import com.student.admin.easycalls.R;
 import com.student.admin.easycalls.gettersetter.discode;
 import com.student.admin.easycalls.gettersetter.exelist;
 import com.student.admin.easycalls.map.JSONParserTask;
+import com.student.admin.easycalls.map.TrackerService;
 import com.student.admin.easycalls.model.api;
 import com.student.admin.easycalls.model.network;
 import com.student.admin.easycalls.module.DirectionFinder;
@@ -87,6 +95,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -100,7 +109,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     LatLng p1,p2;
     private Button btnFindPath;
-    private EditText accno,summary,etOrigin;
+    private EditText accno,summary,etOrigin,bank,amout,transid,cheque,date,DispoCode;
     private EditText etDestination;
     private List<Marker> originMarkers = new ArrayList<>();
     private List<Marker> destinationMarkers = new ArrayList<>();
@@ -148,8 +157,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
            };
 
-//    timerHandler.removeCallbacks(timerRunnable);
-String t[]={"Cash" , "Check" , "Online Transaction"};
+
+
+String t[]={"Cash" , "Cheque" , "Online Transaction"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -161,9 +171,15 @@ String t[]={"Cash" , "Check" , "Online Transaction"};
         spinner1=findViewById(R.id.spinner1);
         l1=findViewById(R.id.timer);
         l2=findViewById(R.id.clientfeed);
+        DispoCode=findViewById(R.id.DispoCode);
         accno=findViewById(R.id.accno);
+        bank=findViewById(R.id.bank);
+        amout=findViewById(R.id.amount);
         spinner1.setItems(t);
-        accnotext=findViewById(R.id.accnotext);
+        transid=findViewById(R.id.transid);
+        cheque=findViewById(R.id.cheque);
+        date=findViewById(R.id.date);
+//      accnotext=findViewById(R.id.accnotext);
         summary=findViewById(R.id.summary);
         dis=findViewById(R.id.dis);
         ImageView image=findViewById(R.id.load);
@@ -174,23 +190,94 @@ String t[]={"Cash" , "Check" , "Online Transaction"};
 
             }
         });
+
+
+        date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int mYear, mMonth, mDay, mHour, mMinute;
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(MapsActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+
+                                date.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+            }
+        });
+
+        DispoCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int mYear, mMonth, mDay, mHour, mMinute;
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(MapsActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+
+                                DispoCode.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+
+            }
+        });
         spinner1.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
-            @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-//          Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
-                if(item.equals("Check")){
-                    accnotext.setVisibility(View.VISIBLE);
-                    accno.setVisibility(View.VISIBLE);
+        @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+//      Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
+                if(item.equals("Cheque")){
 
-                }else{
+                    cheque.setVisibility(View.VISIBLE);
+                    bank.setVisibility(View.VISIBLE);
+                    date.setVisibility(View.VISIBLE);
+                    transid.setVisibility(View.GONE);
 
-                    accnotext.setVisibility(View.INVISIBLE);
-                    accno.setVisibility(View.INVISIBLE);
+                }else if(item.equals("Cash")){
+
+                    transid.setVisibility(View.VISIBLE);
+                    cheque.setVisibility(View.GONE);
+                    bank.setVisibility(View.GONE);
+                    date.setVisibility(View.GONE);
+
+
+                }else if(item.equals("Online Transaction")){
+
+
+
+                    cheque.setVisibility(View.GONE);
+                    bank.setVisibility(View.GONE);
+                    date.setVisibility(View.GONE);
+                    transid.setVisibility(View.VISIBLE);
+
+
+
                 }
             }
         });
 
-   ggg();
+             ggg();
 
      //runs without a timer by reposting this handler at the end of the runnable
         init();
@@ -212,6 +299,7 @@ String t[]={"Cash" , "Check" , "Online Transaction"};
                                  public void onPermissionGranted(PermissionGrantedResponse response) {
                                      mRequestingLocationUpdates = true;
                                      startLocationUpdates();
+                                     startLocationService();
                                  }
 
                                  @Override
@@ -233,6 +321,7 @@ String t[]={"Cash" , "Check" , "Online Transaction"};
                              }).check();
 
                  }else if(o.equals("end")){
+
                      start.setText("timer start");
                      mRequestingLocationUpdates = false;
                      stopLocationUpdates();
@@ -252,9 +341,7 @@ String t[]={"Cash" , "Check" , "Online Transaction"};
 
                  else if(o.equals("upload data")) {
 //
-
                      final api mApiService = network.getRetrofit().create(api.class);
-
                      String userid= new sharedpreff(getApplicationContext()).login123();
                      String g =null;String gg=null;
                        String dfg=summary.getText().toString();
@@ -272,10 +359,17 @@ String t[]={"Cash" , "Check" , "Online Transaction"};
                          gg="";
                      }
                    String hi=  accno.getText().toString();
- if(dfg.length()>3){
+                if(dfg.length()>3){
+                    String e=amout.getText().toString();
+                    String ee=bank.getText().toString();
+                     String p= transid.getText().toString();
+                    String ttt=cheque.getText().toString();
+                    String tt= date.getText().toString();
+
+
 
      Call<exelist> call = mApiService.addlatlong1
-             (userid, dispo[type],dfg,hi,g,gg,t[type1],id1,time);
+             (userid, dispo[type],dfg,hi,g,gg,t[type1],id1,time,e,ee,p,ttt,tt);
      call.enqueue(new Callback<exelist>(){
          @Override
          public void onResponse(Call<exelist> call, Response<exelist> response) {
@@ -321,8 +415,19 @@ String t[]={"Cash" , "Check" , "Online Transaction"};
     }
 
 
+    private void startLocationService() {
+        // Before we start the service, confirm that we have extra power usage privileges.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
+            Intent intent = new Intent();
+            if (!pm.isIgnoringBatteryOptimizations(getPackageName())) {
+                intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                intent.setData(Uri.parse("package:" + getPackageName()));
+                startActivity(intent);
+            }
+        }
 
-
+    }
 
 
     private void ggg() {
@@ -342,12 +447,16 @@ String t[]={"Cash" , "Check" , "Online Transaction"};
                 spinner.setItems(dispo);
                 spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
                     @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-//                        Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
+     //          Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
+                        if(item.equals("PTP") ||item.equals("FLW") ||item.equals("ALC") ){
+                            DispoCode.setVisibility(View.VISIBLE);
 
+                        }else {
+                                DispoCode.setVisibility(View.GONE);
+                        }
 
                     }
                 });
-
 
                 System.out.println(response.body().getResponse().getResponse_message());
             }
@@ -360,6 +469,7 @@ String t[]={"Cash" , "Check" , "Online Transaction"};
         });
 
     }
+
 
     private void sendRequest() {
 
@@ -399,7 +509,6 @@ String t[]={"Cash" , "Check" , "Online Transaction"};
 
         }
     }
-
     public LatLng getLocationFromAddress(Context context, String strAddress)
     {
         Geocoder coder= new Geocoder(context);
@@ -432,7 +541,6 @@ String t[]={"Cash" , "Check" , "Online Transaction"};
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mSettingsClient = LocationServices.getSettingsClient(this);
-
         mLocationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
@@ -463,11 +571,9 @@ String t[]={"Cash" , "Check" , "Online Transaction"};
             if (savedInstanceState.containsKey("is_requesting_updates")) {
                 mRequestingLocationUpdates = savedInstanceState.getBoolean("is_requesting_updates");
             }
-
             if (savedInstanceState.containsKey("last_known_location")) {
                 mCurrentLocation = savedInstanceState.getParcelable("last_known_location");
             }
-
             if (savedInstanceState.containsKey("last_updated_on")) {
                 mLastUpdateTime = savedInstanceState.getString("last_updated_on");
             }
@@ -477,13 +583,10 @@ String t[]={"Cash" , "Check" , "Online Transaction"};
 
     }
 
-
-
     private void updateLocationUI() {
         if (mCurrentLocation!=null) {
 
 //            addlatlong
-
             final api mApiService = network.getRetrofit().create(api.class);
 
             String userid= new sharedpreff(getApplicationContext()).login123();
@@ -498,7 +601,7 @@ String t[]={"Cash" , "Check" , "Online Transaction"};
                 }
                 @Override
                 public void onFailure(Call<exelist> call, Throwable t) {
-//                    progressDialog.dismiss();
+                //  progressDialog.dismiss();
                     Log.d("Error", t.getMessage());
 
                 }
@@ -514,7 +617,7 @@ String t[]={"Cash" , "Check" , "Online Transaction"};
             String output = "json";
             String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters+"&key=AIzaSyC-lD2GZRCFeoU2boj_lIiF_Zc_20TFKrw";
             //https://maps.googleapis.com/maps/api/directions/json?origin=Time+Square&destination=Chelsea+Market&key=YOUR_API_KEY
-            Log.d("onMapClick", url.toString());
+             Log.d("onMapClick", url.toString());
 //            FetchUrl FetchUrl = new FetchUrl();
 //            FetchUrl.execute(url);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(p2));
@@ -523,13 +626,10 @@ String t[]={"Cash" , "Check" , "Online Transaction"};
             Location delhi_location = new Location("Delhi");
             delhi_location.setLatitude(p1.latitude);
             delhi_location.setLongitude(p1.longitude);
-
             Location chandigarh_location = new Location("Chandigarh");
             chandigarh_location.setLatitude(mCurrentLocation.getLatitude());
             chandigarh_location.setLongitude(mCurrentLocation.getLongitude());
-
             double distance = (delhi_location.distanceTo(chandigarh_location))/1000;
-
             String j=  new DecimalFormat("##.##").format(distance);
              dis.setText("Distance  : "+j +" KM");
 //            AlertDialog alertDialog = new AlertDialog.Builder(MapsActivity.this).create();
@@ -538,12 +638,10 @@ String t[]={"Cash" , "Check" , "Online Transaction"};
 //            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
 //                    new DialogInterface.OnClickListener() {
 //                        public void onClick(DialogInterface dialog, int which) {
-//                            dialog.dismiss();
+//                         dialog.dismiss();
 //                        }
 //                    });
 //            alertDialog.show();
-
-
 
             mMap.addMarker(new MarkerOptions().position(p2).title("current"));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(p2));
@@ -688,7 +786,25 @@ String t[]={"Cash" , "Check" , "Online Transaction"};
             startLocationUpdates();
         }
         updateLocationUI();
+
+
     }
+
+    @Override
+    protected void onPause() {
+
+        super.onPause();
+
+        if(mRequestingLocationUpdates) {
+            //pausing location updates
+            stopLocationUpdates();
+        }
+    }
+
+
+
+
+
 
     @Override
     public void onBackPressed() {
@@ -716,14 +832,6 @@ String t[]={"Cash" , "Check" , "Online Transaction"};
         return permissionState == PackageManager.PERMISSION_GRANTED;
 
     }
-    @Override
-    protected void onPause() {
-        super.onPause();
 
-        if(mRequestingLocationUpdates) {
-         //pausing location updates
-            stopLocationUpdates();
-        }
-    }
 
 }

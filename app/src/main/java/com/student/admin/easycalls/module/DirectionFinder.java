@@ -20,9 +20,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Mai Thanh Hiep on 4/3/2016.
- */
+
 public class DirectionFinder {
     private static final String DIRECTION_URL_API = "https://maps.googleapis.com/maps/api/directions/json?";
     private static final String GOOGLE_API_KEY = "AIzaSyBJC3dOpSv8M-td4vY4CXHGH5zqmFm6oWE";
@@ -102,7 +100,6 @@ public class DirectionFinder {
             JSONObject jsonDuration = jsonLeg.getJSONObject("duration");
             JSONObject jsonEndLocation = jsonLeg.getJSONObject("end_location");
             JSONObject jsonStartLocation = jsonLeg.getJSONObject("start_location");
-
             route.distance = new Distance(jsonDistance.getString("text"), jsonDistance.getInt("value"));
             route.duration = new Duration(jsonDuration.getString("text"), jsonDuration.getInt("value"));
             route.endAddress = jsonLeg.getString("end_address");

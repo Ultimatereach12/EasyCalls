@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -53,16 +54,16 @@ public class executelist  extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.executivelist);
         bb=findViewById(R.id.nodata);
         recyclerView1 = findViewById(R.id.recycleview);
         final EditText editText = findViewById(R.id.search);
         final CheckBox checkbox = findViewById(R.id.checkbox);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool);
+        setSupportActionBar(toolbar);
 
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,23 +77,18 @@ public class executelist  extends AppCompatActivity {
 //        checkbox.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//
 //                if (checkbox.isChecked()) {
 //                    for exelist.ExecutiveLocationList: data) {
 //                        model.setSelected(true);
 //                    }
-//
 //                } else {
-//
 //                    for (list.Employees model : data) {
 //                        model.setSelected(false);
 //                    }
-//
 //                }
 //                mAdapter1.notifyDataSetChanged();
 //            }
 //        });
-
 
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -109,7 +105,12 @@ public class executelist  extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
 
                 if (s.toString().isEmpty()) {
+                     if(data!=null){
 
+                             mAdapter1.getFilter().filter("");
+
+
+                     }
 
 
                 } else {
@@ -164,6 +165,11 @@ public class executelist  extends AppCompatActivity {
 
 
     }
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
 
     private class DataAdapter
             extends RecyclerView.Adapter< DataAdapter.ViewHolder> {
@@ -191,8 +197,6 @@ public class executelist  extends AppCompatActivity {
            viewHolder.tv_version.setText(android.get(i).getCustomer_address());
 //            viewHolder.checkBox.setChecked(android.get(i).isSelected());
 //            viewHolder.checkBox.setTag(android.get(i));
-
-
 
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -226,12 +230,10 @@ public class executelist  extends AppCompatActivity {
             });
 
         }
-
         @Override
         public int getItemCount() {
             return android.size();
         }
-
         Filter getFilter() {
             return new Filter() {
                 @Override
@@ -247,7 +249,7 @@ public class executelist  extends AppCompatActivity {
                                 filteredList.add(androidVersion);
                             }
                         }
-                        android = filteredList;
+                          android = filteredList;
                     }
                     FilterResults filterResults = new FilterResults();
                     filterResults.values = android;

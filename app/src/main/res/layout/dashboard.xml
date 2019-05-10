@@ -12,14 +12,14 @@
         android:layout_height="match_parent"
         tools:ignore="InvalidId"
         android:orientation="vertical">
-
+        <include layout="@layout/toolbar"/>
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="150dp"
             android:gravity="center"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorPrimary"
          >
 
 
@@ -33,7 +33,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="top"
                 android:gravity="center"
                 android:text="Easy Calls"
                 android:textStyle="bold"
@@ -51,7 +51,7 @@
             android:orientation="vertical"
            android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginTop="-80dp"
             android:background="@drawable/shadow"
             android:layout_height="match_parent">
@@ -113,7 +113,7 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:src="@drawable/go1"
+                        android:src="@drawable/go"
                         android:layout_gravity="center"
                         android:layout_height="wrap_content"
                         />
@@ -129,7 +129,38 @@
 
             </LinearLayout>
 
+            <LinearLayout
 
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:visibility="gone"
+                android:id="@+id/addexeu"
+                android:gravity="center"
+                android:layout_height="0dp">
+
+                <LinearLayout
+                    android:id="@+id/addexeu1"
+                    android:layout_width="326dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/go1" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Direct Visit"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -139,6 +170,7 @@
                 android:layout_height="0dp">
 
                 <LinearLayout
+
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -159,10 +191,9 @@
                         android:gravity="center"
                         android:textStyle="bold"
                         android:layout_height="wrap_content" />
-
                 </LinearLayout>
-            </LinearLayout>
 
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -170,7 +201,6 @@
                 android:gravity="center"
                 android:id="@+id/clientlocation"
                 android:layout_height="0dp">
-
                 <LinearLayout
                     android:layout_weight="1"
                     android:layout_width="0dp"
@@ -181,7 +211,7 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:src="@drawable/go"
+                        android:src="@drawable/information"
                         android:layout_gravity="center"
                         android:layout_height="wrap_content" />
 
@@ -195,13 +225,42 @@
 
                 </LinearLayout>
 
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:id="@+id/auto"
+                android:layout_height="0dp">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/auto1"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:src="@drawable/go"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:text="Self Register"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
-
-
 
     </LinearLayout>
 

@@ -16,6 +16,7 @@ import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.student.admin.easycalls.gettersetter.login;
 import com.student.admin.easycalls.model.api;
 import com.student.admin.easycalls.model.network;
+import com.student.admin.easycalls.shared.sharedpreff;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,23 +38,22 @@ public class Register  extends AppCompatActivity {
 
         awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
 
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool);
+        setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         singup1 = (Button) findViewById(R.id.signup);
-        Email=(EditText) findViewById(R.id.Email);
+
         ed1 = (EditText) findViewById(R.id.phone);
         ed2 = (EditText) findViewById(R.id.password);
         ed3= (EditText) findViewById(R.id.repassword);
         ed4= (EditText) findViewById(R.id.name);
-
-        awesomeValidation.addValidation(this, R.id.name, "^[A-Za-z\\s]{1,}[\\.]{0,1}[A-Za-z\\s]{0,}$", R.string.nameerror);
 //        awesomeValidation.addValidation(this, R.id.Email, Patterns.EMAIL_ADDRESS, R.string.emailerror);
 //        awesomeValidation.addValidation( this,R.id.phone, "^[2-9]{2}[0-9]{8}$", R.string.mobileerror);
         String regexPassword = ".{8,}";
-        awesomeValidation.addValidation(this,R.id.password, regexPassword, R.string.invalid_password);
+
 
 
 
@@ -67,8 +67,8 @@ public class Register  extends AppCompatActivity {
                 String name = ed4.getText().toString();
 
                 name = name.replace(" ", "");
-                String Email11=Email.getText().toString();
-                if(awesomeValidation.validate()&&repassword.equals(password)&&phone.length()>9){
+
+                if(repassword.equals(password)&&phone.length()>9){
 
                     internetconnection internetconnection=new  internetconnection();
 
@@ -78,8 +78,8 @@ public class Register  extends AppCompatActivity {
                         progressDialog.setCancelable(false);
                         progressDialog.show();
                         api service = network.getRetrofit().create(api.class);
-
-                        Call<login> call = service.register(name, phone, password, Email11,"Exec","2");
+                        String teaml_id= new sharedpreff(getApplicationContext()).login123();
+                        Call<login> call = service.register(name, phone, password,"Exec","2",teaml_id);
 
                         call.enqueue(new Callback<login>() {
                             @Override
@@ -107,20 +107,21 @@ public class Register  extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "network  error", Toast.LENGTH_LONG).show();
                             }
                         });
-                    }else{
-                        Toast.makeText(getApplicationContext(), "No Network", Toast.LENGTH_SHORT).show();
+                              }else{
+
+                               Toast.makeText(getApplicationContext(), "No Network", Toast.LENGTH_SHORT).show();
                     }
                 }else{
                     Toast.makeText(getApplicationContext(), "mobile number and mismatch password", Toast.LENGTH_SHORT).show();
-
-//           Toast.makeText(getApplicationContext(), "mobile number and mis match password", Toast.LENGTH_LONG).show();
-
+//                   Toast.makeText(getApplicationContext(), "mobile number and mis match password", Toast.LENGTH_LONG).show();
                 }
 
             }
         });
 
     }
+
+
     public boolean onSupportNavigateUp() {
 
         onBackPressed();

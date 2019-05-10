@@ -12,7 +12,6 @@
       android:orientation="vertical"
     android:layout_marginStart="20dp"
     android:layout_marginEnd="20dp"
-
     android:layout_marginTop="20dp"
     android:layout_marginBottom="20dp"
     android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -30,6 +29,7 @@
         android:background="@drawable/shadow"
         android:padding="10dp"
         android:text="start" />
+
     <LinearLayout
         android:id="@+id/timer"
         android:layout_width="match_parent"
@@ -110,8 +110,6 @@
             app:ms_dropdown_max_height="350dp"
             android:layout_height="50dp"/>
 
-
-
         <TextView
             android:layout_width="wrap_content"
             android:text="Transaction Types"
@@ -126,33 +124,100 @@
             android:textSize="15sp"
             app:ms_dropdown_max_height="350dp"
             android:layout_height="50dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="Summary"
-            android:textSize="17dp"
-            android:layout_height="wrap_content" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/summary"
-            />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="Acc.No"
-            android:textSize="17dp"
-            android:id="@+id/accnotext"
-            android:visibility="gone"
-            android:layout_height="wrap_content"
-            />
+            <EditText
+                android:layout_width="match_parent"
+                android:backgroundTint="@color/colorPrimary"
+                android:layout_height="wrap_content"
+                android:hint="Dispo Code Date"
+                android:layout_marginTop="5dp"
+                android:visibility="gone"
+                android:focusable="false"
+                android:id="@+id/DispoCode"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:backgroundTint="@color/colorPrimary"
+                android:layout_height="wrap_content"
+                android:hint="Summary"
+                android:layout_marginTop="5dp"
+                android:id="@+id/summary"
+                />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/accno"
-            android:visibility="gone"
-            />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:id="@+id/accno"
+                android:hint="Acc.No"
+                android:layout_marginTop="5dp"
+                android:singleLine="true"
+                android:visibility="gone"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:id="@+id/bank"
+                android:backgroundTint="@color/colorPrimary"
+                android:hint="Bank"
+                android:singleLine="true"
+                android:visibility="gone"
+                android:layout_height="wrap_content" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/amount"
+                    android:inputType="number"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:hint="Amount"
+                    android:singleLine="true"
+                    android:layout_height="wrap_content" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:id="@+id/transid"
+                android:backgroundTint="@color/colorPrimary"
+                android:hint="Transaction id"
+
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:id="@+id/cheque"
+                android:backgroundTint="@color/colorPrimary"
+                android:hint="Cheque  No"
+                android:visibility="gone"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:id="@+id/date"
+                android:backgroundTint="@color/colorPrimary"
+                android:hint="Date"
+                android:visibility="gone"
+                android:focusable="false"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:layout_height="wrap_content" />
+
+            <!--<EditText-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:backgroundTint="@color/colorPrimary"-->
+                <!--android:id="@+id/accno"-->
+             <!---->
+                <!--android:visibility="gone"-->
+                <!--/>-->
+
+
     </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
 

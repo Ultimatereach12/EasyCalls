@@ -3,7 +3,10 @@ package com.student.admin.easycalls;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.student.admin.easycalls.gettersetter.login;
+import com.student.admin.easycalls.map.TrackerService;
 import com.student.admin.easycalls.model.api;
 import com.student.admin.easycalls.model.network;
 import com.student.admin.easycalls.shared.sharedpreff;
@@ -34,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout ff;
     Button login1,singup;
     EditText ed1,ed2;
+    static final Integer LOCATION = 0x1;
+    int  REQUEST_PHONE_CALL=123;
+    int  REQUEST_PHONE_CALL1=1234;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,21 +48,18 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-
-
         setContentView(R.layout.login);
+//        askForPermission(Manifest.permission.ACCESS_FINE_LOCATION,LOCATION);
+//        askForPermission(Manifest.permission.CALL_PHONE,REQUEST_PHONE_CALL);
+//        askForPermission1(Manifest.permission.FOREGROUND_SERVICE,REQUEST_PHONE_CALL1);
 
 
         if (new sharedpreff(getApplicationContext()).isUserLogedOut()) {
-
                 // System.out.println("dsffffffffffffffffffffffffffff");
-
         }else{
             String y=new sharedpreff(getApplicationContext()).getEmail();
-
             System.out.println(y);
             if (y.equals("3")) {
-
                 Intent i = new Intent(MainActivity.this, Dashboard.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
@@ -69,9 +73,9 @@ public class MainActivity extends AppCompatActivity {
             }
             else if(y.equals("3"))
             {
-//                Intent i = new Intent(MainActivity.this,receptionist.class);
-//                startActivity(i);
-//                overridePendingTransition(R.anim.in, R.anim.out);
+//            Intent i = new Intent(MainActivity.this,receptionist.class);
+//            startActivity(i);
+//            overridePendingTransition(R.anim.in, R.anim.out);
             }
             else{
 //                Intent ii = new Intent(getApplicationContext(),DashActivity.class);
@@ -80,14 +84,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-
-
         ff=(LinearLayout)findViewById(R.id.q) ;
         login1=(Button)findViewById(R.id.login);
         singup=(Button)findViewById(R.id.signup);
         ed1=(EditText)findViewById(R.id.email);
         ed2=(EditText)findViewById(R.id.password);
-
         singup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,9 +135,9 @@ public class MainActivity extends AppCompatActivity {
                                 if (resul.getLoginDetails() != null) {
 
                                     if (resul.getLoginDetails()[0].getEmployee_type().equals("2")) {
-
                                         ed1.setText("");
                                         ed2.setText("");
+
                                         new sharedpreff(getApplicationContext()).saveLoginDetails(resul.getLoginDetails()[0].getEmployee_type(),resul.getLoginDetails()[0].getId(),resul.getLoginDetails()[0].getEmployee_name());
                                         Intent i = new Intent(getApplicationContext(),Dashboard.class);
                                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -148,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
 
                                         ed1.setText("");
                                         ed2.setText("");
+
                                         new sharedpreff(getApplicationContext()).saveLoginDetails(resul.getLoginDetails()[0].getEmployee_type(),resul.getLoginDetails()[0].getId(),resul.getLoginDetails()[0].getEmployee_name());
                                         Intent i = new Intent(getApplicationContext(),Dashboard.class);
                                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -206,7 +208,8 @@ public class MainActivity extends AppCompatActivity {
 //                        JSONResponse jsonResponse = response.body();
 //                        data = new ArrayList<>(Arrays.asList(jsonResponse.getAndroid()));
 //                        adapter = new DataAdapter(data);
-//                        recyclerView.setAdapter(adapter);   }
+//                        recyclerView.setAdapter(adapter);
+//                 }
 //                    @Override
 //                    public void onFailure(Call<login> call, Throwable t) {
 //                        progressDialog.dismiss();
@@ -220,11 +223,53 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
-
-
     }
+
+    private void askForPermission(String permission, Integer requestCode ) {
+
+        if (ContextCompat.checkSelfPermission(MainActivity.this, permission) != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, permission)) {
+                //This is called if user has denied the permission before
+                //In this case I am just asking the permission again
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{permission}, requestCode);
+
+                System.out.println("test");
+
+            } else {
+                System.out.println("test123");
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{permission}, requestCode);
+            }
+
+        } else {
+            System.out.println("test12345");
+//            Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void askForPermission1(String permission, Integer requestCode ) {
+
+        if (ContextCompat.checkSelfPermission(MainActivity.this, permission) != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, permission)) {
+                //This is called if user has denied the permission before
+                //In this case I am just asking the permission again
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{permission}, requestCode);
+
+                System.out.println("test");
+
+            } else {
+                System.out.println("test123");
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{permission}, requestCode);
+            }
+
+        } else {
+            System.out.println("test12345");
+//            Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 }

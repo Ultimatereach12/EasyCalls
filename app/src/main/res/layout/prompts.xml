@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_root"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -7,7 +8,7 @@
     android:orientation="vertical"
     android:paddingTop="20dp"
     android:paddingBottom="20dp"
-    android:padding="10dp" >
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/textView1"
@@ -48,14 +49,23 @@
 
         android:drawablePadding="10dp"
         android:singleLine="true"
-
-        android:inputType="number"
+         android:editable="false"
         android:backgroundTint="@color/white"
-        android:hint="Phone"
+        android:hint="End date"
         android:textCursorDrawable="@null"
         android:textColor="#ffff"
         android:textColorHint="#ffff"
         android:textColorHighlight="#ffff"/>
+
+    <com.jaredrummler.materialspinner.MaterialSpinner
+        android:id="@+id/spinner1"
+        app:ms_background_color="#A36363"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        app:ms_dropdown_max_height="350dp"
+        android:layout_height="50dp"/>
 
     <EditText
         android:id="@+id/accno"
@@ -64,10 +74,8 @@
         android:layout_margin="10dp"
         android:padding="15dp"
         android:textSize="14sp"
-
         android:drawablePadding="10dp"
         android:singleLine="true"
-
         android:inputType="text"
         android:backgroundTint="@color/white"
         android:hint="Account Number"
@@ -76,9 +84,9 @@
         android:textColorHint="#ffff"
         android:textColorHighlight="#ffff"/>
     <EditText
-              android:id="@+id/Address"
-               android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
+        android:id="@+id/Address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:padding="15dp"
         android:textSize="14sp"
@@ -90,13 +98,10 @@
         android:textCursorDrawable="@null"
         android:textColor="#ffff"
         android:textColorHint="#ffff"
-        android:textColorHighlight="#ffff"/>
-
-
-
+        android:textColorHighlight="#ffff"
+        />
     <LinearLayout
         android:layout_width="match_parent"
-
         android:layout_height="wrap_content">
         <Button
             android:layout_width="0dp"
@@ -107,7 +112,7 @@
         <Button
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:text="canel"
+            android:text="cancel"
             android:id="@+id/cencel"
             android:layout_height="wrap_content" />
 
