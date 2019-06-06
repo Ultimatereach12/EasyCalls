@@ -36,6 +36,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.maps.model.Dash;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.student.admin.easycalls.gettersetter.login;
@@ -46,6 +47,7 @@ import com.student.admin.easycalls.shared.sharedpreff;
 
 import java.util.Calendar;
 
+import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,7 +56,7 @@ import static android.Manifest.permission.CALL_PHONE;
 
 public  class Dashboard  extends AppCompatActivity {
 
-    LinearLayout ff,clientlocaion,employee,register,add,exec,exec1;
+    LinearLayout ff,clientlocaion,employee,register,add,exec,exec1,detail,detail1,first,second;
     Button login1, singup;
     EditText ed1, ed2;
     static final Integer LOCATION = 0x1;
@@ -82,10 +84,21 @@ public  class Dashboard  extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.dashboard);
         askForPermission(Manifest.permission.ACCESS_FINE_LOCATION,LOCATION);
         askForPermission(Manifest.permission.CALL_PHONE,REQUEST_PHONE_CALL);
+
+        String userid1= new sharedpreff(getApplicationContext()).login123();
+
+        String getname= new sharedpreff(getApplicationContext()).getname();
+     TextView    name= findViewById(R.id.name);
+        String y=new sharedpreff(getApplicationContext()).getname();
+            name.setText(y);
+//        Toast.makeText(this, y, Toast.LENGTH_SHORT).show();
+        Crashlytics.setUserIdentifier(userid1);
+
+        Crashlytics.setUserName(getname);
 
 //        if (ContextCompat.checkSelfPermission(Dashboard.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
 //            ActivityCompat.requestPermissions(Dashboard.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
@@ -98,16 +111,19 @@ public  class Dashboard  extends AppCompatActivity {
 
         LinearLayout button = findViewById(R.id.set);
         LinearLayout client = findViewById(R.id.client);
+        first=findViewById(R.id.first);
+        second=findViewById(R.id.second);
         employee=findViewById(R.id.clientlocation);
         clientlocaion=findViewById(R.id.emplocation);
         exec1=findViewById(R.id.auto1);
         LinearLayout exec1 = findViewById(R.id.auto1);
         exec=findViewById(R.id.auto);
-
         add=findViewById(R.id.add);
         register=findViewById(R.id.emplocation1);
+        detail=findViewById(R.id.details);
+        detail1=findViewById(R.id.details1);
 
-        String userid= new sharedpreff(getApplicationContext()).getEmail();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool);
         setSupportActionBar(toolbar);
 
@@ -122,21 +138,30 @@ public  class Dashboard  extends AppCompatActivity {
         }
 
             // startService(new Intent( Dashboard.this, TrackerService.class));
-
-
+        String userid= new sharedpreff(getApplicationContext()). getEmail1();
+      //  Toast.makeText(this, userid, Toast.LENGTH_SHORT).show();
         if(userid.equals("3")){
             clientlocaion.setVisibility(View.VISIBLE);
             employee.setVisibility(View.GONE);
             register.setVisibility(View.VISIBLE);
+            first.setVisibility(View.VISIBLE);
+            second.setVisibility(View.GONE);
             exec.setVisibility(View.GONE);
             add.setVisibility(View.GONE);
+
+            detail.setVisibility(View.VISIBLE);
         }else if(userid.equals("2")){
+
+            second.setVisibility(View.VISIBLE);
+            first.setVisibility(View.GONE);
 
             employee.setVisibility(View.VISIBLE);
             clientlocaion.setVisibility(View.GONE);
             register.setVisibility(View.GONE);
             exec1.setVisibility(View.VISIBLE);
             add.setVisibility(View.VISIBLE);
+            detail.setVisibility(View.GONE);
+
         }
             add.setOnClickListener(new View.OnClickListener() {
              @Override
@@ -153,6 +178,19 @@ public  class Dashboard  extends AppCompatActivity {
             }
         });
 
+        detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplicationContext(), detail.class);
+                startActivity(intent);
+
+//                Toast.makeText(Dashboard.this, "", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
         exec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,23 +202,21 @@ public  class Dashboard  extends AppCompatActivity {
                 alertDialogBuilder.setCancelable(false);
                 // set prompts.xml to alertdialog builder
                 alertDialogBuilder.setView(promptsView);
-
-
-                final EditText userInput = (EditText) promptsView
+                final EditText userInput = (EditText)promptsView
                         .findViewById(R.id.name);
-                final EditText phone = (EditText) promptsView
+                final EditText phone = (EditText)promptsView
                         .findViewById(R.id.phone);
 
-                final EditText address = (EditText) promptsView
+                final EditText address = (EditText)promptsView
                         .findViewById(R.id.Address);
 
-                final EditText accno = (EditText) promptsView
+                final EditText accno = (EditText)promptsView
                         .findViewById(R.id.accno);
 
-                final Button cencel = (Button) promptsView
+                final Button cencel = (Button)promptsView
                         .findViewById(R.id.cencel);
 
-                final MaterialSpinner test = (MaterialSpinner) promptsView
+                final MaterialSpinner test = (MaterialSpinner)promptsView
                         .findViewById(R.id.spinner1);
 
                 final Button submit = (Button) promptsView
@@ -249,17 +285,14 @@ public  class Dashboard  extends AppCompatActivity {
                                 progressDialog.show();
                                 api mApiService = network.getRetrofit().create(api.class);
                                 String userid= new sharedpreff(Dashboard.this).login123();
-                                Call<login> call = mApiService.exee( userid,user,address1,accno1,phone1,t[type1]);
-                                call.enqueue(new Callback<login>() {
+                                Call<login> call = mApiService.exee(userid,user,address1,accno1,phone1,t[type1]);
+                                call.enqueue(new Callback<login>(){
                                     @Override
                                     public void onResponse(Call<login> call, Response<login> response) {
                                         System.out.println(call.request().url());
                                         Toast.makeText( Dashboard.this, response.body().getResponse().getResponse_message(), Toast.LENGTH_SHORT).show();
-
-
                                         alertDialog.dismiss();
                                         progressDialog.dismiss();
-
                                         Intent ii=new Intent(Dashboard.this,MapsActivity.class);
                                         ii.putExtra("name",address1);
                                         ii.putExtra("id", response.body().getResponse().getResponse_code());
@@ -395,9 +428,9 @@ public  class Dashboard  extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_user){
 
-//           new sharedpreff(getApplicationContext()).logout1();
-//           Intent i=new Intent(this,DashActivity.class);
-//           startActivity(i);
+//      new sharedpreff(getApplicationContext()).logout1();
+//      Intent i=new Intent(this,DashActivity.class);
+//      startActivity(i);
             AlertDialog.Builder builder1 = new AlertDialog.Builder(Dashboard.this);
             builder1.setMessage("Sure Logout  ");
             builder1.setCancelable(true);
@@ -412,7 +445,7 @@ public  class Dashboard  extends AppCompatActivity {
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(i);
                             overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-                        }
+                    }
                     }
                     );
 

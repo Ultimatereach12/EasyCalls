@@ -2,10 +2,15 @@ package com.student.admin.easycalls.model;
 
 
 
+import com.student.admin.easycalls.gettersetter.customernotpaidlist;
 import com.student.admin.easycalls.gettersetter.discode;
 import com.student.admin.easycalls.gettersetter.exelist;
 import com.student.admin.easycalls.gettersetter.list;
 import com.student.admin.easycalls.gettersetter.login;
+import com.student.admin.easycalls.gettersetter.paidlist;
+import com.student.admin.easycalls.gettersetter.tllist;
+import com.student.admin.easycalls.gettersetter.visit;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -35,42 +40,57 @@ public interface api {
                           @Query("customer_address") String email11,
                          @Query("customer_accno")String h,   @Query("end_date")String end_date,   @Query("emp_type")String emp_type);
 
-//    end_date=mar20&emp_type=rest
+     //    end_date=mar20&emp_type=rest
 
-
-
-    @POST("webservice.php?Case=ExecutiveLocationList")
+     @POST("webservice.php?Case=ExecutiveLocationList")
          Call<exelist>list1(@Query("employee_id") String name);
 
+
+    @POST("webservice.php?Case=CustomerExecutiveList1")
+    Call<tllist>tllist(@Query("teaml_id") String name,@Query("exc_date") String name1);
+
+   //http://www.dneers.com/easycalls/webservice.php?Case=CustomerExecutiveList&teaml_id=11
 
     @POST("webservice.php?Case=DispoCodeList")
     Call<discode>discodw1();
 
     @POST("webservice.php?Case=CurrentLocationSave")
-    Call<exelist>addlatlong(@Query("employee_id") String employee_id,@Query("current_lat") String current_lat,
-                            @Query("current_lang") String current_lang ,@Query("client_id") String client_id   );
+    Call<exelist>addlatlong(      @Query("employee_id") String employee_id,@Query("current_lat") String current_lat,
+                                  @Query("current_lang") String current_lang ,@Query("client_id") String client_id   );
 
 
     @POST("webservice.php?Case=ExecutiveDetailsSave")
-    Call<exelist>addlatlong1( @Query("employee_id") String employee_id,
-                              @Query("dispo_code") String dispo_code,
-                              @Query("executive_summary") String executive_summary,
-                              @Query("executive_other") String executive_other,
-                              @Query("executive_location_lat") String executive_location_lat,
-                              @Query("executive_location_long") String executive_location_long,
-                              @Query("executive_transtype") String executive_transtype,
-                              @Query("status_id") String status_id,
-                              @Query("executive_time") String executive_time,
-                              @Query("amount") String enter_amnt,
-                              @Query("bank") String bank,
+    Call<exelist>addlatlong1(@Query("employee_id") String employee_id,
+                               @Query("dispo_code") String dispo_code,
+                               @Query("executive_summary") String executive_summary,
+                               @Query("executive_other") String executive_other,
+                               @Query("executive_location_lat") String executive_location_lat,
+                               @Query("executive_location_long") String executive_location_long,
+                               @Query("executive_transtype") String executive_transtype,
+                               @Query("status_id") String status_id,
+                               @Query("executive_time") String executive_time,
+                               @Query("amount") String enter_amnt,
+                               @Query("bank") String bank,
+                               @Query("trans_id") String trans_id,
+                               @Query("cheque_number") String cheque_number,
+                               @Query("date") String date
+                                );
 
 
-                              @Query("trans_id") String trans_id,
-                              @Query("cheque_number") String cheque_number,
-                              @Query("date") String date
-                              );
+    @POST("webservice.php?Case=CustomerExecutiveNotPaidlist")
+    Call<customernotpaidlist>nopay(@Query("teaml_id") String name);
+
+    @POST("webservice.php?Case=CustomerExecutivePaidlist")
+    Call<paidlist>paylist(@Query("teaml_id") String name);
+
+    @POST("webservice.php?Case=MyBaseList")
+    Call<visit>baselist(@Query("teaml_id") String name);
 
 
+//    http://www.dneers.com/easycalls/webservice.php?Case=CustomerExecutivePaidlist&teaml_id=64
+
+//    http://www.dneers.com/easycalls/webservice.php?Case=MyBaseList&teaml_id=64
+     //http://www.dneers.com/easycalls/webservice.php?Case=CustomerExecutiveNotPaidlist&teaml_id=64
 
 
     //http://www.dneers.com/easycalls/webservice.php?Case=ExecutiveDetailsSave
@@ -102,17 +122,17 @@ public interface api {
     // date=mau23
 
     //http://www.dneers.com/easycalls/webservice.php?Case=ExecutiveDetailsSave&
-    // employee_id=1&teamleader_id=3
-    // &dispo_code=ANF&
-    // executive_summary=ghsdsgah&
-    // executive_other=ashjdfgasfgahg&
-    // executive_location_lat=1.3920567&
-    // executive_location_long=79.7147468&
-    // executive_address=16/17%20Annamalai%20Nagar%204th%20Street&status_id=11&
-    // executive_transtype=Cash&
-    // summary=ajhsgfajshg
-    // &amount=10
-    // &trans_id=123541
+    //employee_id=1&teamleader_id=3
+    //&dispo_code=ANF&
+    //executive_summary=ghsdsgah&
+    //executive_other=ashjdfgasfgahg&
+    //executive_location_lat=1.3920567&
+    //executive_location_long=79.7147468&
+    //executive_address=16/17%20Annamalai%20Nagar%204th%20Street&status_id=11&
+    //executive_transtype=Cash&
+    //summary=ajhsgfajshg
+    //&amount=10
+    //&trans_id=123541
 
 
     @POST("webservice.php?Case=WholedayTracking")
@@ -135,17 +155,15 @@ public interface api {
     //&current_lat=11.3920567
     //&current_lang=79.7147468
 
-
-
-//http://www.dneers.com/easycalls/webservice.php?Case=DispoCodeList
-//http://www.dneers.com/easycalls/webservice.php?Case=ExecutiveLocationList&employee_id=1
-//http://www.dneers.com/easycalls/webservice.php?Case=
-//ExecutiveLocationSave
-//&employee_id=1
-//&customer_name=george
-//&customer_phone=1236758976
-//&customer_accno=Asds
-//&customer_address=ahsgdfagfd
+  //http://www.dneers.com/easycalls/webservice.php?Case=DispoCodeList
+  //http://www.dneers.com/easycalls/webservice.php?Case=ExecutiveLocationList&employee_id=1
+  //http://www.dneers.com/easycalls/webservice.php?Case=
+  //ExecutiveLocationSave
+  //&employee_id=1
+  //&customer_name=george
+  // &customer_phone=1236758976
+  // &customer_accno=Asds
+  //&customer_address=ahsgdfagfd
 
 
 //http://www.dneers.com/easycalls/webservice.php?
@@ -160,11 +178,11 @@ public interface api {
 //@POST("webservice.php?Case=TodayList")
 //Call<pending> PendingList(@Query("doctor_id") String nam);
 //@POST("webservice.php?Case=ApproveList1")
-//    Call<pending> PendingList1(@Query("doctor_id") String nam);
+//Call<pending> PendingList1(@Query("doctor_id") String nam);
 
 
-//    @POST("webservice.php?Case=BeforeConfirm")
-//    Call<h> BeforeConfirm(@Query("patient_id") String nam);
+//   @POST("webservice.php?Case=BeforeConfirm")
+//   Call<h> BeforeConfirm(@Query("patient_id") String nam);
 
 //    @POST("webservice.php?Case=PatientPayment")
 //    Call<pending> payment1(@Query("appoinment_id") String nam, @Query("amount") String nam1, @Query("paid_id") String namdfdsfsdf11);
@@ -177,12 +195,12 @@ public interface api {
 
 //    @POST("webservice.php?Case=BookingConfirm")
 //    Call<pending> BookingConfirm(@Query("appoinment_id") String nam, @Query("status") String r);
-//
+
 //    @POST("webservice.php?Case=WeekListing")
 //    Call<pending> WeekListing(@Query("doctor_id") String nam);
-//
+
 //    @POST("webservice.php?Case=ConfirmPendingList")
-//    Call<pending> appoint(@Query("doctor_id") String nam);
+//    Call<pending>appoint(@Query("doctor_id") String nam);
 //
 //
 //    @POST("webservice.php?Case=PatientConfirm")
@@ -210,7 +228,6 @@ public interface api {
 //    Call<common> avaliable(@Query("doctor_id") String name, @Query("appoinment_date") String password, @Query(value = "appoinment_slot", encoded = true) String g, @Query("patient_id") String f, @Query("Id") String id);
 
 //    DoctorMessage&message_text=asdfsaf&sender_id=12&receiver_id=23
-//
 //    @POST("webservice.php?Case=DoctorMessage")
 //    Call<chat> chat1(@Query("message_text") String nam, @Query("sender_id") String chat_id, @Query("receiver_id") String chat_id1);
 
@@ -227,6 +244,7 @@ public interface api {
 //    Call<UploadObject> uploadFile(@Part MultipartBody.Part file, @Part("name") RequestBody name)
 
 //    uploadFile(@Part MultipartBody.Part file, @Part("name") RequestBody name);
+
 }
 
 

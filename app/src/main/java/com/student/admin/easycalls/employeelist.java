@@ -30,16 +30,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.crashlytics.android.Crashlytics;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.student.admin.easycalls.gettersetter.list;
 import com.student.admin.easycalls.gettersetter.login;
 import com.student.admin.easycalls.model.api;
 import com.student.admin.easycalls.model.network;
+import com.student.admin.easycalls.shared.sharedpreff;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-
+import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,7 +55,14 @@ public class employeelist  extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.employeelist);
+
+        String userid= new sharedpreff(getApplicationContext()).login123();
+        String getname= new sharedpreff(getApplicationContext()).getname();
+        Crashlytics.setUserIdentifier(userid);
+        Crashlytics.setUserName(getname);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -77,13 +85,10 @@ public class employeelist  extends AppCompatActivity {
                     for (list.Employees model : data) {
                              model.setSelected(true);
                     }
-
-                } else {
-
+                }else {
                     for (list.Employees  model : data) {
                         model.setSelected(false);
                     }
-
                 }
                 mAdapter1.notifyDataSetChanged();
             }
@@ -153,9 +158,6 @@ public class employeelist  extends AppCompatActivity {
 
             }
         });
-
-
-
     }
 
     public boolean onSupportNavigateUp() {
@@ -241,8 +243,6 @@ public class employeelist  extends AppCompatActivity {
                                   mYear = c.get(Calendar.YEAR);
                                   mMonth = c.get(Calendar.MONTH);
                                   mDay = c.get(Calendar.DAY_OF_MONTH);
-
-
                                   DatePickerDialog datePickerDialog = new DatePickerDialog(gg,
                                           new DatePickerDialog.OnDateSetListener() {
 
@@ -279,7 +279,6 @@ public class employeelist  extends AppCompatActivity {
 
                             if (internetconnection.isOnline(gg)) {
 
-
                                 String user= userInput.getText().toString();
                                 String phone1= phone.getText().toString();
                                 String address1= address.getText().toString();
@@ -315,7 +314,7 @@ public class employeelist  extends AppCompatActivity {
 
                                 }else{
 
-                                    Toast.makeText(getApplicationContext(), "click ok ", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "click ok", Toast.LENGTH_SHORT).show();
                                 }
 
 
@@ -387,7 +386,6 @@ public class employeelist  extends AppCompatActivity {
 
                 }
             };
-
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {

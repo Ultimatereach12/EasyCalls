@@ -18,12 +18,14 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.student.admin.easycalls.gettersetter.login;
 import com.student.admin.easycalls.map.TrackerService;
 import com.student.admin.easycalls.model.api;
 import com.student.admin.easycalls.model.network;
 import com.student.admin.easycalls.shared.sharedpreff;
 
+import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,12 +49,15 @@ public class MainActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.login);
 //        askForPermission(Manifest.permission.ACCESS_FINE_LOCATION,LOCATION);
 //        askForPermission(Manifest.permission.CALL_PHONE,REQUEST_PHONE_CALL);
 //        askForPermission1(Manifest.permission.FOREGROUND_SERVICE,REQUEST_PHONE_CALL1);
-
+        String userid= new sharedpreff(getApplicationContext()).login123();
+        String getname= new sharedpreff(getApplicationContext()).getname();
+        Crashlytics.setUserIdentifier(userid);
+        Crashlytics.setUserName(getname);
 
         if (new sharedpreff(getApplicationContext()).isUserLogedOut()) {
                 // System.out.println("dsffffffffffffffffffffffffffff");

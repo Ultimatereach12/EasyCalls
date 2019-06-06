@@ -18,7 +18,7 @@ public class JSONParserTask {
             JSONArray jLegs;
             JSONArray jSteps;
 
-            try {
+            try{
 
                 jRoutes = jObject.getJSONArray("routes");
                 for(int i=0;i<jRoutes.length();i++){

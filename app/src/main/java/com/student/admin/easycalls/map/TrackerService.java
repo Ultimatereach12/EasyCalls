@@ -207,7 +207,7 @@ public class TrackerService extends Service implements LocationListener {
 //                    System.out.println(response.body());
 //                    progressDialog.dismiss();
 
-                System.out.println(response.body().getResponse().getResponse_message());
+//                System.out.println(response.body().getResponse().getResponse_message());
             }
             @Override
             public void onFailure(Call<exelist> call, Throwable t) {
@@ -316,13 +316,6 @@ public class TrackerService extends Service implements LocationListener {
 
             startForeground(PRIMARY_FOREGROUND_NOTIF_SERVICE_ID, notification);
         }
-
-
-
-
-
-
-
 
 
     }

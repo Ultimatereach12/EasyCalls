@@ -2,11 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.student.admin.easycalls">
 
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality.
-    -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -20,7 +15,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
 
-    <application
+     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -49,13 +44,15 @@
         </activity>
 
         <activity android:name=".Register"  android:screenOrientation="portrait" >
-
         </activity>
         <activity android:name=".Dashboard"  android:screenOrientation="portrait" />
         <activity android:name=".employeelist" android:screenOrientation="portrait" />
         <activity android:name=".executelist" android:screenOrientation="portrait" />
+        <activity android:name=".detail" android:screenOrientation="portrait" />
 
-
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="ac380399898ccb1344c7fc333ab5173b33f8fe08" />
         <service
             android:name=".map.TrackerService"
             android:enabled="true"

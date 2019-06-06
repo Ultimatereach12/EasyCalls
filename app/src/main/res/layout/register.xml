@@ -37,6 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Full Name"
+                android:fontFamily="@font/calibri"
                 android:textSize="16dp"
                 android:textColor="#101010"
                 />
@@ -45,10 +46,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:fontFamily="@font/calibri"
                 android:padding="10dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:textCursorDrawable="@null"
                 android:inputType="text"
+
                 android:textColor="#4d4949"
                 android:textSize="14sp"
                 android:digits="abcdefghijklmnopqrstuvwxyz"
@@ -61,6 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Phone Number"
+                android:fontFamily="@font/calibri"
                 android:textSize="16dp"
                 android:textColor="#101010"
                 />
@@ -70,6 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:padding="10dp"
+                android:fontFamily="@font/calibri"
                 android:drawablePadding="10dp"
                 android:singleLine="true"
                 android:inputType="phone"
@@ -109,6 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Password"
+                android:fontFamily="@font/calibri"
                 android:textSize="16dp"
                 android:textColor="#101010"
                 />
@@ -120,6 +126,7 @@
                 android:layout_margin="10dp"
                 android:padding="10dp"
                 android:inputType="textPassword"
+                android:fontFamily="@font/calibri"
                 android:singleLine="true"
                 android:backgroundTint="@color/colorPrimary"
                 android:drawablePadding="10dp"
@@ -135,6 +142,7 @@
                 android:layout_height="wrap_content"
                 android:text="Re-Enter Password"
                 android:textSize="16dp"
+                android:fontFamily="@font/calibri"
                 android:textColor="#101010"
                 />
             <EditText
@@ -144,6 +152,7 @@
                 android:layout_margin="10dp"
                 android:layout_marginBottom="50dp"
                 android:padding="10dp"
+                android:fontFamily="@font/calibri"
                 android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@!#$%."
                 android:textSize="14sp"
                 android:maxLength="8"
@@ -167,6 +176,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:fontFamily="@font/calibri"
             android:layout_alignParentTop="true"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"

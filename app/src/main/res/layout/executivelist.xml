@@ -3,11 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <LinearLayout
+     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
-
         android:descendantFocusability="beforeDescendants"
         android:focusableInTouchMode="true"
         android:layout_height="match_parent">
@@ -16,14 +14,16 @@
             android:layout_width="match_parent"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
+             android:visibility="gone"
             app:cardCornerRadius="15dp"
-            android:layout_marginTop="5dp"
+
             android:layout_height="40dp">
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:hint="search"
                 android:background="@drawable/edit"
+                android:fontFamily="@font/calibri"
                 android:paddingStart="20dp"
                 android:id="@+id/search"
                 android:focusable="true"
@@ -35,7 +35,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:padding="10dp"
+
             android:visibility="gone"
             android:layout_height="wrap_content">
             <CheckBox
@@ -43,12 +43,12 @@
                 android:text="Select All"
                 android:id="@+id/checkbox"
                 android:visibility="gone"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:gravity="right"
                 android:layout_height="wrap_content" >
-
                 <Button
                     android:layout_width="wrap_content"
                     android:text="Remove"
@@ -56,10 +56,11 @@
                     android:layout_marginStart="5dp"
                     android:background="@android:color/holo_red_dark"
                     android:textColor="@android:color/white"
-                    android:layout_height="30dp" />
+                    android:layout_height="30dp"
+                    />
             </LinearLayout>
-        </LinearLayout>
 
+        </LinearLayout>
 
         <ImageView
             android:layout_width="match_parent"
@@ -68,21 +69,192 @@
             android:visibility="gone"
             android:src="@drawable/nodata"
             android:id="@+id/nodata"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            />
+            <LinearLayout
+                android:checkedButton="@+id/calm"
+                android:id="@+id/toggle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
+
+                android:padding="2dp"
+
+                android:background="@drawable/control_switch_background_border"
+                android:orientation="horizontal">
+                <LinearLayout
+
+
+                    android:layout_width="0dp"
+                    android:clickable="true"
+                    android:background="@drawable/control_switch_background_selector_middle"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:id="@+id/open"
+                    android:padding="1dp"
+                    android:gravity="center"
+                    android:text="Open"
+                    android:orientation="vertical"
+                    android:fontFamily="sans-serif-medium"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                       android:id="@+id/open1"
+                        android:background="@null"
+                        android:fontFamily="@font/calibri"
+
+                        android:text="Open"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        />
+
+                    <TextView
+
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.7"
+                        android:background="@null"
+                        android:id="@+id/open12"
+                        android:textSize="12dp"
+                        android:fontFamily="@font/calibri"
+                        android:text="10000"
+                        android:gravity="center"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:clickable="true"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:padding="1dp"
+                    android:gravity="center"
+                    android:background="@drawable/control_switch_background_selector_middle"
+                    android:id="@+id/progress"
+                    android:text="Open"
+                    android:orientation="vertical"
+                    android:fontFamily="@font/calibri"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:id="@+id/progress1"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/calibri"
+                        android:text="Progress"
+                        android:textColor="@color/white"
+                        android:gravity="center"
+                        />
+                    <TextView
+
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.7"
+                        android:textSize="12dp"
+                        android:textColor="@color/white"
+                        android:background="@null"
+                        android:id="@+id/progress2"
+                        android:fontFamily="@font/calibri"
+                        android:text="10000"
+                        android:gravity="center"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingTop="5dp"
+                    android:id="@+id/close"
+                    android:background="@drawable/control_switch_background_selector_middle"
+                    android:padding="1dp"
+                    android:paddingBottom="5dp"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:fontFamily="@font/calibri"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/calibri"
+                        android:text="Close"
+                        android:id="@+id/close1"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.7"
+                        android:background="@null"
+                        android:textSize="12dp"
+                        android:textColor="@color/white"
+                        android:id="@+id/close2"
+                        android:fontFamily="@font/calibri"
+                        android:text="10000"
+                        android:gravity="center"
+                        />
+                </LinearLayout>
+
+
+            </LinearLayout>
+         <ProgressBar
+             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+             android:layout_width="match_parent"
+             android:id="@+id/bar"
+            android:visibility="gone"
+             android:layout_marginTop="-5dp"
+             android:layout_height="wrap_content"
+             android:indeterminate="true"/>
+
+            <android.support.v7.widget.RecyclerView
+             android:layout_marginTop="1dp"
+             android:padding="5dp"
+             app:layout_behavior="@string/appbar_scrolling_view_behavior"
+             android:layout_width="match_parent"
+             android:scrollbars="vertical"
+             android:layout_height="match_parent"
+             android:id="@+id/recycleview"
+            />
         <android.support.v7.widget.RecyclerView
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="1dp"
             android:padding="5dp"
+            android:visibility="gone"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
             android:scrollbars="vertical"
             android:layout_height="match_parent"
-            android:id="@+id/recycleview"
+            android:id="@+id/recycleview1"
             />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="1dp"
+            android:padding="5dp"
+            android:visibility="gone"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
+            android:scrollbars="vertical"
+            android:layout_height="match_parent"
+            android:id="@+id/recycleview2"
+            />
+
+
+
     </LinearLayout>
-
-
-
-
 
 </android.support.constraint.ConstraintLayout>

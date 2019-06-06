@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -11,6 +12,7 @@
         android:id="@+id/f"
         android:layout_height="match_parent"
         tools:ignore="InvalidId"
+
         android:orientation="vertical">
         <include layout="@layout/toolbar"/>
 
@@ -18,8 +20,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="150dp"
+            android:layout_marginStart="12dp"
+            android:orientation="vertical"
             android:gravity="center"
-            android:background="@color/colorPrimary"
+
          >
 
 
@@ -29,17 +33,62 @@
                  <!--android:layout_height="wrap_content"-->
                 <!--android:src="@mipmap/ic_launcher"-->
                   <!--/>-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:gravity="center|left"
+                    android:text="Hello "
+                    android:fontFamily="@font/calibri"
+                    android:textColor="#000"
+                    android:textSize="15dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:gravity="center|left"
+                     android:id="@+id/name"
+                    android:fontFamily="@font/calibri"
+                    android:textColor="#000"
+                    android:textSize="15dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:gravity="center|left"
+                    android:text=" buddy !"
+                    android:fontFamily="@font/calibri"
+                    android:textColor="#000"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
-                android:gravity="center"
-                android:text="Easy Calls"
+                android:gravity="center|left"
+                android:text="Welcome to "
+
+          android:layout_marginStart="10dp"
+                android:fontFamily="@font/calibri"
+                android:textColor="#292626"
+                android:textSize="30dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_marginStart="10dp"
+                android:gravity="center|left"
+                android:text="Easy calls "
                 android:textStyle="bold"
                 android:fontFamily="@font/calibri"
-                android:textColor="#fff"
-                android:textSize="50dp" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="30dp" />
 
         </LinearLayout>
 
@@ -49,13 +98,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
-           android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="-80dp"
-            android:background="@drawable/shadow"
+
             android:layout_height="match_parent">
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight=" 1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_height="0dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_weight="1"
@@ -64,10 +116,14 @@
                 android:layout_height="0dp">
 
 
+
+
                 <LinearLayout
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+
+                    android:background="@drawable/back"
+                    android:layout_width="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_height="match_parent"
                     android:id="@+id/set"
                     android:layout_gravity="center"
                     android:orientation="vertical">
@@ -75,7 +131,7 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:src="@drawable/go1"
+                        android:src="@drawable/list1"
                         android:layout_gravity="center"
                         android:layout_height="wrap_content"
                         />
@@ -85,21 +141,38 @@
                         android:text="Employee List"
                         android:layout_gravity="center"
                         android:gravity="center"
+                        android:textColor="@color/white"
                         android:textStyle="bold"
+                        android:layout_marginTop="30dp"
+                        android:fontFamily="@font/calibri"
+                        android:textSize="18dp"
                         android:layout_height="wrap_content"
                         />
                 </LinearLayout>
 
 
 
+
             </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/first"
+                android:orientation="horizontal"
+                android:layout_height="0dp">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:id="@+id/emplocation1"
                 android:gravity="center"
-                android:layout_height="0dp">
+
+                android:layout_margin="10dp"
+                android:background="@drawable/back2"
+                android:layout_height="match_parent">
 
 
                 <LinearLayout
@@ -113,15 +186,21 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:src="@drawable/go"
-                        android:layout_gravity="center"
-                        android:layout_height="wrap_content"
+                        android:src="@drawable/register"
+                        android:layout_gravity="center|left"
+                        android:layout_marginStart="5dp"
+                        android:layout_height="100dp"
                         />
                     <TextView
                         android:layout_width="match_parent"
                         android:text="Employee  Register"
                         android:layout_gravity="center"
-                        android:gravity="center"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="30dp"
+                        android:gravity="center|left"
+                        android:textSize="18dp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/calibri"
                         android:textStyle="bold"
                         android:layout_height="wrap_content"
                         />
@@ -130,11 +209,60 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:id="@+id/details"
+                android:layout_margin="10dp"
+                android:background="@drawable/back1"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_weight="1"
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/details1"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:src="@drawable/detail1"
+                        android:layout_gravity="center|left"
+                        android:layout_marginStart="5dp"
+                        android:layout_height="100dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:text="Details"
+                        android:layout_gravity="center"
+                        android:textSize="18dp"
+                        android:gravity="center|left"
+                        android:fontFamily="@font/calibri"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="30dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+
+            <LinearLayout
 
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:visibility="gone"
                 android:id="@+id/addexeu"
+
                 android:gravity="center"
                 android:layout_height="0dp">
 
@@ -157,109 +285,150 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
+                        android:textSize="18dp"
+                        android:fontFamily="@font/calibri"
                         android:text="Direct Visit"
                         android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:id="@+id/add"
-                android:layout_height="0dp">
-
                 <LinearLayout
-
+                    android:id="@+id/add"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/Attendance"
-                    android:layout_gravity="center"
-                    android:orientation="vertical">
+                    android:gravity="center">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:src="@drawable/go"
+                    <LinearLayout
+                        android:id="@+id/Attendance"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/back"
                         android:layout_gravity="center"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:text="Attendance"
-                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
                         android:gravity="center"
-                        android:textStyle="bold"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-            </LinearLayout>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/detail" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:id="@+id/clientlocation"
-                android:layout_height="0dp">
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/client"
-                    android:layout_gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:src="@drawable/information"
-                        android:layout_gravity="center"
-                        android:layout_height="wrap_content" />
-
-                     <TextView
-                        android:layout_width="match_parent"
-                        android:text="Client Location"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:textStyle="bold"
-                        android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/calibri"
+                            android:gravity="center"
+                            android:layout_marginTop="30dp"
+                            android:text="Attendance"
+                            android:textColor="@color/white"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
 
                 </LinearLayout>
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:id="@+id/auto"
+                android:id="@+id/second"
+                android:orientation="horizontal"
                 android:layout_height="0dp">
 
+
                 <LinearLayout
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/auto1"
-                    android:layout_gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:src="@drawable/go"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:id="@+id/clientlocation"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/back2"
+                        android:layout_height="match_parent"
+                        android:id="@+id/client"
                         android:layout_gravity="center"
-                        android:layout_height="wrap_content" />
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:text="Self Register"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:textStyle="bold"
-                        android:layout_height="wrap_content" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:src="@drawable/clientlocation"
+                            android:layout_gravity="center|left"
+                            android:layout_height="100dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="Client Location"
+                            android:layout_gravity="center"
+                            android:gravity="center|left"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginStart="20dp"
+                            android:textColor="@color/white"
+                            android:textSize="18dp"
+                            android:fontFamily="@font/calibri"
+                            android:textStyle="bold"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:id="@+id/auto"
+                    android:layout_height="match_parent">
+
+
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:background="@drawable/back1"
+                        android:layout_height="match_parent"
+                        android:id="@+id/auto1"
+                        android:layout_margin="10dp"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:src="@drawable/selfregister"
+                            android:layout_gravity="left|top"
+                            android:layout_height="100dp"         />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="Self Register"
+                            android:textColor="@color/white"
+                            android:layout_marginTop="30dp"
+                            android:fontFamily="@font/calibri"
+                            android:layout_marginStart="20dp"
+                            android:layout_gravity="center"
+                            android:gravity="bottom"
+                            android:textStyle="bold"
+                            android:textSize="18dp"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+
+
             </LinearLayout>
 
+
+        </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>

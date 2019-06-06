@@ -40,7 +40,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import io.fabric.sdk.android.Fabric;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -81,9 +82,7 @@ import com.student.admin.easycalls.model.api;
 import com.student.admin.easycalls.model.network;
 import com.student.admin.easycalls.module.DirectionFinder;
 import com.student.admin.easycalls.shared.sharedpreff;
-
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -99,7 +98,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -129,9 +127,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LocationCallback mLocationCallback;
     private Location mCurrentLocation;
     Button start;
-
     ArrayList<LatLng> MarkerPoints;
-
     TextView count,dis;
     ArrayList<discode.DispoCodeList> data;
     String[] dispo;
@@ -158,12 +154,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
            };
 
 
-
 String t[]={"Cash" , "Cheque" , "Online Transaction"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_maps);
+        String userid= new sharedpreff(getApplicationContext()).login123();
+
+        String getname= new sharedpreff(getApplicationContext()).getname();
+
+
+        Crashlytics.setUserIdentifier(userid);
+
+        Crashlytics.setUserName(getname);
+
         value= getIntent().getExtras().getString("name");
         id1= getIntent().getExtras().getString("id");
         count=findViewById(R.id.count);
@@ -183,9 +189,12 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
         summary=findViewById(R.id.summary);
         dis=findViewById(R.id.dis);
         ImageView image=findViewById(R.id.load);
+
+
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
               ggg();
 
             }
@@ -218,6 +227,8 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
             }
         });
 
+
+
         DispoCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -243,10 +254,12 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
 
             }
         });
+
+
         spinner1.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
         @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-//      Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
+//                   Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
                 if(item.equals("Cheque")){
 
                     cheque.setVisibility(View.VISIBLE);
@@ -263,8 +276,6 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
 
 
                 }else if(item.equals("Online Transaction")){
-
-
 
                     cheque.setVisibility(View.GONE);
                     bank.setVisibility(View.GONE);
@@ -305,8 +316,6 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
                                  @Override
                                  public void onPermissionDenied(PermissionDeniedResponse response) {
                                      if (response.isPermanentlyDenied()) {
-                                         // open device settings when the permission is
-                                         // denied permanently
                                          openSettings();
                                      }
                                  }
@@ -328,6 +337,7 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
                      start.setText("stop timer");
                      startTime = System.currentTimeMillis();
                      timerHandler.postDelayed(timerRunnable, 0);
+
                  }
 
                  else if(o.equals("stop timer")) {
@@ -355,35 +365,57 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
                        double i=  mCurrentLocation.getLongitude();
                        gg= String.valueOf(i);
                      }else{
+
                          g="";
                          gg="";
+
                      }
                    String hi=  accno.getText().toString();
                 if(dfg.length()>3){
+
+                    start.setClickable(false);
                     String e=amout.getText().toString();
                     String ee=bank.getText().toString();
-                     String p= transid.getText().toString();
+                    String p=transid.getText().toString();
                     String ttt=cheque.getText().toString();
-                    String tt= date.getText().toString();
+                    String tt=date.getText().toString();
 
+//                    Toast.makeText(MapsActivity.this, id1, Toast.LENGTH_SHORT).show();
+                    String jg=null;
+                             if(dispo[type].equals("PAID")){
+                                 jg=   t[type1] ;
+                             }else{
 
+                                 jg="";
+                                 e="";
+                                 ee="";
+                                 p="";
+                                 ttt="";
 
+                             }
      Call<exelist> call = mApiService.addlatlong1
-             (userid, dispo[type],dfg,hi,g,gg,t[type1],id1,time,e,ee,p,ttt,tt);
+             (userid, dispo[type],dfg,hi,g,gg,jg,id1,time,e,ee,p,ttt,tt);
      call.enqueue(new Callback<exelist>(){
          @Override
          public void onResponse(Call<exelist> call, Response<exelist> response) {
 //                    System.out.println(response.body());
 //                    progressDialog.dismiss();
-//             System.out.println(call.request().url());
+             System.out.println(call.request().url());
+             System.out.println(response.body().getResponse().getResponse_message() );
 //             System.out.println(response.body().getResponse().getResponse_message());
              Toast.makeText(MapsActivity.this, response.body().getResponse().getResponse_message(), Toast.LENGTH_SHORT).show();
+
+
 //             Intent i = new Intent(getApplicationContext(),executelist.class);
 //             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //             startActivity(i);
 //             overridePendingTransition(R.anim.out, R.anim.in);
              if( response.body().getResponse().getResponse_code().equals("1")){
                  finish();
+
+             }else{
+
+                 start.setClickable(true);
              }
 
 
@@ -392,15 +424,17 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
          @Override
          public void onFailure(Call<exelist> call, Throwable t) {
 //                    progressDialog.dismiss();
+             start.setClickable(true);
              Log.d("Error", t.getMessage());
 
          }
      });
 
- }else{
+     }else{
+
      Toast.makeText(MapsActivity.this, "Enter Summary More Text ", Toast.LENGTH_SHORT).show();
 
- }
+     }
 
 
                  }
@@ -413,7 +447,6 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
         mapFragment.getMapAsync(this);
 
     }
-
 
     private void startLocationService() {
         // Before we start the service, confirm that we have extra power usage privileges.
@@ -447,13 +480,22 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
                 spinner.setItems(dispo);
                 spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
                     @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-     //          Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
+     //                 Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
                         if(item.equals("PTP") ||item.equals("FLW") ||item.equals("ALC") ){
                             DispoCode.setVisibility(View.VISIBLE);
 
-                        }else {
-                                DispoCode.setVisibility(View.GONE);
+                        }else if (item.equals("PAID")) {
+                            transid.setVisibility(View.VISIBLE);
+                            cheque.setVisibility(View.GONE);
+                            bank.setVisibility(View.GONE);
+                            date.setVisibility(View.VISIBLE);
+                            amout.setVisibility(View.VISIBLE);
                         }
+                        else{
+
+
+                        }
+
 
                     }
                 });
@@ -480,6 +522,7 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
             return;
         }
         if (destination.isEmpty()) {
+
             Toast.makeText(this, "Please enter destination address!", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -610,28 +653,33 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
             p2=new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()) ;
 
 
-            String str_origin = "origin=" + p1.latitude + "," + p1.longitude;
-            String str_dest = "destination=" + mCurrentLocation.getLatitude() + "," + mCurrentLocation.getLongitude();
-            String sensor = "sensor=false";
-            String parameters = str_origin + "&" + str_dest ;
-            String output = "json";
-            String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters+"&key=AIzaSyC-lD2GZRCFeoU2boj_lIiF_Zc_20TFKrw";
-            //https://maps.googleapis.com/maps/api/directions/json?origin=Time+Square&destination=Chelsea+Market&key=YOUR_API_KEY
-             Log.d("onMapClick", url.toString());
+//            String str_origin = "origin=" + p1.latitude + "," + p1.longitude;
+//            String str_dest = "destination=" + mCurrentLocation.getLatitude() + "," + mCurrentLocation.getLongitude();
+//            String sensor = "sensor=false";
+//            String parameters = str_origin + "&" + str_dest ;
+//            String output = "json";
+//            String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters+"&key=AIzaSyC-lD2GZRCFeoU2boj_lIiF_Zc_20TFKrw";
+//            //https://maps.googleapis.com/maps/api/directions/json?origin=Time+Square&destination=Chelsea+Market&key=YOUR_API_KEY
+//             Log.d("onMapClick", url.toString());
 //            FetchUrl FetchUrl = new FetchUrl();
 //            FetchUrl.execute(url);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(p2));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(7));
 
-            Location delhi_location = new Location("Delhi");
-            delhi_location.setLatitude(p1.latitude);
-            delhi_location.setLongitude(p1.longitude);
-            Location chandigarh_location = new Location("Chandigarh");
-            chandigarh_location.setLatitude(mCurrentLocation.getLatitude());
-            chandigarh_location.setLongitude(mCurrentLocation.getLongitude());
-            double distance = (delhi_location.distanceTo(chandigarh_location))/1000;
-            String j=  new DecimalFormat("##.##").format(distance);
-             dis.setText("Distance  : "+j +" KM");
+
+            if(p1!=null){
+                Location delhi_location = new Location("Delhi");
+                delhi_location.setLatitude(p1.latitude);
+                delhi_location.setLongitude(p1.longitude);
+                Location chandigarh_location = new Location("Chandigarh");
+                chandigarh_location.setLatitude(mCurrentLocation.getLatitude());
+                chandigarh_location.setLongitude(mCurrentLocation.getLongitude());
+                double distance = (delhi_location.distanceTo(chandigarh_location))/1000;
+                String j=  new DecimalFormat("##.##").format(distance);
+                dis.setText("Distance  : "+j +" KM");
+            }
+
+
 //            AlertDialog alertDialog = new AlertDialog.Builder(MapsActivity.this).create();
 //            alertDialog.setTitle("Info");
 //            alertDialog.setMessage("Distance between these two location is : "+distance +" miles");
@@ -679,7 +727,6 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
         }
     }
 
-
     private void startLocationUpdates(){
         mSettingsClient
                 .checkLocationSettings(mLocationSettingsRequest)
@@ -718,7 +765,6 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
                         updateLocationUI();
                     }
                 });
-
     }
 
 
@@ -735,7 +781,7 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
                 .addOnCompleteListener(this,new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(getApplicationContext(), "Location updates stopped!", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(), "Location updates stopped!", Toast.LENGTH_SHORT).show();
                         toggleButtons();
                     }
                 });
