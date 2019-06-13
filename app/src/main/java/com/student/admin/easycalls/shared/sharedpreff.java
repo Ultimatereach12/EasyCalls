@@ -13,20 +13,19 @@ public class sharedpreff {
 
     public  void saveLoginDetails(String email, String password,String name) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("p", Context.MODE_PRIVATE);
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("Email", email);
         editor.putString("Password", password);
         editor.putString("name", name);
-        editor.commit();
-    }
 
-    public  void Token(String token ) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("pp", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("Token", token);
 
         editor.commit();
     }
+
+
+
+
 
     public  void saveLoginDetails2(String g ) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("pp", Context.MODE_PRIVATE);

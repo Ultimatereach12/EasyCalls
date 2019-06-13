@@ -40,6 +40,7 @@ import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.maps.model.Dash;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.student.admin.easycalls.gettersetter.login;
+import com.student.admin.easycalls.gettersetter.password;
 import com.student.admin.easycalls.map.TrackerService;
 import com.student.admin.easycalls.model.api;
 import com.student.admin.easycalls.model.network;
@@ -77,7 +78,6 @@ public  class Dashboard  extends AppCompatActivity {
             double lat = intent.getDoubleExtra("lat", 0.0);
             double lng = intent.getDoubleExtra("long", 0.0);
             setTrackingLocation(lat, lng);
-
         }
     };
 
@@ -92,9 +92,9 @@ public  class Dashboard  extends AppCompatActivity {
         String userid1= new sharedpreff(getApplicationContext()).login123();
 
         String getname= new sharedpreff(getApplicationContext()).getname();
-     TextView    name= findViewById(R.id.name);
+        TextView  name= findViewById(R.id.name);
         String y=new sharedpreff(getApplicationContext()).getname();
-            name.setText(y);
+        name.setText(y);
 //        Toast.makeText(this, y, Toast.LENGTH_SHORT).show();
         Crashlytics.setUserIdentifier(userid1);
 
@@ -148,13 +148,11 @@ public  class Dashboard  extends AppCompatActivity {
             second.setVisibility(View.GONE);
             exec.setVisibility(View.GONE);
             add.setVisibility(View.GONE);
-
             detail.setVisibility(View.VISIBLE);
         }else if(userid.equals("2")){
 
             second.setVisibility(View.VISIBLE);
             first.setVisibility(View.GONE);
-
             employee.setVisibility(View.VISIBLE);
             clientlocaion.setVisibility(View.GONE);
             register.setVisibility(View.GONE);
@@ -166,7 +164,9 @@ public  class Dashboard  extends AppCompatActivity {
             add.setOnClickListener(new View.OnClickListener() {
              @Override
        public void onClick(View v) {
+
         Toast.makeText(Dashboard.this, "under construction ", Toast.LENGTH_SHORT).show();
+
              }
       });
 
@@ -194,6 +194,7 @@ public  class Dashboard  extends AppCompatActivity {
         exec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 final String t[]={"Landline" , "Mobile" };
                 LayoutInflater li = LayoutInflater.from(Dashboard.this);
                 final View promptsView = li.inflate(R.layout.prompts, null);
@@ -206,13 +207,10 @@ public  class Dashboard  extends AppCompatActivity {
                         .findViewById(R.id.name);
                 final EditText phone = (EditText)promptsView
                         .findViewById(R.id.phone);
-
                 final EditText address = (EditText)promptsView
                         .findViewById(R.id.Address);
-
                 final EditText accno = (EditText)promptsView
                         .findViewById(R.id.accno);
-
                 final Button cencel = (Button)promptsView
                         .findViewById(R.id.cencel);
 
@@ -227,6 +225,7 @@ public  class Dashboard  extends AppCompatActivity {
                 phone.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         int mYear, mMonth, mDay;
                         final Calendar c = Calendar.getInstance();
                         mYear = c.get(Calendar.YEAR);
@@ -244,8 +243,11 @@ public  class Dashboard  extends AppCompatActivity {
                                         phone.setText(dayOfMonth + "-" +(monthOfYear + 1)+ "-" + year);
 
                                     }
-                                }, mYear, mMonth, mDay);
+
+                                    }, mYear, mMonth, mDay);
                         datePickerDialog.show();
+
+
                     }
                 });
 
@@ -276,7 +278,7 @@ public  class Dashboard  extends AppCompatActivity {
                             final String address1= address.getText().toString();
                             String accno1=   accno.getText().toString();
                             int type1= test.getSelectedIndex();
-                            if(user.length()>2&&phone1.length()>4&&address1.length()>4&&accno1.length()>4){
+                            if(user.length()>2&&phone1.length()>4&&address1.length()>4&&accno1.length()>11){
 
                                 String r=userInput.getText().toString();
                                 final ProgressDialog progressDialog = new ProgressDialog(Dashboard.this);
@@ -290,6 +292,11 @@ public  class Dashboard  extends AppCompatActivity {
                                     @Override
                                     public void onResponse(Call<login> call, Response<login> response) {
                                         System.out.println(call.request().url());
+
+                                        if(response.body().getResponse().getResponse_code().equals("5")){
+
+                                        }
+
                                         Toast.makeText( Dashboard.this, response.body().getResponse().getResponse_message(), Toast.LENGTH_SHORT).show();
                                         alertDialog.dismiss();
                                         progressDialog.dismiss();
@@ -297,6 +304,8 @@ public  class Dashboard  extends AppCompatActivity {
                                         ii.putExtra("name",address1);
                                         ii.putExtra("id", response.body().getResponse().getResponse_code());
                                         startActivity(ii);
+
+
                                     }
                                     @Override
                                     public void onFailure(Call<login> call, Throwable t) {
@@ -413,7 +422,11 @@ public  class Dashboard  extends AppCompatActivity {
     }
 
     private void stopLocationService() {
+
+
         stopService(new Intent(this, TrackerService.class));
+
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -440,11 +453,30 @@ public  class Dashboard  extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
                             stopLocationService();
-                            new sharedpreff(getApplicationContext()).logout1();
-                            Intent i = new Intent(Dashboard.this, MainActivity.class);
-                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(i);
-                            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                            String userid= new sharedpreff(getApplicationContext()).login123();
+                            api service = network.getRetrofit().create(api.class);
+                            Call<password> call = service.logout(userid );
+                            call.enqueue(new Callback<password>() {
+                                @Override
+                                public void onResponse(Call<password> call, Response<password> response) {
+
+
+                                    new sharedpreff(getApplicationContext()).logout1();
+                                    Intent i = new Intent(Dashboard.this, MainActivity.class);
+                                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(i);
+                                    overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                                }
+
+                                @Override
+                                public void onFailure(Call<password> call, Throwable t) {
+
+                                    Toast.makeText(getApplicationContext(), "Network Error", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+
+
                     }
                     }
                     );
@@ -476,7 +508,6 @@ public  class Dashboard  extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         finish();
-
                     }
                 });
         alertDialog.show();

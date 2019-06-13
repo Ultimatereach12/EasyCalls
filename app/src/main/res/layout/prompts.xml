@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:padding="15dp"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         android:textSize="14sp"
         android:id="@+id/name"
         android:fontFamily="@font/calibri"
@@ -77,13 +78,16 @@
         android:drawablePadding="10dp"
         android:fontFamily="@font/calibri"
         android:singleLine="true"
-        android:inputType="text"
+        android:digits="1234567890"
+        android:inputType="number"
+        android:maxLength="14"
         android:backgroundTint="@color/white"
         android:hint="Account Number"
         android:textCursorDrawable="@null"
         android:textColor="#ffff"
         android:textColorHint="#ffff"
-        android:textColorHighlight="#ffff"/>
+        android:textColorHighlight="#ffff"
+        />
     <EditText
         android:id="@+id/Address"
         android:layout_width="match_parent"

@@ -1,29 +1,45 @@
 package com.student.admin.easycalls;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.student.admin.easycalls.gettersetter.login;
 import com.student.admin.easycalls.map.TrackerService;
 import com.student.admin.easycalls.model.api;
 import com.student.admin.easycalls.model.network;
 import com.student.admin.easycalls.shared.sharedpreff;
+
+import java.util.Calendar;
 
 import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
@@ -34,7 +50,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.Manifest.permission_group.LOCATION;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, TextWatcher {
 
 
     LinearLayout ff;
@@ -43,6 +59,18 @@ public class MainActivity extends AppCompatActivity {
     static final Integer LOCATION = 0x1;
     int  REQUEST_PHONE_CALL=123;
     int  REQUEST_PHONE_CALL1=1234;
+
+    private CheckBox rem_userpass;
+    SharedPreferences sharedPreferences12;
+    SharedPreferences.Editor editor;
+    String deviceid;
+    private static final String PREF_NAME = "prefs";
+    private static final String KEY_REMEMBER = "remember";
+    private static final String KEY_USERNAME = "username";
+    private static final String KEY_PASS = "password";
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +79,42 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.login);
+        final TextView forget=findViewById(R.id.forget);
+        forget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent=new Intent(getApplicationContext(),passwordreset.class);
+                startActivity(intent);
+
+
+            }
+        });
+
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, 101);
+        }
+
+
+
+        sharedPreferences12 = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        editor = sharedPreferences12.edit();
+
+        rem_userpass = (CheckBox)findViewById(R.id.checkBox);
+
+        if(sharedPreferences12.getBoolean(KEY_REMEMBER, false))
+            rem_userpass.setChecked(true);
+        else
+            rem_userpass.setChecked(false);
+            rem_userpass.setOnCheckedChangeListener(this);
+
+
+
 //        askForPermission(Manifest.permission.ACCESS_FINE_LOCATION,LOCATION);
 //        askForPermission(Manifest.permission.CALL_PHONE,REQUEST_PHONE_CALL);
 //        askForPermission1(Manifest.permission.FOREGROUND_SERVICE,REQUEST_PHONE_CALL1);
+
         String userid= new sharedpreff(getApplicationContext()).login123();
         String getname= new sharedpreff(getApplicationContext()).getname();
         Crashlytics.setUserIdentifier(userid);
@@ -94,6 +155,15 @@ public class MainActivity extends AppCompatActivity {
         singup=(Button)findViewById(R.id.signup);
         ed1=(EditText)findViewById(R.id.email);
         ed2=(EditText)findViewById(R.id.password);
+
+        ed1.setText(sharedPreferences12.getString(KEY_USERNAME,""));
+        ed2.setText(sharedPreferences12.getString(KEY_PASS,""));
+
+        ed1.addTextChangedListener(this);
+        ed2.addTextChangedListener(this);
+
+
+
         singup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,22 +196,23 @@ public class MainActivity extends AppCompatActivity {
                         progressDialog.setCancelable(false);
                         progressDialog.show();
                         api service = network.getRetrofit().create(api.class);
-                        Call<login> call = service.Login(Phone, pass, tokrn);
+                        Call<login> call = service.Login(Phone, pass, tokrn,deviceid);
                         call.enqueue(new Callback<login>() {
                              @Override
                             public void onResponse(Call<login> call, Response<login> response) {
                                 progressDialog.dismiss();
                                 Log.d("response", "code = " + response.code());
-
                                 Log.d("mvvvv", "StudentId  : " + response.body().toString());
                                 System.out.println("log in id :" + response.toString());
+                                 System.out.println("log in id :" + call.request().url());
+
                                 login resul = response.body();
 
                                 if (resul.getLoginDetails() != null) {
 
                                     if (resul.getLoginDetails()[0].getEmployee_type().equals("2")) {
-                                        ed1.setText("");
-                                        ed2.setText("");
+//                                        ed1.setText("");
+//                                        ed2.setText("");
 
                                         new sharedpreff(getApplicationContext()).saveLoginDetails(resul.getLoginDetails()[0].getEmployee_type(),resul.getLoginDetails()[0].getId(),resul.getLoginDetails()[0].getEmployee_name());
                                         Intent i = new Intent(getApplicationContext(),Dashboard.class);
@@ -167,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
 
                                         Snackbar snackbar = Snackbar.make(ff, "Invalid login details", Snackbar.LENGTH_LONG);
                                         snackbar.show();
-             //        new sharedpreff(getApplicationContext()).saveLoginDetails(resul.getUser_info().getlogin_type(), resul.getUser_info().getId(), resul.getUser_info().getDoctor_name());
+             //                            new sharedpreff(getApplicationContext()).saveLoginDetails(resul.getUser_info().getlogin_type(), resul.getUser_info().getId(), resul.getUser_info().getDoctor_name());
              //                            Intent i = new Intent(getApplicationContext(), newdashboard.class);
              //                            startActivity(i);
              //                            overridePendingTransition(R.anim.in, R.anim.out);
@@ -175,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
                                     }
 
                                 } else {
-                                    Snackbar snackbar = Snackbar.make(ff, "Invalid login details", Snackbar.LENGTH_LONG);
+                                    Snackbar snackbar = Snackbar.make(ff, response.body().getResponse().getResponse_message(), Snackbar.LENGTH_LONG);
                                     snackbar.show();
                                 }
                             }
@@ -190,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
                         });
 
                     }else{
-                        Toast.makeText(getApplicationContext(),"No Network", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Valid Length", Toast.LENGTH_SHORT).show();
                     }
                 }else{
 
@@ -275,6 +346,88 @@ public class MainActivity extends AppCompatActivity {
 //            Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        managePrefs();
+    }
+
+    private void managePrefs() {
+        if(rem_userpass.isChecked()){
+
+            editor.putString(KEY_USERNAME, ed1.getText().toString().trim());
+            editor.putString(KEY_PASS, ed2.getText().toString().trim());
+            editor.putBoolean(KEY_REMEMBER, true);
+            editor.apply();
+
+        }else{
+
+            editor.putBoolean(KEY_REMEMBER, false);
+            editor.remove(KEY_PASS);//editor.putString(KEY_PASS,"");
+            editor.remove(KEY_USERNAME);//editor.putString(KEY_USERNAME, "");
+            editor.apply();
+
+
+        }
+    }
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+        managePrefs();
+
+
+    }
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)   {
+        switch (requestCode) {
+            case 101:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) !=  PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                     deviceid=Build.DEVICE;
+
+//                    Toast.makeText(this, g, Toast.LENGTH_SHORT).show();
+            }
+            else  {
+
+                //not granted
+
+
+            }
+            break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) !=   PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+
+//        textView.setText(Build.DEVICE);
+
+        deviceid=Build.DEVICE;
+/*   Toast.makeText(this, g, Toast.LENGTH_SHORT).show();*/
+
+    }
+
 
 
 }

@@ -92,7 +92,6 @@ public class DirectionFinder {
         for (int i = 0; i < jsonRoutes.length(); i++) {
             JSONObject jsonRoute = jsonRoutes.getJSONObject(i);
             Route route = new Route();
-
             JSONObject overview_polylineJson = jsonRoute.getJSONObject("overview_polyline");
             JSONArray jsonLegs = jsonRoute.getJSONArray("legs");
             JSONObject jsonLeg = jsonLegs.getJSONObject(0);

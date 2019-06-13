@@ -77,6 +77,7 @@ public class employeelist  extends AppCompatActivity {
               editText.setEnabled(true);
             }
         });
+
         checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

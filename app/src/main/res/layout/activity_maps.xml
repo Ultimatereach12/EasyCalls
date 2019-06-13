@@ -22,7 +22,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|top"
-
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:elevation="100dp"
@@ -148,6 +147,7 @@
                     android:layout_weight="1"
                     android:backgroundTint="@color/colorPrimary"
                     android:hint="Amount"
+                    android:maxLength="5"
                     android:singleLine="true"
                     android:layout_height="wrap_content" />
 
@@ -159,6 +159,8 @@
                     android:hint="Transaction id"
                     android:fontFamily="@font/calibri"
                     android:layout_weight="1"
+                    android:inputType="number"
+                    android:maxLength="14"
                     android:singleLine="true"
                     android:layout_height="wrap_content" />
                 <EditText

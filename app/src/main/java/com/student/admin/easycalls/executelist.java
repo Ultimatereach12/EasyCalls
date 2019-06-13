@@ -101,13 +101,17 @@ public class executelist extends AppCompatActivity {
                 recyclerView2.setVisibility(View.GONE);
                 recyclerView3.setVisibility(View.GONE);
 
-                if (data1 == null) {
+                 System.out.println(data1);
+
+
 
                     getlist();
-                }
+
 
             }
         });
+
+
 
         progress.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,14 +122,14 @@ public class executelist extends AppCompatActivity {
                 recyclerView2.setVisibility(View.VISIBLE);
                 recyclerView3.setVisibility(View.GONE);
 
-                if (data1 == null) {
+
 
                     bar.setVisibility(View.VISIBLE);
                     LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(executelist.this, LinearLayoutManager.VERTICAL, false);
                     recyclerView2.setLayoutManager(horizontalLayoutManager);
                     final api mApiService = network.getRetrofit().create(api.class);
                     String userid = new sharedpreff(getApplicationContext()).login123();
-                    Call<customernotpaidlist> call = mApiService.nopay("64");
+                    Call<customernotpaidlist> call = mApiService.nopay(userid);
                     call.enqueue(new Callback<customernotpaidlist>() {
                         @Override
                         public void onResponse(Call<customernotpaidlist> call, Response<customernotpaidlist> response) {
@@ -147,14 +151,13 @@ public class executelist extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<customernotpaidlist> call, Throwable t) {
 
-
                             bar.setVisibility(View.GONE);
                             Log.d("Error", t.getMessage());
 
 
                         }
                     });
-                }
+
 
 //        Toast.makeText(executelist.this, "2", Toast.LENGTH_SHORT).show();
 
@@ -171,7 +174,8 @@ public class executelist extends AppCompatActivity {
                 recyclerView3.setVisibility(View.VISIBLE);
                 gg("3");
 
-                if (data2 == null) {
+
+
 
                     bar.setVisibility(View.VISIBLE);
                     LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(executelist.this, LinearLayoutManager.VERTICAL, false);
@@ -179,7 +183,7 @@ public class executelist extends AppCompatActivity {
                     final api mApiService = network.getRetrofit().create(api.class);
 
                     String userid = new sharedpreff(getApplicationContext()).login123();
-                    Call<paidlist> call = mApiService.paylist("64");
+                    Call<paidlist> call = mApiService.paylist(userid);
                     call.enqueue(new Callback<paidlist>() {
                         @Override
                         public void onResponse(Call<paidlist> call, Response<paidlist> response) {
@@ -213,7 +217,7 @@ public class executelist extends AppCompatActivity {
 
                         }
                     });
-                }
+
 //           Toast.makeText(executelist.this, "3", Toast.LENGTH_SHORT).show();
             }
         });
@@ -299,7 +303,7 @@ public class executelist extends AppCompatActivity {
         final api mApiService = network.getRetrofit().create(api.class);
 
         String userid = new sharedpreff(getApplicationContext()).login123();
-        Call<visit> call = mApiService.baselist("64");
+        Call<visit> call = mApiService.baselist(userid);
         call.enqueue(new Callback<visit>() {
             @Override
             public void onResponse(Call<visit> call, Response<visit> response) {
@@ -312,7 +316,7 @@ public class executelist extends AppCompatActivity {
                 } else {
                     Toast.makeText(executelist.this, "No data", Toast.LENGTH_SHORT).show();
                 }
-                mAdapter1 = new DataAdapter(data, executelist.this);
+                mAdapter1 = new DataAdapter(recyclerView1,data, executelist.this);
                 recyclerView1.setAdapter(mAdapter1);
                 bar.setVisibility(View.GONE);
             }
@@ -392,12 +396,46 @@ public class executelist extends AppCompatActivity {
         private ArrayList<visit.List> android, mFilteredList;
 
         private ArrayList<exelist.ExecutiveLocationList> item_list;
+
+        RecyclerView recy;
+
         Context gg;
 
-        public DataAdapter(ArrayList<visit.List> android, Context g) {
+        private boolean isLoading;
+
+
+        private int visibleThreshold = 5;
+        private int lastVisibleItem, totalItemCount;
+
+
+        public DataAdapter(RecyclerView recy,ArrayList<visit.List> android, Context g) {
             this.android = android;
             this.mFilteredList = android;
             this.gg = g;
+            this.recy=recy;
+
+
+
+//            final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recy.getLayoutManager();
+//            recy.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//                @Override
+//                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                    super.onScrolled(recyclerView, dx, dy);
+//                    totalItemCount = linearLayoutManager.getItemCount();
+//                    lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+//                    if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+////                        if (onLoadMoreListener != null) {
+////                            onLoadMoreListener.onLoadMore();
+////                        }
+////                        Toast.makeText(gg, "retre", Toast.LENGTH_SHORT).show();
+//
+//                        isLoading = true;
+//                    }
+//                }
+//            });
+
+
+
         }
 
         @Override
@@ -650,7 +688,7 @@ public class executelist extends AppCompatActivity {
                     CheckBox cb = (CheckBox) v;
                     list.Employees model = (list.Employees) cb.getTag();
                     model.setSelected(cb.isChecked());
-//                  android.get(i).setSelected(cb.isChecked());
+//                android.get(i).setSelected(cb.isChecked());
 
                 }
             });
@@ -662,7 +700,6 @@ public class executelist extends AppCompatActivity {
             return android.size();
         }
 
-
 //        Filter getFilter() {
 //            return new Filter() {
 //                @Override
@@ -671,7 +708,6 @@ public class executelist extends AppCompatActivity {
 //                    if (charString.isEmpty()) {
 //                        android=mFilteredList;
 //                    } else {
-
 //                        System.out.println(charString);
 //                        ArrayList <exelist.ExecutiveLocationList>  filteredList = new ArrayList<>();
 //                        for (exelist.ExecutiveLocationList androidVersion : android) {
@@ -687,7 +723,6 @@ public class executelist extends AppCompatActivity {
 //                }
 //                @Override
 //                protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-//
 //                    android = (ArrayList<exelist.ExecutiveLocationList>) filterResults.values;
 //                    notifyDataSetChanged();
 //

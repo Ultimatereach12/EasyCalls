@@ -8,6 +8,7 @@ import com.student.admin.easycalls.gettersetter.exelist;
 import com.student.admin.easycalls.gettersetter.list;
 import com.student.admin.easycalls.gettersetter.login;
 import com.student.admin.easycalls.gettersetter.paidlist;
+import com.student.admin.easycalls.gettersetter.password;
 import com.student.admin.easycalls.gettersetter.tllist;
 import com.student.admin.easycalls.gettersetter.visit;
 
@@ -24,7 +25,7 @@ public interface api {
 
     @POST("webservice.php?Case=CommonLogin")
       Call<login> Login (
-             @Query("user_name") String name, @Query(value = "user_password", encoded = true) String password1, @Query(value = "token", encoded = true) String token);
+             @Query("user_name") String name, @Query(value = "user_password", encoded = true) String password1, @Query(value = "token", encoded = true) String token, @Query(value = "device_name", encoded = true) String device_name);
 
 
       @POST("webservice.php?Case=EmployeeList")
@@ -38,7 +39,7 @@ public interface api {
     @POST("webservice.php?Case=ExecutiveLocationSave")
        Call<login> exee (@Query("employee_id") String name,@Query("customer_name")String phone,
                           @Query("customer_address") String email11,
-                         @Query("customer_accno")String h,   @Query("end_date")String end_date,   @Query("emp_type")String emp_type);
+                         @Query("customer_accno")String h,   @Query("end_date")String end_date,   @Query("emp_type")String emp_type   );
 
      //    end_date=mar20&emp_type=rest
 
@@ -85,6 +86,19 @@ public interface api {
 
     @POST("webservice.php?Case=MyBaseList")
     Call<visit>baselist(@Query("teaml_id") String name);
+
+
+    @POST("webservice.php?Case=ForgetPassword")
+    Call<password>password(@Query(value = "employee_phone" , encoded = true) String name);
+
+
+
+
+
+
+    @POST("webservice.php?Case=DeviceLogout")
+    Call<password>logout(@Query(value = "user_id" , encoded = true) String name);
+
 
 
 //    http://www.dneers.com/easycalls/webservice.php?Case=CustomerExecutivePaidlist&teaml_id=64

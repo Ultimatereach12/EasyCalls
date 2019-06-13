@@ -125,8 +125,8 @@ public class TrackerService extends Service implements LocationListener {
         @Override
         public void onConnected(Bundle bundle) {
             LocationRequest request = new LocationRequest();
-            request.setInterval(20000);
-            request.setFastestInterval(20000);
+            request.setInterval(10*60*1000);
+            request.setFastestInterval(10*60*1000);
             request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
                     request, TrackerService.this);
@@ -223,8 +223,8 @@ public class TrackerService extends Service implements LocationListener {
             // are kept when the locations are the same, the earlier representing
             // the time the location was arrived at, and the latest representing the
             // current time.
-//             mTransportStatuses.set(0, location.getLatitude());
-//             mTransportStatuses.set(1, location.getLongitude());
+            // mTransportStatuses.set(0, location.getLatitude());
+            // mTransportStatuses.set(1, location.getLongitude());
              setLocationMessage(location);
 
              System.out.println(location);
