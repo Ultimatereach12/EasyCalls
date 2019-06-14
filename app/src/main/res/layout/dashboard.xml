@@ -12,7 +12,7 @@
         android:id="@+id/f"
         android:layout_height="match_parent"
         tools:ignore="InvalidId"
-
+android:background="@drawable/dashboard"
         android:orientation="vertical">
         <include layout="@layout/toolbar"/>
 
@@ -35,16 +35,17 @@
                   <!--/>-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
+
                     android:gravity="center|left"
-                    android:text="Hello "
+                    android:text="Welcome "
                     android:fontFamily="@font/calibri"
-                    android:textColor="#000"
+                    android:textColor="#ffff"
                     android:textSize="15dp" />
                 <TextView
                     android:layout_width="wrap_content"
@@ -52,35 +53,18 @@
                     android:layout_gravity="top"
                     android:gravity="center|left"
                      android:id="@+id/name"
+
                     android:fontFamily="@font/calibri"
-                    android:textColor="#000"
-                    android:textSize="15dp" />
+                    android:textColor="#ffff"
+                    android:layout_marginTop="10dp"
+                    android:textStyle="bold"
+                    android:textSize="22dp" />
 
             </LinearLayout>
 
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:gravity="center|left"
-                android:text="Welcome to "
 
-          android:layout_marginStart="10dp"
-                android:fontFamily="@font/calibri"
-                android:textColor="#292626"
-                android:textSize="30dp" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:layout_marginStart="10dp"
-                android:gravity="center|left"
-                android:text="Easy calls "
-                android:textStyle="bold"
-                android:fontFamily="@font/calibri"
-                android:textColor="@color/colorPrimary"
-                android:textSize="30dp" />
+
 
         </LinearLayout>
 
@@ -111,20 +95,21 @@
 
 
                 <LinearLayout
-
                     android:background="@drawable/back"
-                    android:layout_width="match_parent"
+                    android:layout_width="120dp"
                     android:layout_margin="5dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="120dp"
                     android:id="@+id/set"
                     android:layout_gravity="center"
+                    android:gravity="center"
                     android:orientation="vertical">
 
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:src="@drawable/list1"
+                        android:src="@drawable/forma1"
                         android:layout_gravity="center"
+
                         android:layout_height="wrap_content"
                         />
 
@@ -133,11 +118,11 @@
                         android:text="Employee List"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimary"
+
                         android:layout_marginTop="30dp"
                         android:fontFamily="@font/calibri"
-                        android:textSize="18dp"
+                        android:textSize="12dp"
                         android:layout_height="wrap_content"
                         />
                 </LinearLayout>

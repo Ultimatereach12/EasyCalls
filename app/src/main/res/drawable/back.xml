@@ -5,13 +5,13 @@
 
     >
     <gradient
-        android:startColor="@color/blue"
+        android:startColor="@android:color/white"
 
-        android:endColor="@color/lightBlue"
+        android:endColor="@android:color/white"
         android:angle="0" />
 
 
-    <corners android:radius="7dp" />
+    <corners android:radius="35dp" />
 
 
 
