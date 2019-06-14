@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/MainDashboard"
+        tools:layout_editor_absoluteX="225dp"
+        tools:layout_editor_absoluteY="215dp">
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Welcome"
+        android:textColor="#FFF"
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="43dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Lorem ipsum"
+        android:textColor="#FFF"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="75dp" />
+
+    <LinearLayout
+        android:id="@+id/set"
+        android:layout_width="117dp"
+        android:layout_height="113dp"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:background="@drawable/back"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="145dp"
+        tools:layout_editor_absoluteY="125dp">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:src="@drawable/forma1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/calibri"
+
+            android:gravity="center"
+            android:text="Attendance"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/set"
+        android:layout_width="117dp"
+        android:layout_height="113dp"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:background="@drawable/back"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="272dp">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:src="@drawable/mybaseicon" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/calibri"
+
+            android:gravity="center"
+            android:text="My Base"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/set"
+        android:layout_width="117dp"
+        android:layout_height="113dp"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:background="@drawable/back"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="278dp"
+        tools:layout_editor_absoluteY="272dp">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:src="@drawable/messboard" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/calibri"
+
+            android:gravity="center"
+            android:text="Message Board"
+            android:textColor="@color/colorPrimary"
+            android:textSize="17dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="145dp"
+        tools:layout_editor_absoluteY="238dp">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/centericon" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/set"
+        android:layout_width="117dp"
+        android:layout_height="113dp"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:background="@drawable/back"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="145dp"
+        tools:layout_editor_absoluteY="409dp">
+
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:src="@drawable/dashboardreport" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/calibri"
+            android:gravity="center"
+            android:text="Reports"
+            android:textColor="@color/colorPrimary"
+            android:textSize="17dp" />
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>
