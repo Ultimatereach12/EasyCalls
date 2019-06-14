@@ -399,13 +399,10 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                 }
                      deviceid=Build.DEVICE;
 
-//                    Toast.makeText(this, g, Toast.LENGTH_SHORT).show();
+//                       Toast.makeText(this, g, Toast.LENGTH_SHORT).show();
             }
             else  {
-
                 //not granted
-
-
             }
             break;
             default:
@@ -417,7 +414,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
     protected void onResume() {
 
         super.onResume();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) !=   PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
 
