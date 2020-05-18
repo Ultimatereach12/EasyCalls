@@ -1,28 +1,20 @@
 package com.student.admin.easycalls;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
-import com.student.admin.easycalls.gettersetter.login;
 import com.student.admin.easycalls.gettersetter.password;
-import com.student.admin.easycalls.gettersetter.tllist;
 import com.student.admin.easycalls.model.api;
 import com.student.admin.easycalls.model.network;
-import com.student.admin.easycalls.shared.sharedpreff;
-
-import java.util.ArrayList;
 
 import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;

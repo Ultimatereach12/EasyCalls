@@ -1,7 +1,7 @@
 package com.student.admin.easycalls;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 abstract class PaginationScrollListener extends RecyclerView.OnScrollListener {
 
     LinearLayoutManager layoutManager;
