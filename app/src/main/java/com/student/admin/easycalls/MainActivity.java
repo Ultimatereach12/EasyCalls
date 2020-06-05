@@ -11,11 +11,11 @@ import androidx.annotation.RequiresApi;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -84,8 +84,6 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, 101);
         }
 
-
-
         sharedPreferences12 = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences12.edit();
 
@@ -96,8 +94,6 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         else
             rem_userpass.setChecked(false);
             rem_userpass.setOnCheckedChangeListener(this);
-
-
 
 //        askForPermission(Manifest.permission.ACCESS_FINE_LOCATION,LOCATION);
 //        askForPermission(Manifest.permission.CALL_PHONE,REQUEST_PHONE_CALL);
@@ -120,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                 overridePendingTransition(R.anim.in, R.anim.out);
             }else if(y.equals("2")){
                 Intent i = new Intent(MainActivity.this,Dashboard.class);
-
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
                 overridePendingTransition(R.anim.in,R.anim.out);
@@ -189,14 +184,16 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                              @Override
                             public void onResponse(Call<login> call, Response<login> response) {
                                 progressDialog.dismiss();
-                                Log.d("response", "code = " + response.code());
-                                Log.d("mvvvv", "StudentId  : " + response.body().toString());
-                                System.out.println("log in id :" + response.toString());
+
                                  System.out.println("log in id :" + call.request().url());
+//                                 Log.d("response", "code = " + response.code());
+//                                 Log.d("mvvvv", "StudentId  : " + response.body().toString());
+//                                 System.out.println("log in id :" + response.toString());
 
                                 login resul = response.body();
 
                                 if (resul.getLoginDetails() != null) {
+
 
                                     if (resul.getLoginDetails()[0].getEmployee_type().equals("2")) {
 //                                        ed1.setText("");
@@ -210,9 +207,9 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
 
                                     }
                                     else if (resul.getLoginDetails()[0].getEmployee_type().equals("3")) {
-
-                                        ed1.setText("");
-                                        ed2.setText("");
+//
+//                                        ed1.setText("");
+//                                        ed2.setText("");
 
                                         new sharedpreff(getApplicationContext()).saveLoginDetails(resul.getLoginDetails()[0].getEmployee_type(),resul.getLoginDetails()[0].getId(),resul.getLoginDetails()[0].getEmployee_name());
                                         Intent i = new Intent(getApplicationContext(),Dashboard.class);
@@ -249,14 +246,14 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                         });
 
                     }else{
-                        Toast.makeText(getApplicationContext(),"Valid Length", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Net not connect", Toast.LENGTH_SHORT).show();
                     }
                 }else{
 
                     Snackbar snackbar = Snackbar.make(ff, "Enter phone number and password", Snackbar.LENGTH_LONG);
                     snackbar.show();
-
                 }
+
 
 //                   api  mApiService = network.getRetrofit().create(api.class);
 //                   Call<login> call = mApiService.studentLogin(Phone,pass,"dfssd");
@@ -298,15 +295,14 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                 //This is called if user has denied the permission before
                 //In this case I am just asking the permission again
                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{permission}, requestCode);
-
                 System.out.println("test");
-
             } else {
                 System.out.println("test123");
                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{permission}, requestCode);
             }
 
-        } else {
+        }
+        else {
             System.out.println("test12345");
 //            Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
         }
@@ -318,17 +314,12 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
 
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, permission)) {
-                //This is called if user has denied the permission before
-                //In this case I am just asking the permission again
                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{permission}, requestCode);
-
                 System.out.println("test");
-
             } else {
                 System.out.println("test123");
                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{permission}, requestCode);
             }
-
         } else {
             System.out.println("test12345");
 //            Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
@@ -366,9 +357,7 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-
-        managePrefs();
-
+     managePrefs();
 
     }
     @Override
@@ -386,7 +375,6 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
                     return;
                 }
                      deviceid=Build.DEVICE;
-
 //                       Toast.makeText(this, g, Toast.LENGTH_SHORT).show();
             }
             else  {
@@ -403,7 +391,9 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
 
         super.onResume();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+
             return;
+
         }
 
 //        textView.setText(Build.DEVICE);

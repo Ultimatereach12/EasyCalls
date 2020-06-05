@@ -5,10 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
@@ -41,6 +42,8 @@ public class Register  extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        TextView toolbar_title=findViewById(R.id.toolbar_title);
+        toolbar_title.setText("Register");
         singup1 = (Button) findViewById(R.id.signup);
 
         ed1 = (EditText) findViewById(R.id.phone);
@@ -50,9 +53,6 @@ public class Register  extends AppCompatActivity {
 //        awesomeValidation.addValidation(this, R.id.Email, Patterns.EMAIL_ADDRESS, R.string.emailerror);
 //        awesomeValidation.addValidation( this,R.id.phone, "^[2-9]{2}[0-9]{8}$", R.string.mobileerror);
         String regexPassword = ".{8,}";
-
-
-
 
         singup1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,14 +77,13 @@ public class Register  extends AppCompatActivity {
                         api service = network.getRetrofit().create(api.class);
                         String teaml_id= new sharedpreff(getApplicationContext()).login123();
                         Call<login> call = service.register(name, phone, password,"Exec","2",teaml_id);
-
                         call.enqueue(new Callback<login>() {
                             @Override
                             public void onResponse(Call<login> call, Response<login> response) {
                                 progressDialog.dismiss();
-                                Log.d("response", "code = " + response.code());
-                                Log.d("mvvvv", "StudentId  :  " + response.body().toString());
-                                System.out.println("log in id :" + response.toString());
+//                                Log.d("response", "code = " + response.code());
+//                                Log.d("mvvvv", "StudentId  :  " + response.body().toString());
+//                                System.out.println("log in id :" + response.toString());
                                 login resul = response.body();
 
                                 if (resul.getResponse() != null) {
@@ -110,15 +109,13 @@ public class Register  extends AppCompatActivity {
                     }
                 }else{
                     Toast.makeText(getApplicationContext(), "mobile number and mismatch password", Toast.LENGTH_SHORT).show();
-//                   Toast.makeText(getApplicationContext(), "mobile number and mis match password", Toast.LENGTH_LONG).show();
+//                  Toast.makeText(getApplicationContext(), "mobile number and mis match password", Toast.LENGTH_LONG).show();
                 }
 
             }
         });
 
     }
-
-
     public boolean onSupportNavigateUp() {
 
         onBackPressed();

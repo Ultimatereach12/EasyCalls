@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "835446759233",
+    "firebase_url": "https://easycalls-b3ed0.firebaseio.com",
+    "project_id": "easycalls-b3ed0",
+    "storage_bucket": "easycalls-b3ed0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:835446759233:android:9d3b952e01b1c00cd54bc0",
+        "android_client_info": {
+          "package_name": "com.student.admin.easycalls"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "835446759233-lgguo99tqnhu2cb7gme9a3icc7ic0t8m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.student.admin.easycalls",
+            "certificate_hash": "37bed83b9be44b9de0b4d966af0122db9d27e156"
+          }
+        },
+        {
+          "client_id": "835446759233-qg3bkeom2rgu1ps63p6fc3dod8mp2d38.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSmLitYERcZ1-xvet6nlKZMkp3WrplKhQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "835446759233-qg3bkeom2rgu1ps63p6fc3dod8mp2d38.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

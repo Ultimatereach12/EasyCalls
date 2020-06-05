@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -75,6 +76,8 @@ public class executelist extends AppCompatActivity {
         final EditText editText = findViewById(R.id.search);
         final CheckBox checkbox = findViewById(R.id.checkbox);
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool);
+        TextView toolbar_title=findViewById(R.id.toolbar_title);
+        toolbar_title.setText("Field list");
         open = findViewById(R.id.open);
         progress = findViewById(R.id.progress);
         close = findViewById(R.id.close);
@@ -93,15 +96,14 @@ public class executelist extends AppCompatActivity {
         open.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 gg("1");
 
                 recyclerView1.setVisibility(View.VISIBLE);
                 recyclerView2.setVisibility(View.GONE);
                 recyclerView3.setVisibility(View.GONE);
-
-                 System.out.println(data1);
-
-
+                System.out.println(data1);
 
                     getlist();
 
@@ -120,8 +122,6 @@ public class executelist extends AppCompatActivity {
                 recyclerView2.setVisibility(View.VISIBLE);
                 recyclerView3.setVisibility(View.GONE);
 
-
-
                     bar.setVisibility(View.VISIBLE);
                     LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(executelist.this, LinearLayoutManager.VERTICAL, false);
                     recyclerView2.setLayoutManager(horizontalLayoutManager);
@@ -131,8 +131,8 @@ public class executelist extends AppCompatActivity {
                     call.enqueue(new Callback<customernotpaidlist>() {
                         @Override
                         public void onResponse(Call<customernotpaidlist> call, Response<customernotpaidlist> response) {
-                            System.out.println(response.body());
-                            System.out.println(call.request().url());
+//                            System.out.println(response.body());
+//                            System.out.println(call.request().url());
                             data1 = new ArrayList<>(Arrays.asList(response.body().getList()));
                             if (data1.size() != 0) {
 
@@ -155,7 +155,6 @@ public class executelist extends AppCompatActivity {
 
                         }
                     });
-
 
 //        Toast.makeText(executelist.this, "2", Toast.LENGTH_SHORT).show();
 
@@ -185,8 +184,8 @@ public class executelist extends AppCompatActivity {
                     call.enqueue(new Callback<paidlist>() {
                         @Override
                         public void onResponse(Call<paidlist> call, Response<paidlist> response) {
-                            System.out.println(response.body());
-                            System.out.println(call.request().url());
+//                            System.out.println(response.body());
+//                            System.out.println(call.request().url());
                             data2 = new ArrayList<>(Arrays.asList(response.body().getList()));
 
                             if (data2.size() != 0) {
@@ -216,7 +215,8 @@ public class executelist extends AppCompatActivity {
                         }
                     });
 
-//           Toast.makeText(executelist.this, "3", Toast.LENGTH_SHORT).show();
+//             Toast.makeText(executelist.this, "3", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -238,11 +238,11 @@ public class executelist extends AppCompatActivity {
 //            @Override
 //            public void onClick(View v) {
 //                if (checkbox.isChecked()) {
-//                    for exelist.ExecutiveLocationList: data) {
+//                    fort exelist.ExecutiveLocationList: data) {
 //                        model.setSelected(true);
 //                    }
 //                } else {
-//                    for (list.Employees model : data) {
+//                    fort (list.Employees model : data) {
 //                        model.setSelected(false);
 //                    }
 //                }
@@ -276,7 +276,7 @@ public class executelist extends AppCompatActivity {
 
                 } else {
 
-//                    mAdapter1.getFilter().filter(s.toString());
+//               mAdapter1.getFilter().filter(s.toString());
 
                 }
             }
@@ -294,19 +294,17 @@ public class executelist extends AppCompatActivity {
     }
 
     private void getlist() {
-
        bar.setVisibility(View.VISIBLE);
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(executelist.this, LinearLayoutManager.VERTICAL, false);
         recyclerView1.setLayoutManager(horizontalLayoutManager);
         final api mApiService = network.getRetrofit().create(api.class);
-
         String userid = new sharedpreff(getApplicationContext()).login123();
         Call<visit> call = mApiService.baselist(userid);
         call.enqueue(new Callback<visit>() {
             @Override
             public void onResponse(Call<visit> call, Response<visit> response) {
-                System.out.println(response.body());
-                System.out.println(call.request().url());
+//                System.out.println(response.body());
+//                System.out.println(call.request().url());
 
                 data = new ArrayList<>(Arrays.asList(response.body().getList()));
                 if (data.size() != 0) {
@@ -407,12 +405,11 @@ public class executelist extends AppCompatActivity {
 
 
         public DataAdapter(RecyclerView recy,ArrayList<visit.List> android, Context g) {
+
             this.android = android;
             this.mFilteredList = android;
             this.gg = g;
             this.recy=recy;
-
-
 
 //            final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recy.getLayoutManager();
 //            recy.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -491,7 +488,7 @@ public class executelist extends AppCompatActivity {
 //                    } else {
 //                        System.out.println(charString);
 //                        ArrayList<exelist.ExecutiveLocationList> filteredList = new ArrayList<>();
-//                        for (exelist.ExecutiveLocationList androidVersion : android) {
+//                        fort (exelist.ExecutiveLocationList androidVersion : android) {
 //                            if (androidVersion.getCustomer_name().toLowerCase().contains(charString)) {
 //                                filteredList.add(androidVersion);
 //                            }
@@ -514,7 +511,7 @@ public class executelist extends AppCompatActivity {
 //        }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
-            private TextView tv_name, tv_version, tv_api_level, tv_name1;
+            private TextView tv_name, tv_version ;
             CheckBox checkBox;
 
             public ViewHolder(View view) {
@@ -558,14 +555,10 @@ public class executelist extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-
-
                         Intent ii=new Intent(gg,MapsActivity.class);
                         ii.putExtra("name","");
                         ii.putExtra("id",android.get(i).getId());
                         startActivity(ii);
-
-
 
                 }
             });
@@ -598,7 +591,7 @@ public class executelist extends AppCompatActivity {
 //                    } else {
 //                        System.out.println(charString);
 //                        ArrayList<exelist.ExecutiveLocationList> filteredList = new ArrayList<>();
-//                        for (exelist.ExecutiveLocationList androidVersion : android) {
+//                        fort (exelist.ExecutiveLocationList androidVersion : android) {
 //                            if (androidVersion.getCustomer_name().toLowerCase().contains(charString)) {
 //                                filteredList.add(androidVersion);
 //                            }
@@ -708,7 +701,7 @@ public class executelist extends AppCompatActivity {
 //                    } else {
 //                        System.out.println(charString);
 //                        ArrayList <exelist.ExecutiveLocationList>  filteredList = new ArrayList<>();
-//                        for (exelist.ExecutiveLocationList androidVersion : android) {
+//                        fort (exelist.ExecutiveLocationList androidVersion : android) {
 //                            if (androidVersion.getCustomer_name().toLowerCase().contains(charString)) {
 //                                filteredList.add(androidVersion);
 //                            }

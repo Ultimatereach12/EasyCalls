@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.student.admin.easycalls">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.student.admin.easycalls"
+
+
+    >
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -23,19 +27,19 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!-- The API key for Google Maps-based APIs is defined as a string resource.
+        <!-- The API key fort Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
              Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/. -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+             You need a different API key fort each encryption key, including the release key that is used to
+             sign the APK fort publishing.
+             You can define the keys fort the debug and release targets in src/debug/ and src/release/. -->
+         <meta-data
+             android:name="com.google.android.geo.API_KEY"
+             android:value="@string/google_maps_key" />
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"  ></activity>
+            android:label="@string/title_activity_maps" ></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,14 +47,31 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Register"  android:screenOrientation="portrait" >
+        <activity android:name=".Register"  android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
         </activity>
-        <activity android:name=".Dashboard"  android:screenOrientation="portrait" />
-        <activity android:name=".employeelist" android:screenOrientation="portrait" />
-        <activity android:name=".executelist" android:screenOrientation="portrait" />
-        <activity android:name=".detail" android:screenOrientation="portrait" />
-         <activity android:name=".passwordreset"   android:screenOrientation="portrait" />
-
+        <activity android:name=".Dashboard"  android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".employeelist" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".executelist" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".detail" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+         <activity android:name=".passwordreset"   android:screenOrientation="portrait"
+             tools:ignore="LockedOrientationActivity" />
+         <activity android:name=".attence"  android:screenOrientation="portrait"
+             tools:ignore="LockedOrientationActivity"  />
+         <activity android:name=".middle"  android:screenOrientation="portrait"
+             tools:ignore="LockedOrientationActivity"  />
+         <activity android:name=".recycle"  android:screenOrientation="portrait"
+             tools:ignore="LockedOrientationActivity"  />
+         <activity android:name=".search"  android:screenOrientation="portrait"
+             tools:ignore="LockedOrientationActivity"  />
+         <activity android:name=".accountdetails"  android:screenOrientation="portrait"
+             tools:ignore="LockedOrientationActivity"  />
+         <activity android:name=".totalreportt"  android:screenOrientation="portrait"
+             tools:ignore="LockedOrientationActivity"  />
 
         <meta-data
             android:name="io.fabric.ApiKey"

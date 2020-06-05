@@ -3,7 +3,7 @@ package com.student.admin.easycalls;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
-
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,26 +50,21 @@ public class detail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.details);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.tool);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.tool);
         setSupportActionBar(toolbar);
-
         String userid= new sharedpreff(getApplicationContext()).login123();
         String getname= new sharedpreff(getApplicationContext()).getname();
         Crashlytics.setUserIdentifier(userid);
         Crashlytics.setUserName(getname);
-
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-          recyclerView=findViewById(R.id.recycleview);
+        recyclerView=findViewById(R.id.recycleview);
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(horizontalLayoutManager);
-
         Date date = new Date();    // to get the date
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");    // getting date in this format
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");       //getting date in this format
         String formattedDate = df.format(date.getTime());
-        //   text.setText(formattedDate);
+   //   text.setText(formattedDate);
         g=formattedDate;
     }
 
@@ -80,17 +75,21 @@ public class detail extends AppCompatActivity {
         call.enqueue(new Callback<tllist>() {
             @Override
             public void onResponse(Call<tllist> call, Response<tllist> response) {
-                System.out.println(call.request().url());
+//                System.out.println(call.request().url());
                 data = new ArrayList<>(Arrays.asList(response.body().getList()));
 
                 if(data.size()!=0){
+
                     System.out.println("ghfghfgh");
                     mAdapter1 = new DataAdapter(data, getApplicationContext());
                     recyclerView.setAdapter(mAdapter1);
+
                 }else{
+
                     mAdapter1 = new DataAdapter(data, getApplicationContext());
                     recyclerView.setAdapter(mAdapter1);
                     Toast.makeText(detail.this, "No data", Toast.LENGTH_SHORT).show();
+
                 }
             }
             @Override
@@ -125,12 +124,12 @@ public class detail extends AppCompatActivity {
                                               int monthOfYear, int dayOfMonth) {
 
                              String ff  =  String.format("%02d", monthOfYear+1 );
-//                       Toast.makeText(detail.this, dayOfMonth + "-" + (monthOfYear + 1) + "-" + year, Toast.LENGTH_SHORT).show();
+//                           Toast.makeText(detail.this, dayOfMonth + "-" + (monthOfYear + 1) + "-" + year, Toast.LENGTH_SHORT).show();
                              g=dayOfMonth + "-" + ff + "-" + year;
-
+                            gg();
 
                              //phone.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                            gg();
+
                         }
                     }, mYear, mMonth, mDay);
             datePickerDialog.show();
@@ -143,9 +142,7 @@ public class detail extends AppCompatActivity {
 
     protected void onStart() {
         super.onStart();
-
         gg();
-
     }
     @Override
     protected void onResume() {
@@ -166,24 +163,23 @@ public class detail extends AppCompatActivity {
             this.mFilteredList = android;
             this.gg = g;
         }
-
         @Override
         public   DataAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.studentcart2, viewGroup, false);
             return new   DataAdapter.ViewHolder(view);
+
         }
 
         @Override
-        public void onBindViewHolder(final  DataAdapter.ViewHolder viewHolder , final int i) {
+        public void onBindViewHolder(final DataAdapter.ViewHolder viewHolder , final int i) {
 
-            viewHolder.cname.setText(android.get(i).getCustomer_name());
-
+             viewHolder.cname.setText(android.get(i).getCustomer_name());
 //            System.out.println(android.get(i).getCustomer_name());
-         viewHolder.ename.setText(android.get(i).getEmployee_name());
-
-            viewHolder.su.setText(android.get(i).getExecutive_summary());
-            viewHolder.typ.setText(android.get(i).getExecutive_transtype());
-            viewHolder.code.setText(android.get(i).getDispo_code());
+             viewHolder.ename.setText(android.get(i).getEmployee_name());
+             viewHolder.su.setText(android.get(i).getExecutive_summary());
+             viewHolder.typ.setText(android.get(i).getExecutive_transtype());
+             viewHolder.code.setText(android.get(i).getDispo_code());
 
 
 //          viewHolder.checkBox.setChecked(android.get(i).isSelected());
@@ -191,7 +187,6 @@ public class detail extends AppCompatActivity {
 //         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
-
 //                    AlertDialog alertDialog = new AlertDialog.Builder(gg).create();
 //                    LayoutInflater inflater = (LayoutInflater)getApplicationContext().
 //                    getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -219,12 +214,11 @@ public class detail extends AppCompatActivity {
 //                            popupWindow.dismiss();
 //                        }
 //                    });
-//
 //                    et.setText(android.get(i).getExecutive_transtype());
 //                    eti.setText(android.get(i).getExecutive_time());
 //                    es.setText(android.get(i).getExecutive_summary());
 //                    dc.setText(android.get(i).getDispo_code());
-//
+
 //                    popupView.setOnTouchListener(new View.OnTouchListener() {
 //                        @Override
 //                        public boolean onTouch(View v, MotionEvent event) {
@@ -232,9 +226,6 @@ public class detail extends AppCompatActivity {
 //                            return true;
 //                        }
 //                    });
-//
-//
-//
 ////         viewHolder.tv_name.setText(android.get(i).getCustomer_name());
 ////        if(android.get(i).getStatus().equals("1")){
 ////        Intent ii=new Intent(gg,MapsActivity.class);
@@ -248,16 +239,11 @@ public class detail extends AppCompatActivity {
 //                }
 //            });
 
-
-
         }
         @Override
         public int getItemCount() {
-
             return android.size();
-
         }
-
 
 //   Filter getFilter() {
 //            return new Filter() {
@@ -269,7 +255,7 @@ public class detail extends AppCompatActivity {
 //                    } else {
 //                        System.out.println(charString);
 //                        ArrayList<exelist.ExecutiveLocationList> filteredList = new ArrayList<>();
-//                        for (exelist.ExecutiveLocationList androidVersion : android) {
+//                        fort (exelist.ExecutiveLocationList androidVersion : android) {
 //                            if (androidVersion.getCustomer_name().toLowerCase().contains(charString)) {
 //                                 filteredList.add(androidVersion);
 //                            }
@@ -299,8 +285,6 @@ public class detail extends AppCompatActivity {
                 su=view.findViewById(R.id.su);
                 code=view.findViewById(R.id.dispo);
                 typ=view.findViewById(R.id.type);
-
-
             }
         }
     }
@@ -308,6 +292,4 @@ public class detail extends AppCompatActivity {
         onBackPressed();
         return true;
     }
-
-
 }

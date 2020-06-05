@@ -18,7 +18,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|top"
@@ -53,7 +53,7 @@
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:layout_height="wrap_content">
-                    <TextView
+                       <TextView
                         android:layout_width="0dp"
                         android:text="Dispo Code"
                         android:layout_weight="1"
@@ -61,15 +61,14 @@
                         android:textSize="17dp"
                         android:layout_height="match_parent"
                         />
-
                     <ImageView
                         android:src="@drawable/ic_loop_black_24dp"
                         android:id="@+id/load"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="match_parent" />
-
                 </LinearLayout>
+
                 <com.jaredrummler.materialspinner.MaterialSpinner
                     android:id="@+id/spinner"
                     android:layout_width="match_parent"
@@ -82,6 +81,8 @@
                     android:layout_width="wrap_content"
                     android:text="Transaction Types"
                     android:textSize="17dp"
+                    android:visibility="gone"
+                    android:id="@+id/idtran"
                     android:fontFamily="@font/calibri"
                     android:layout_height="wrap_content" />
 
@@ -95,12 +96,82 @@
                     android:layout_height="50dp"/>
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/calibri"
+                        android:textSize="17dp"
+                        android:text="End Date"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:id="@+id/enddate"
+                        android:fontFamily="@font/calibri"
+                        android:textSize="15dp"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content">
+
+                  <TextView
+                      android:layout_width="0dp"
+                      android:layout_weight="1"
+                      android:fontFamily="@font/calibri"
+                      android:textSize="17dp"
+                       android:text="BTC"
+
+                      android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:id="@+id/btc"
+                        android:fontFamily="@font/calibri"
+                        android:textSize="15dp"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/calibri"
+                        android:textSize="17dp"
+                        android:text="To Be Collected"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:id="@+id/collected"
+                        android:fontFamily="@font/calibri"
+                        android:textSize="15dp"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
                 <EditText
                     android:layout_width="match_parent"
                     android:backgroundTint="@color/colorPrimary"
                     android:layout_height="wrap_content"
-                    android:hint="Dispo Code Date"
-                    android:layout_marginTop="5dp"
+                    android:hint="Followup Date"
+
                     android:fontFamily="@font/calibri"
                     android:visibility="gone"
                     android:focusable="false"
@@ -112,7 +183,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Summary"
                     android:fontFamily="@font/calibri"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="2dp"
                     android:id="@+id/summary"
                     />
 
@@ -123,13 +194,11 @@
                     android:id="@+id/accno"
                     android:fontFamily="@font/calibri"
                     android:hint="Acc.No"
-                    android:layout_marginTop="5dp"
                     android:singleLine="true"
                     android:visibility="gone"
                     />
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_marginTop="5dp"
                     android:id="@+id/bank"
                     android:fontFamily="@font/calibri"
                     android:backgroundTint="@color/colorPrimary"
@@ -140,7 +209,7 @@
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_marginTop="5dp"
+
                     android:id="@+id/amount"
                     android:inputType="number"
                     android:fontFamily="@font/calibri"
@@ -153,40 +222,37 @@
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_marginTop="5dp"
                     android:id="@+id/transid"
                     android:backgroundTint="@color/colorPrimary"
                     android:hint="Transaction id"
                     android:fontFamily="@font/calibri"
                     android:layout_weight="1"
                     android:inputType="number"
-                    android:maxLength="14"
+                    android:maxLength="15"
                     android:singleLine="true"
                     android:layout_height="wrap_content" />
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_marginTop="5dp"
                     android:id="@+id/cheque"
                     android:backgroundTint="@color/colorPrimary"
                     android:fontFamily="@font/calibri"
                     android:hint="Cheque  No"
                     android:visibility="gone"
                     android:layout_weight="1"
+                    android:maxLength="15"
                     android:singleLine="true"
                     android:layout_height="wrap_content" />
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_marginTop="5dp"
                     android:id="@+id/date"
                     android:backgroundTint="@color/colorPrimary"
-                    android:hint="Date"
+                    android:hint="Cheque Date"
                     android:visibility="gone"
                     android:fontFamily="@font/calibri"
                     android:focusable="false"
                     android:layout_weight="1"
                     android:singleLine="true"
                     android:layout_height="wrap_content" />
-
                 <!--<EditText-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->
@@ -195,8 +261,6 @@
                 <!---->
                 <!--android:visibility="gone"-->
                 <!--/>-->
-
-
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
@@ -221,7 +285,7 @@
             android:layout_marginTop="30dp"
             android:gravity="center"
             android:text=""
-            android:textSize="30dp"   />
+            android:textSize="30dp"/>
 
 
         <TextView
@@ -243,14 +307,12 @@
         android:id="@+id/start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_gravity="center|bottom"
         android:fontFamily="@font/calibri"
-
         android:layout_marginBottom="10dp"
         android:background="@drawable/shadow"
         android:padding="10dp"
-        android:text="start" />
+        android:text="start"  />
 
 
     </FrameLayout>

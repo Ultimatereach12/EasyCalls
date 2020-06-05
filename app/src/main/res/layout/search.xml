@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/attence"
+    android:orientation="vertical">
+      <include layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+           android:gravity="center"
+        android:id="@+id/l1"
+        android:layout_gravity="center"
+        android:background="@drawable/check"
+      android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_height="wrap_content">
+   <EditText
+       android:layout_width="match_parent"
+       android:id="@+id/search"
+       android:singleLine="true"
+       android:maxLength="12"
+       android:background="@drawable/check"
+       android:inputType="number"
+       android:layout_gravity="center"
+       android:hint="search account number"
+       android:textColorHint="#D6676B"
+       android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:id="@+id/l2"
+        android:layout_gravity="center"
+        android:background="@drawable/check"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_height="wrap_content">
+
+        <EditText
+
+            android:layout_width="match_parent"
+            android:id="@+id/search1"
+            android:singleLine="true"
+            android:background="@drawable/check"
+            android:textColorHint="#D6676B"
+            android:layout_gravity="center"
+            android:editable="false"
+            android:focusable="false"
+            android:hint="search date"
+
+            android:layout_height="match_parent"
+            />
+
+    </LinearLayout>
+
+     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="1dp"
+        android:padding="5dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:scrollbars="vertical"
+        android:layout_height="match_parent"
+        android:id="@+id/recycleview"
+        />
+
+
+</LinearLayout>

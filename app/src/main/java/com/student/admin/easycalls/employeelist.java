@@ -1,17 +1,21 @@
 package com.student.admin.easycalls;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -27,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.crashlytics.android.Crashlytics;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.student.admin.easycalls.gettersetter.list;
@@ -34,44 +39,52 @@ import com.student.admin.easycalls.gettersetter.login;
 import com.student.admin.easycalls.model.api;
 import com.student.admin.easycalls.model.network;
 import com.student.admin.easycalls.shared.sharedpreff;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+
 import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class employeelist  extends AppCompatActivity {
+public class employeelist extends AppCompatActivity {
     LinearLayout ff;
     Button login1, singup;
     EditText ed1, ed2;
     RecyclerView recyclerView1;
     DataAdapter mAdapter1;
     ArrayList<list.Employees> data;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.employeelist);
 
-        String userid= new sharedpreff(getApplicationContext()).login123();
-        String getname= new sharedpreff(getApplicationContext()).getname();
+        String userid = new sharedpreff(getApplicationContext()).login123();
+        String getname = new sharedpreff(getApplicationContext()).getname();
         Crashlytics.setUserIdentifier(userid);
         Crashlytics.setUserName(getname);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool);
         setSupportActionBar(toolbar);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        recyclerView1= findViewById(R.id.recycleview);
-        final EditText editText= findViewById(R.id.search);
-        final CheckBox checkbox= findViewById(R.id.checkbox);
-        final Button button= findViewById(R.id.remove);
+        TextView toolbar_title = findViewById(R.id.toolbar_title);
+        toolbar_title.setText("Executive list");
+        recyclerView1 = findViewById(R.id.recycleview);
+        final EditText editText = findViewById(R.id.search);
+        final CheckBox checkbox = findViewById(R.id.checkbox);
+        final Button button = findViewById(R.id.remove);
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              editText.setEnabled(true);
+
+                editText.setEnabled(true);
+
             }
         });
 
@@ -81,10 +94,10 @@ public class employeelist  extends AppCompatActivity {
 
                 if (checkbox.isChecked()) {
                     for (list.Employees model : data) {
-                             model.setSelected(true);
+                        model.setSelected(true);
                     }
-                }else {
-                    for (list.Employees  model : data) {
+                } else {
+                    for (list.Employees model : data) {
                         model.setSelected(false);
                     }
                 }
@@ -99,20 +112,22 @@ public class employeelist  extends AppCompatActivity {
 
 
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
             }
+
             @Override
             public void afterTextChanged(Editable s) {
 
-                if(s.toString().isEmpty()){
+                if (s.toString().isEmpty()) {
 
-                    if(data.size()!=0){
+                    if (data.size() != 0) {
                         mAdapter1.getFilter().filter("");
                     }
 
-                }else {
+                } else {
 
                     mAdapter1.getFilter().filter(s.toString());
 
@@ -125,8 +140,6 @@ public class employeelist  extends AppCompatActivity {
             public void onClick(View v) {
 
 
-
-
             }
         });
 
@@ -136,22 +149,23 @@ public class employeelist  extends AppCompatActivity {
         progressDialog.show();
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView1.setLayoutManager(horizontalLayoutManager);
-        final api mApiService =  network.getRetrofit().create(api.class);
+        final api mApiService = network.getRetrofit().create(api.class);
         Call<list> call = mApiService.list();
         call.enqueue(new Callback<list>() {
             @Override
             public void onResponse(Call<list> call, Response<list> response) {
 
-                System.out.println(call.request().url());
-                System.out.println(response.body());
+//                System.out.println(call.request().url());
+//                System.out.println(response.body());
                 data = new ArrayList<>(Arrays.asList(response.body().getEmployees()));
-                mAdapter1= new DataAdapter(data,employeelist.this);
+                mAdapter1 = new DataAdapter(data, employeelist.this);
                 recyclerView1.setAdapter(mAdapter1);
                 progressDialog.dismiss();
             }
+
             @Override
             public void onFailure(Call<list> call, Throwable t) {
-                   progressDialog.dismiss();
+                progressDialog.dismiss();
                 Log.d("Error", t.getMessage());
 
             }
@@ -162,8 +176,9 @@ public class employeelist  extends AppCompatActivity {
         onBackPressed();
         return true;
     }
+
     private class DataAdapter
-            extends RecyclerView.Adapter< DataAdapter.ViewHolder> {
+            extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         private ArrayList<list.Employees> android, mFilteredList;
 
         private ArrayList<list.Employees> item_list;
@@ -180,6 +195,7 @@ public class employeelist  extends AppCompatActivity {
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.studentcart, viewGroup, false);
             return new DataAdapter.ViewHolder(view);
         }
+
         @Override
         public void onBindViewHolder(final DataAdapter.ViewHolder viewHolder, final int i) {
 
@@ -189,7 +205,17 @@ public class employeelist  extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+android.get(i).getEmployee_phone()));
+                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + android.get(i).getEmployee_phone()));
+                    if (ActivityCompat.checkSelfPermission(employeelist.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
                     startActivity(intent);
 
                 }
@@ -294,7 +320,7 @@ public class employeelist  extends AppCompatActivity {
                                     call.enqueue(new Callback<login>() {
                                         @Override
                                         public void onResponse(Call<login> call, Response<login> response) {
-                                            System.out.println(call.request().url());
+//                                            System.out.println(call.request().url());
                                             Toast.makeText( gg,  response.body().getResponse().getResponse_message(), Toast.LENGTH_SHORT).show();
                                             alertDialog.dismiss();
                                             progressDialog.dismiss();
@@ -326,7 +352,7 @@ public class employeelist  extends AppCompatActivity {
 
 
 
-// create alert dialog
+ //            create alert dialog
 //            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.rgb(42,184,204)));
 //            alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.WHITE);
 

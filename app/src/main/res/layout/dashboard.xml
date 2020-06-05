@@ -12,27 +12,21 @@
         android:id="@+id/f"
         android:layout_height="match_parent"
         tools:ignore="InvalidId"
-android:background="@drawable/dashboard"
+        android:background="@drawable/dashboard"
         android:orientation="vertical">
         <include layout="@layout/toolbar"/>
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             android:layout_marginStart="12dp"
             android:orientation="vertical"
             android:gravity="center"
+            >
 
-         >
 
 
-            <!--<TExt-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:gravity="center"-->
-                 <!--android:layout_height="wrap_content"-->
-                <!--android:src="@mipmap/ic_launcher"-->
-                  <!--/>-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="vertical"
@@ -40,41 +34,31 @@ android:background="@drawable/dashboard"
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="top"
-
+                    android:layout_gravity="bottom"
                     android:gravity="center|left"
                     android:text="Welcome "
                     android:fontFamily="@font/calibri"
                     android:textColor="#ffff"
-                    android:textSize="15dp" />
+                    android:textSize="20dp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
                     android:gravity="center|left"
-                     android:id="@+id/name"
-
+                    android:id="@+id/name"
                     android:fontFamily="@font/calibri"
                     android:textColor="#ffff"
-                    android:layout_marginTop="10dp"
                     android:textStyle="bold"
-                    android:textSize="22dp" />
+                    android:textSize="30dp" />
 
             </LinearLayout>
 
-
-
-
-
         </LinearLayout>
-
-
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
-
             android:layout_height="match_parent">
 
 
@@ -85,142 +69,173 @@ android:background="@drawable/dashboard"
                 android:gravity="center"
                 android:layout_height="0dp">
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:id="@+id/emplocation"
+                android:layout_width="115dp"
+                android:background="@drawable/back"
+                android:id="@+id/Attendance1"
                 android:gravity="center"
-                android:layout_height="0dp">
+                android:layout_height="115dp">
 
 
 
 
                 <LinearLayout
                     android:background="@drawable/back"
-                    android:layout_width="120dp"
+                    android:layout_width="115dp"
                     android:layout_margin="5dp"
-                    android:layout_height="120dp"
-                    android:id="@+id/set"
+                    android:layout_height="115dp"
+                    android:id="@+id/Attendance2"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:orientation="vertical">
 
 
                     <ImageView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:src="@drawable/forma1"
                         android:layout_gravity="center"
-
-                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_height="50dp"
                         />
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:text="Employee List"
+                        android:text="Attendance"
                         android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:textSize="16dp"
                         android:gravity="center"
-                        android:textColor="@color/colorPrimary"
-
-                        android:layout_marginTop="30dp"
+                        android:textStyle="bold"
                         android:fontFamily="@font/calibri"
-                        android:textSize="12dp"
+                        android:textColor="@color/colorPrimary"
                         android:layout_height="wrap_content"
                         />
                 </LinearLayout>
-
-
-
 
             </LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_weight="1"
                 android:id="@+id/first"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:orientation="horizontal"
-                android:layout_height="0dp">
+                android:layout_height="130dp">
 
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="115dp"
                 android:layout_weight="1"
                 android:id="@+id/emplocation1"
                 android:gravity="center"
-
-                android:layout_margin="10dp"
-                android:background="@drawable/back2"
-                android:layout_height="match_parent">
+                android:layout_height="115dp">
 
 
                 <LinearLayout
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:id="@+id/set1"
+                    android:layout_width="115dp"
+                    android:layout_height="115dp"
                     android:layout_gravity="center"
+                    android:gravity="center"
+                    android:background="@drawable/back2"
                     android:orientation="vertical">
 
-
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:src="@drawable/register"
-                        android:layout_gravity="center|left"
-                        android:layout_marginStart="5dp"
-                        android:layout_height="100dp"
-                        />
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+
+                        android:src="@drawable/shape1" />
+
                     <TextView
                         android:layout_width="match_parent"
-                        android:text="Employee  Register"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="30dp"
-                        android:gravity="center|left"
-                        android:textSize="18dp"
-                        android:textColor="@color/white"
-                        android:fontFamily="@font/calibri"
-                        android:textStyle="bold"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/calibri"
+                        android:gravity="center"
+                        android:text="Register"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16dp"
+
                         />
                 </LinearLayout>
 
             </LinearLayout>
 
+
+
+                <LinearLayout
+                    android:layout_width="130dp"
+                    android:layout_weight="1"
+
+                    android:gravity="center"
+
+
+                    android:layout_height="130dp">
+
+
+                    <LinearLayout
+
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:layout_gravity="center"
+
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="110dp"
+                            android:layout_height="110dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="5dp"
+                            android:src="@drawable/logo" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="115dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:id="@+id/details"
-                android:layout_margin="10dp"
-                android:background="@drawable/back1"
-                android:layout_height="match_parent">
+
+
+                android:layout_height="115dp">
+
 
                 <LinearLayout
-                    android:layout_weight="1"
 
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="115dp"
+                    android:layout_height="115dp"
                     android:id="@+id/details1"
+                    android:gravity="center"
+
+                    android:background="@drawable/back1"
                     android:layout_gravity="center"
                     android:orientation="vertical">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:src="@drawable/detail1"
-                        android:layout_gravity="center|left"
-                        android:layout_marginStart="5dp"
-                        android:layout_height="100dp" />
+                        android:layout_width="match_parent"
+                        android:src="@drawable/dashboardreport"
+
+                        android:gravity="center"
+                        android:layout_height="50dp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:text="Details"
                         android:layout_gravity="center"
-                        android:textSize="18dp"
-                        android:gravity="center|left"
-                        android:fontFamily="@font/calibri"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="30dp"
-                        android:textColor="@color/white"
+                        android:layout_marginTop="20dp"
+                        android:textSize="16dp"
+                        android:gravity="center"
                         android:textStyle="bold"
+                        android:fontFamily="@font/calibri"
+                        android:textColor="@color/colorPrimary"
                         android:layout_height="wrap_content" />
 
                 </LinearLayout>
@@ -228,13 +243,57 @@ android:background="@drawable/dashboard"
             </LinearLayout>
 
 
+
             </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="115dp"
+                    android:id="@+id/emplocation"
+                    android:gravity="center"
+                    android:layout_height="115dp">
+
+
+
+
+                    <LinearLayout
+                        android:background="@drawable/back"
+                        android:layout_width="115dp"
+
+                        android:layout_height="115dp"
+                        android:id="@+id/set"
+
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+
+                        <ImageView
+                            android:layout_width="115dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/shape1" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="Employee List"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_marginTop="20dp"
+                            android:fontFamily="@font/calibri"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            android:layout_height="wrap_content"
+                            />
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
 
 
 
             <LinearLayout
-
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:visibility="gone"
@@ -245,7 +304,7 @@ android:background="@drawable/dashboard"
 
                 <LinearLayout
                     android:id="@+id/addexeu1"
-                    android:layout_width="326dp"
+                    android:layout_width="115dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
@@ -255,7 +314,7 @@ android:background="@drawable/dashboard"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@drawable/go1" />
+                      />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -267,31 +326,34 @@ android:background="@drawable/dashboard"
                         android:text="Direct Visit"
                         android:textStyle="bold" />
                 </LinearLayout>
+
             </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/add"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_width="115dp"
+                    android:layout_height="115dp"
                     android:layout_weight="1"
-                    android:gravity="center">
+                    android:gravity="center"
+                    >
 
                     <LinearLayout
                         android:id="@+id/Attendance"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_width="115dp"
+                        android:layout_height="115dp"
                         android:background="@drawable/back"
                         android:layout_gravity="center"
-                        android:layout_margin="5dp"
+
                         android:gravity="center"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
+
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/detail" />
+                            android:src="@drawable/forma1" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -299,11 +361,12 @@ android:background="@drawable/dashboard"
                             android:layout_gravity="center"
                             android:fontFamily="@font/calibri"
                             android:gravity="center"
-                            android:layout_marginTop="30dp"
+                            android:layout_marginTop="20dp"
                             android:text="Attendance"
-                            android:textColor="@color/white"
-                            android:textSize="18dp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="16dp"
+                           />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -312,103 +375,170 @@ android:background="@drawable/dashboard"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:id="@+id/second"
+                android:gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:orientation="horizontal"
-                android:layout_height="0dp">
+                android:layout_height="115dp"
+                >
 
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="115dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:id="@+id/clientlocation"
-                    android:layout_height="match_parent">
+                    android:layout_height="115dp">
                     <LinearLayout
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_margin="10dp"
+                        android:layout_width="115dp"
                         android:background="@drawable/back2"
-                        android:layout_height="match_parent"
+                        android:layout_height="115dp"
                         android:id="@+id/client"
+                        android:gravity="center"
                         android:layout_gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:src="@drawable/clientlocation"
-                            android:layout_gravity="center|left"
-                            android:layout_height="100dp" />
+                            android:layout_width="match_parent"
+                            android:src="@drawable/shape1"
+                            android:layout_gravity="center"
+                            android:layout_height="50dp" />
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:text="Client Location"
+                            android:text="My Base"
                             android:layout_gravity="center"
-                            android:gravity="center|left"
-                            android:layout_marginTop="30dp"
-                            android:layout_marginStart="20dp"
-                            android:textColor="@color/white"
-                            android:textSize="18dp"
-                            android:fontFamily="@font/calibri"
+                            android:gravity="center"
                             android:textStyle="bold"
+                            android:layout_marginTop="20dp"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="16dp"
+                            android:fontFamily="@font/calibri"
                             android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="115dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_height="115dp">
+
+
+                    <LinearLayout
+
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="110dp"
+                            android:layout_height="110dp"
+                            android:layout_gravity="center"
+
+                            android:src="@drawable/logo" />
+
 
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="115dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:id="@+id/auto"
-                    android:layout_height="match_parent">
+                    android:layout_height="115dp">
 
 
                     <LinearLayout
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
+
+                        android:layout_width="115dp"
                         android:background="@drawable/back1"
-                        android:layout_height="match_parent"
+                        android:layout_height="115dp"
                         android:id="@+id/auto1"
-                        android:layout_margin="10dp"
+
+                        android:gravity="center"
                         android:layout_gravity="center"
                         android:orientation="vertical">
 
-
-
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:src="@drawable/selfregister"
-                            android:layout_gravity="left|top"
-                            android:layout_height="100dp"         />
+                            android:layout_width="match_parent"
+                            android:src="@drawable/dashboardreport"
+                            android:layout_gravity="center"
+                            android:layout_height="50dp"     />
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:text="Self Register"
-                            android:textColor="@color/white"
-                            android:layout_marginTop="30dp"
-                            android:fontFamily="@font/calibri"
-                            android:layout_marginStart="20dp"
-                            android:layout_gravity="center"
-                            android:gravity="bottom"
+                            android:text="Custom Entry"
+                            android:textColor="@color/colorPrimary"
                             android:textStyle="bold"
-                            android:textSize="18dp"
+                            android:fontFamily="@font/calibri"
+                            android:layout_marginTop="20dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textSize="16dp"
                             android:layout_height="wrap_content" />
 
                     </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/del1"
+                    android:layout_width="115dp"
+                    android:layout_height="115dp"
+                    android:visibility="gone"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    >
+                <LinearLayout
+                    android:id="@+id/del"
+                    android:layout_width="115dp"
+                    android:layout_height="115dp"
+                    android:background="@drawable/back"
+
+                    android:layout_gravity="center"
+
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
 
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/fort" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/calibri"
+                        android:gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:text="Details"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16dp"
+                        />
                 </LinearLayout>
 
-
-
+            </LinearLayout>
 
             </LinearLayout>
 
 
-        </LinearLayout>
+
+
+
         </LinearLayout>
 
-    </LinearLayout>
+        </LinearLayout>
+
 
 
 

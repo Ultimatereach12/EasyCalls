@@ -43,25 +43,45 @@
             android:padding="3dp"
             android:layout_height="wrap_content">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="0.7"
+                android:id="@+id/end"
+                android:textStyle="bold"
+                android:fontFamily="@font/calibri"
+                android:layout_marginTop="2dp"
+                android:gravity="center|left"
+                android:layout_marginStart="20dp"
+                android:layout_height="match_parent"
+                />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:layout_marginStart="20dp"
                 >
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_weight="0.7"
                     android:id="@+id/tv"
                     android:gravity="center|left"
-                    android:textStyle="bold"
+
                     android:layout_marginTop="2dp"
                     android:textSize="14dp"
                     android:layout_height="match_parent"
                     />
             </LinearLayout>
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="0.7"
+                android:id="@+id/btc"
+                android:fontFamily="@font/calibri"
+                android:layout_marginTop="2dp"
+                android:gravity="center|left"
+                android:layout_marginStart="20dp"
+                android:layout_height="match_parent"
+                />
 
             <TextView
                 android:layout_width="match_parent"

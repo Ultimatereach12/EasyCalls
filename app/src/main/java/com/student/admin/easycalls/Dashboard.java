@@ -52,12 +52,14 @@ import retrofit2.Response;
 
 public  class Dashboard  extends AppCompatActivity {
 
-    LinearLayout ff,clientlocaion,employee,register,add,exec,exec1,detail,detail1,first,second;
+      AlertDialog alertDialog;
+    LinearLayout ff,clientlocaion,employee,register,add,exec,exec1,detail,detail1,first,second,Attendance,Attendance1,del;
     Button login1, singup;
     EditText ed1, ed2;
     static final Integer LOCATION = 0x1;
    int  REQUEST_PHONE_CALL=123;
     private static final int PERMISSIONS_REQUEST = 0x1;
+     public EditText accno12;
     private static String[] PERMISSIONS_REQUIRED = new String[]{
             android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
@@ -66,6 +68,8 @@ public  class Dashboard  extends AppCompatActivity {
             setTrackingStatus(intent.getIntExtra(getString(R.string.status), 0));
         }
     };
+
+
     private BroadcastReceiver mLocationReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -83,32 +87,30 @@ public  class Dashboard  extends AppCompatActivity {
         setContentView(R.layout.dashboard);
         askForPermission(Manifest.permission.ACCESS_FINE_LOCATION,LOCATION);
         askForPermission(Manifest.permission.CALL_PHONE,REQUEST_PHONE_CALL);
-
         String userid1= new sharedpreff(getApplicationContext()).login123();
-
         String getname= new sharedpreff(getApplicationContext()).getname();
         TextView  name= findViewById(R.id.name);
         String y=new sharedpreff(getApplicationContext()).getname();
         name.setText(y);
 //        Toast.makeText(this, y, Toast.LENGTH_SHORT).show();
         Crashlytics.setUserIdentifier(userid1);
-
         Crashlytics.setUserName(getname);
-
-//        if (ContextCompat.checkSelfPermission(Dashboard.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(Dashboard.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
-//        }
-//        else
-//        {
-////            startActivity(intent);
-//        }
-
+        if (ContextCompat.checkSelfPermission(Dashboard.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(Dashboard.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
+        }
+        else
+        {
+//            startActivity(intent);
+        }
 
         LinearLayout button = findViewById(R.id.set);
         LinearLayout client = findViewById(R.id.client);
+        Attendance=findViewById(R.id.Attendance1);
+        Attendance1=findViewById(R.id.Attendance2);
         first=findViewById(R.id.first);
         second=findViewById(R.id.second);
         employee=findViewById(R.id.clientlocation);
+        del=findViewById(R.id.del1);
         clientlocaion=findViewById(R.id.emplocation);
         exec1=findViewById(R.id.auto1);
         LinearLayout exec1 = findViewById(R.id.auto1);
@@ -117,17 +119,13 @@ public  class Dashboard  extends AppCompatActivity {
         register=findViewById(R.id.emplocation1);
         detail=findViewById(R.id.details);
         detail1=findViewById(R.id.details1);
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool);
         setSupportActionBar(toolbar);
-
+        TextView toolbar_title=findViewById(R.id.toolbar_title);
+        toolbar_title.setText("Dashboard");
         checkLocationPermission();
-
-        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE );
-
+        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (!manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
-
 //          Intent   intent1 = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
 //            startActivity(intent1);
         }
@@ -139,8 +137,10 @@ public  class Dashboard  extends AppCompatActivity {
             clientlocaion.setVisibility(View.VISIBLE);
             employee.setVisibility(View.GONE);
             register.setVisibility(View.VISIBLE);
+            Attendance.setVisibility(View.VISIBLE);
             first.setVisibility(View.VISIBLE);
             second.setVisibility(View.GONE);
+
             exec.setVisibility(View.GONE);
             add.setVisibility(View.GONE);
             detail.setVisibility(View.VISIBLE);
@@ -148,6 +148,8 @@ public  class Dashboard  extends AppCompatActivity {
 
             second.setVisibility(View.VISIBLE);
             first.setVisibility(View.GONE);
+            Attendance.setVisibility(View.GONE);
+            del.setVisibility(View.VISIBLE);
             employee.setVisibility(View.VISIBLE);
             clientlocaion.setVisibility(View.GONE);
             register.setVisibility(View.GONE);
@@ -160,10 +162,37 @@ public  class Dashboard  extends AppCompatActivity {
              @Override
        public void onClick(View v) {
 
-        Toast.makeText(Dashboard.this, "under construction ", Toast.LENGTH_SHORT).show();
+                 Intent intent = new Intent(getApplicationContext(), attence.class);
+                 startActivity(intent);
+
+
+//           Toast.makeText(Dashboard.this, "under construction ", Toast.LENGTH_SHORT).show();
 
              }
       });
+
+        del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplicationContext(), totalreportt.class);
+                startActivity(intent);
+
+            }
+        });
+
+        Attendance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplicationContext(), attence.class);
+                startActivity(intent);
+
+
+//        Toast.makeText(Dashboard.this, "under construction ", Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,7 +219,7 @@ public  class Dashboard  extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                final String t[]={"Landline" , "Mobile" };
+                final String t[]= {"Landline" , "Mobile" };
                 LayoutInflater li = LayoutInflater.from(Dashboard.this);
                 final View promptsView = li.inflate(R.layout.prompts, null);
                 final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
@@ -198,13 +227,14 @@ public  class Dashboard  extends AppCompatActivity {
                 alertDialogBuilder.setCancelable(false);
                 // set prompts.xml to alertdialog builder
                 alertDialogBuilder.setView(promptsView);
+
                 final EditText userInput = (EditText)promptsView
                         .findViewById(R.id.name);
                 final EditText phone = (EditText)promptsView
                         .findViewById(R.id.phone);
                 final EditText address = (EditText)promptsView
                         .findViewById(R.id.Address);
-                final EditText accno = (EditText)promptsView
+                 accno12 = (EditText)promptsView
                         .findViewById(R.id.accno);
                 final Button cencel = (Button)promptsView
                         .findViewById(R.id.cencel);
@@ -217,6 +247,27 @@ public  class Dashboard  extends AppCompatActivity {
 
                 test.setItems(t);
 
+                accno12.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+//                        Intent ii=new Intent(Dashboard.this,search.class);
+////                        ii.putExtra("name",address1);
+////                        ii.putExtra("id", response.body().getResponse().getResponse_code());
+//                        ii.putExtra("EXTRA_SESSION_ID", "3");
+//
+//                        startActivity(ii);
+
+//                        Intent intent = new Intent();
+//                        intent.setClass(getApplicationContext(), search.class);
+//                        intent.putExtra("EXTRA_SESSION_ID", "3");
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                        startActivityForResult(intent, 6969);
+//                        setResult(60);
+
+
+                    }
+                });
                 phone.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -235,7 +286,10 @@ public  class Dashboard  extends AppCompatActivity {
                                     public void onDateSet(DatePicker view, int year,
                                                           int monthOfYear, int dayOfMonth) {
 
-                                        phone.setText(dayOfMonth + "-" +(monthOfYear + 1)+ "-" + year);
+                                        phone.setText(String.format("%02d",dayOfMonth) + "-" + String.format("%02d",monthOfYear + 1)+ "-" + year);
+
+
+
 
                                     }
 
@@ -247,13 +301,15 @@ public  class Dashboard  extends AppCompatActivity {
                 });
 
 
-                final AlertDialog alertDialog = alertDialogBuilder.create();
+                 alertDialog = alertDialogBuilder.create();
 
                 cencel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
+
                         alertDialog.dismiss();
+
 
                     }
                 });
@@ -269,52 +325,83 @@ public  class Dashboard  extends AppCompatActivity {
 
 
                             String user= userInput.getText().toString();
-                            String phone1= phone.getText().toString();
+                            final String phone1= phone.getText().toString();
                             final String address1= address.getText().toString();
-                            String accno1=   accno.getText().toString();
+                            String accno1=   accno12.getText().toString();
                             int type1= test.getSelectedIndex();
-                            if(user.length()>2&&phone1.length()>4&&address1.length()>4&&accno1.length()>11){
 
-                                String r=userInput.getText().toString();
-                                final ProgressDialog progressDialog = new ProgressDialog(Dashboard.this);
-                                progressDialog.setMessage("Loading ...");
-                                progressDialog.setCancelable(false);
-                                progressDialog.show();
-                                api mApiService = network.getRetrofit().create(api.class);
-                                String userid= new sharedpreff(Dashboard.this).login123();
-                                Call<login> call = mApiService.exee(userid,user,address1,accno1,phone1,t[type1]);
-                                call.enqueue(new Callback<login>(){
-                                    @Override
-                                    public void onResponse(Call<login> call, Response<login> response) {
-                                        System.out.println(call.request().url());
 
-                                        if(response.body().getResponse().getResponse_code().equals("5")){
+                            if(accno1.length()>1) {
+                                if (user.length() > 2) {
 
+
+                                    
+                                    if( phone1.length() > 4){
+
+                                        if(address1.length() > 3){
+
+                                            String r = userInput.getText().toString();
+                                            final ProgressDialog progressDialog = new ProgressDialog(Dashboard.this);
+                                            progressDialog.setMessage("Loading ... ");
+                                            progressDialog.setCancelable(false);
+                                            progressDialog.show();
+                                            api mApiService = network.getRetrofit().create(api.class);
+                                            String userid = new sharedpreff(Dashboard.this).login123();
+                                            Call<login> call = mApiService.exee(userid, user, address1, accno1, phone1, t[type1]);
+                                            alertDialog.dismiss();
+                                            call.enqueue(new Callback<login>() {
+                                                @Override
+                                                public void onResponse(Call<login> call, Response<login> response) {
+                                            System.out.println(call.request().url());
+                                                    System.out.println(response.body());
+
+//                                              Extra("name1", "");
+//                                                    ii.putExtra("address", address1);
+//                                      value= getIntent().getExtras().getString("name");
+
+                                             Toast.makeText(Dashboard.this, response.body().getResponse().getResponse_message(), Toast.LENGTH_SHORT).show();
+                                                    progressDialog.dismiss();
+
+                                                  if (response.body().getResponse().getResponse_message().equals("ExecutiveLocation Inserted")) {
+
+                                                    Intent ii = new Intent(Dashboard.this, MapsActivity.class);
+                                                    ii.putExtra("name", address1);
+                                                    ii.putExtra("id", response.body().getResponse().getResponse_code());
+                                                    ii.putExtra("end", phone1);
+                                                    ii.putExtra("name", "");
+                                                    ii.putExtra("name1", "");
+                                                    startActivity(ii);
+
+                                                                   }
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<login> call, Throwable t) {
+                                                    Log.d("Error", t.getMessage());
+                                                    Toast.makeText(Dashboard.this,"network error",Toast.LENGTH_SHORT).show();
+                                                    progressDialog.dismiss();
+                                                    alertDialog.dismiss();
+                                                }
+                                            });
+
+
+
+
+                                        }else{
+                                            Toast.makeText(Dashboard.this, "Check Address length  ", Toast.LENGTH_SHORT).show();
                                         }
 
-                                        Toast.makeText( Dashboard.this, response.body().getResponse().getResponse_message(), Toast.LENGTH_SHORT).show();
-                                        alertDialog.dismiss();
-                                        progressDialog.dismiss();
-                                        Intent ii=new Intent(Dashboard.this,MapsActivity.class);
-                                        ii.putExtra("name",address1);
-                                        ii.putExtra("id", response.body().getResponse().getResponse_code());
-                                        startActivity(ii);
-
-
+                                      }else{
+                                        Toast.makeText(Dashboard.this, "Select date", Toast.LENGTH_SHORT).show();
                                     }
-                                    @Override
-                                    public void onFailure(Call<login> call, Throwable t) {
-                                        Log.d("Error",t.getMessage());
-                                        Toast.makeText( Dashboard.this , "network error", Toast.LENGTH_SHORT).show();
-                                        progressDialog.dismiss();
-                                        alertDialog.dismiss();
-                                    }
-                                });
+                                     } else {
 
+                                    Toast.makeText(getApplicationContext(), "Check name length", Toast.LENGTH_SHORT).show();
+                                }
 
                             }else{
 
-                                Toast.makeText(getApplicationContext(), "Enter data", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Account number  length not valid ", Toast.LENGTH_SHORT).show();
                             }
 
                         }else{
@@ -326,7 +413,7 @@ public  class Dashboard  extends AppCompatActivity {
 
 
 
-// create alert dialog
+//            create alert dialog
 //            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.rgb(42,184,204)));
 //            alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.WHITE);
 
@@ -344,7 +431,7 @@ public  class Dashboard  extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getApplicationContext(), executelist.class);
+                Intent intent = new Intent(getApplicationContext(),middle.class);
                 startActivity(intent);
 
             }
@@ -363,11 +450,15 @@ public  class Dashboard  extends AppCompatActivity {
         });
     }
 
+
+
+
+
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[]
             grantResults) {
         if (requestCode == PERMISSIONS_REQUEST) {
             // We request storage perms as well as location perms, but don't care
-            // about the storage perms - it's just for debugging.
+            // about the storage perms - it's just fort debugging.
             for (int i = 0; i < permissions.length; i++) {
                 if (permissions[i].equals(Manifest.permission.ACCESS_FINE_LOCATION)) {
                     if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
@@ -417,11 +508,7 @@ public  class Dashboard  extends AppCompatActivity {
     }
 
     private void stopLocationService() {
-
-
         stopService(new Intent(this, TrackerService.class));
-
-
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -453,19 +540,19 @@ public  class Dashboard  extends AppCompatActivity {
                             Call<password> call = service.logout(userid );
                             call.enqueue(new Callback<password>() {
                                 @Override
-                                public void onResponse(Call<password> call, Response<password> response) {
+                                public void onResponse(Call<password> call,Response<password> response) {
 
-
+//                                    System.out.println(call.request().url());
                                     new sharedpreff(getApplicationContext()).logout1();
                                     Intent i = new Intent(Dashboard.this, MainActivity.class);
                                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(i);
                                     overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-                                }
 
+                                }
                                 @Override
                                 public void onFailure(Call<password> call, Throwable t) {
-
+                                    System.out.println(call.request().url());
                                     Toast.makeText(getApplicationContext(), "Network Error", Toast.LENGTH_LONG).show();
                                 }
                             });
@@ -526,10 +613,32 @@ public  class Dashboard  extends AppCompatActivity {
 //        System.out.println(h  +"sdffffffffffffffffff"+ hh );
     }
 
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        System.out.println("tretretertefgdfgdgdgfd");
+
+            if (data != null) {
+
+                String  user_mobile = data.getStringExtra("PhoneNumber");
+                System.out.println(user_mobile );
+
+                if(alertDialog!=null){
+                    accno12.setText(user_mobile);
+                }else{
+                     exec.callOnClick();
+                     accno12.setText(user_mobile);
+                }
+//
+            }
+    }
+
     @Override
     public void onResume() {
 
         super.onResume();
+
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter(TrackerService.STATUS_INTENT));
         LocalBroadcastManager.getInstance(this).registerReceiver(mLocationReceiver,
@@ -538,10 +647,14 @@ public  class Dashboard  extends AppCompatActivity {
     }
     @Override
     protected void onPause() {
+
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mLocationReceiver);
         super.onPause();
+
     }
+
+
     private void askForPermission(String permission, Integer requestCode ) {
 
         if (ContextCompat.checkSelfPermission(Dashboard.this, permission) != PackageManager.PERMISSION_GRANTED) {
@@ -552,13 +665,13 @@ public  class Dashboard  extends AppCompatActivity {
                 //In this case I am just asking the permission again
                 ActivityCompat.requestPermissions(Dashboard.this, new String[]{permission}, requestCode);
 
-            } else {
+            }else{
 
                 ActivityCompat.requestPermissions(Dashboard.this, new String[]{permission}, requestCode);
             }
 
         } else {
-//Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
+//             Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
         }
     }
 }

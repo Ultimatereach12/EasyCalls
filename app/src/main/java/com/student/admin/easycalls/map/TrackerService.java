@@ -20,16 +20,18 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PowerManager;
-import androidx.core.BuildConfig;
+import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import android.util.Log;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.student.admin.easycalls.BuildConfig;
 import com.student.admin.easycalls.MainActivity;
 import com.student.admin.easycalls.R;
 import com.student.admin.easycalls.gettersetter.exelist;
@@ -44,7 +46,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import androidx.annotation.RequiresApi;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -158,7 +159,7 @@ public class TrackerService extends Service implements LocationListener {
 
     /**
      * Determines if the current location is approximately the same as the location
-     * for a particular status. Used to check if we'll add a new status, or
+     * fort a particular status. Used to check if we'll add a new status, or
      * update the most recent status of we're stationary.
      */
 
@@ -182,7 +183,6 @@ public class TrackerService extends Service implements LocationListener {
 
         stopSelf();
     }
-
 
     @Override
     public void onLocationChanged(Location location) {

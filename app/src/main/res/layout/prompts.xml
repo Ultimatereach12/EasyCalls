@@ -18,9 +18,28 @@
         android:gravity="center"
         android:textColor="#fff"
         android:paddingBottom="20dp"
-        android:text="Enter  Details Client "
+        android:text="Enter Details   Client"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
+    <EditText
+        android:id="@+id/accno"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="15dp"
+        android:textSize="14sp"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/calibri"
+        android:singleLine="true"
+        android:digits="1234567890_-"
+        android:inputType="number"
+        android:backgroundTint="@color/white"
+        android:hint="Account Number"
+        android:textCursorDrawable="@null"
+        android:textColor="#ffff"
+        android:textColorHint="#ffff"
+        android:textColorHighlight="#ffff"
+        />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,7 +57,7 @@
         android:textCursorDrawable="@null"
         android:textColor="#ffff"
         android:textColorHint="#ffff"
-        android:textColorHighlight="#ffff"/>
+        android:textColorHighlight="#ffff"  />
 
     <EditText
         android:id="@+id/phone"
@@ -68,26 +87,7 @@
         app:ms_dropdown_max_height="350dp"
         android:layout_height="50dp"/>
 
-    <EditText
-        android:id="@+id/accno"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:padding="15dp"
-        android:textSize="14sp"
-        android:drawablePadding="10dp"
-        android:fontFamily="@font/calibri"
-        android:singleLine="true"
-        android:digits="1234567890"
-        android:inputType="number"
-        android:maxLength="14"
-        android:backgroundTint="@color/white"
-        android:hint="Account Number"
-        android:textCursorDrawable="@null"
-        android:textColor="#ffff"
-        android:textColorHint="#ffff"
-        android:textColorHighlight="#ffff"
-        />
+
     <EditText
         android:id="@+id/Address"
         android:layout_width="match_parent"

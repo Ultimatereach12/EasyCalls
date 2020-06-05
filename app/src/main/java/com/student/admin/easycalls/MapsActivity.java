@@ -35,7 +35,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import io.fabric.sdk.android.Fabric;
+
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -73,6 +75,7 @@ import com.student.admin.easycalls.model.api;
 import com.student.admin.easycalls.model.network;
 import com.student.admin.easycalls.module.DirectionFinder;
 import com.student.admin.easycalls.shared.sharedpreff;
+
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -81,6 +84,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -88,9 +92,9 @@ import retrofit2.Response;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    LatLng p1,p2;
+    LatLng p1, p2;
     private Button btnFindPath;
-    private EditText accno,summary,etOrigin,bank,amout,transid,cheque,date,DispoCode;
+    private EditText accno, summary, etOrigin, bank, amout, transid, cheque, date, DispoCode;
     private EditText etDestination;
     private List<Marker> originMarkers = new ArrayList<>();
     private List<Marker> destinationMarkers = new ArrayList<>();
@@ -104,20 +108,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int REQUEST_CHECK_SETTINGS = 100;
     private FusedLocationProviderClient mFusedLocationClient;
     private SettingsClient mSettingsClient;
-    LinearLayout l1,l2;
+    LinearLayout l1, l2;
     private LocationRequest mLocationRequest;
     private LocationSettingsRequest mLocationSettingsRequest;
     private LocationCallback mLocationCallback;
     private Location mCurrentLocation;
     Button start;
     ArrayList<LatLng> MarkerPoints;
-    TextView count,dis;
+    TextView count, dis, collected, btc;
     ArrayList<discode.DispoCodeList> data;
     String[] dispo;
-    MaterialSpinner spinner,spinner1;
-    String value,id1;
-    String time ;
-    TextView accnotext;
+    MaterialSpinner spinner, spinner1;
+    String value, value1, id1, valueadd, end;
+    String time;
+    TextView accnotext, enddate12, idtran;
     long startTime = 0;
     final Handler timerHandler = new Handler();
     Runnable timerRunnable = new Runnable() {
@@ -128,57 +132,80 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             int seconds = (int) (millis / 1000);
             int minutes = seconds / 60;
             seconds = seconds % 60;
-            int hours   = (int) ((millis / (1000*60*60)) % 24);
-            count.setText(String.format("%02d:%02d:%02d",hours, minutes, seconds));
-            time=  count.getText().toString();
+            int hours = (int) ((millis / (1000 * 60 * 60)) % 24);
+            count.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
+            time = count.getText().toString();
             timerHandler.postDelayed(this, 500);
 
         }
-           };
+    };
 
 
-String t[]={"Cash" , "Cheque" , "Online Transaction"};
+    String t[] = {"Cash", "Cheque", "Online Transaction"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_maps);
-        String userid= new sharedpreff(getApplicationContext()).login123();
+        String userid = new sharedpreff(getApplicationContext()).login123();
 
-        String getname= new sharedpreff(getApplicationContext()).getname();
+        String getname = new sharedpreff(getApplicationContext()).getname();
 
 
         Crashlytics.setUserIdentifier(userid);
 
         Crashlytics.setUserName(getname);
 
-        value= getIntent().getExtras().getString("name");
-        id1= getIntent().getExtras().getString("id");
-        count=findViewById(R.id.count);
-        spinner=findViewById(R.id.spinner);
-        spinner1=findViewById(R.id.spinner1);
-        l1=findViewById(R.id.timer);
-        l2=findViewById(R.id.clientfeed);
-        DispoCode=findViewById(R.id.DispoCode);
-        accno=findViewById(R.id.accno);
-        bank=findViewById(R.id.bank);
-        amout=findViewById(R.id.amount);
+
+        valueadd = getIntent().getExtras().getString("address");
+        end = getIntent().getExtras().getString("end");
+        value = getIntent().getExtras().getString("name");
+        value1 = getIntent().getExtras().getString("name1");
+        id1 = getIntent().getExtras().getString("id");
+
+        collected = findViewById(R.id.collected);
+        btc = findViewById(R.id.btc);
+
+        System.out.println(value1);
+        System.out.println(id1);
+        System.out.println(value);
+
+        if (value != null || !value1.equals("")) {
+            btc.setText(value);
+        }
+
+        if (value1 != null || !value1.equals("")) {
+            collected.setText(value1);
+        }
+        idtran = findViewById(R.id.idtran);
+        count = findViewById(R.id.count);
+        spinner = findViewById(R.id.spinner);
+        spinner1 = findViewById(R.id.spinner1);
+        l1 = findViewById(R.id.timer);
+        l2 = findViewById(R.id.clientfeed);
+        DispoCode = findViewById(R.id.DispoCode);
+        accno = findViewById(R.id.accno);
+        bank = findViewById(R.id.bank);
+        amout = findViewById(R.id.amount);
         spinner1.setItems(t);
-        transid=findViewById(R.id.transid);
-        cheque=findViewById(R.id.cheque);
-        date=findViewById(R.id.date);
+
+        enddate12 = findViewById(R.id.enddate);
+        transid = findViewById(R.id.transid);
+        cheque = findViewById(R.id.cheque);
+        date = findViewById(R.id.date);
 //      accnotext=findViewById(R.id.accnotext);
-        summary=findViewById(R.id.summary);
-        dis=findViewById(R.id.dis);
-        ImageView image=findViewById(R.id.load);
+        summary = findViewById(R.id.summary);
+        dis = findViewById(R.id.dis);
+        ImageView image = findViewById(R.id.load);
 
 
+        enddate12.setText(end);
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-              ggg();
+                ggg();
 
             }
         });
@@ -194,7 +221,6 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
                 mMonth = c.get(Calendar.MONTH);
                 mDay = c.get(Calendar.DAY_OF_MONTH);
 
-
                 DatePickerDialog datePickerDialog = new DatePickerDialog(MapsActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
 
@@ -202,14 +228,15 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
 
-                                date.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                                date.setText(String.format("%02d", dayOfMonth) + "-" + String.format("%02d", monthOfYear + 1) + "-" + year);
 
                             }
+
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
             }
         });
-
 
 
         DispoCode.setOnClickListener(new View.OnClickListener() {
@@ -229,7 +256,8 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
 
-                                DispoCode.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                                DispoCode.setText(year + "-" + String.format("%02d", monthOfYear + 1) + "-" + String.format("%02d", dayOfMonth));
 
                             }
                         }, mYear, mMonth, mDay);
@@ -241,16 +269,19 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
 
         spinner1.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
-        @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
 //                   Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
-                if(item.equals("Cheque")){
+
+                DispoCode.setVisibility(View.VISIBLE);
+                if (item.equals("Cheque")) {
 
                     cheque.setVisibility(View.VISIBLE);
                     bank.setVisibility(View.VISIBLE);
                     date.setVisibility(View.VISIBLE);
                     transid.setVisibility(View.GONE);
 
-                }else if(item.equals("Cash")){
+                } else if (item.equals("Cash")) {
 
                     transid.setVisibility(View.VISIBLE);
                     cheque.setVisibility(View.GONE);
@@ -258,285 +289,364 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
                     date.setVisibility(View.GONE);
 
 
-                }else if(item.equals("Online Transaction")){
+                } else if (item.equals("Online Transaction")) {
 
                     cheque.setVisibility(View.GONE);
                     bank.setVisibility(View.GONE);
                     date.setVisibility(View.GONE);
                     transid.setVisibility(View.VISIBLE);
-
 
 
                 }
             }
         });
 
-             ggg();
+        ggg();
 
-     //runs without a timer by reposting this handler at the end of the runnable
+        //runs without a timer by reposting this handler at the end of the runnable
         init();
-       start=(Button)findViewById(R.id.start);
+        start = (Button) findViewById(R.id.start);
 
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                 String o= start.getText().toString();
+                String o = start.getText().toString();
 
-                 if(o.equals("start")){
+                if (o.equals("start")) {
 
-                     start.setText("end");
-                     Dexter.withActivity(MapsActivity.this)
-                             .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-                             .withListener(new PermissionListener() {
-                                 @Override
-                                 public void onPermissionGranted(PermissionGrantedResponse response) {
-                                     mRequestingLocationUpdates = true;
-                                     startLocationUpdates();
-                                     startLocationService();
-                                 }
+                    start.setText("end");
+                    Dexter.withActivity(MapsActivity.this)
+                            .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                            .withListener(new PermissionListener() {
+                                @Override
+                                public void onPermissionGranted(PermissionGrantedResponse response) {
+                                    mRequestingLocationUpdates = true;
+                                    startLocationUpdates();
+                                    startLocationService();
+                                }
 
-                                 @Override
-                                 public void onPermissionDenied(PermissionDeniedResponse response) {
-                                     if (response.isPermanentlyDenied()) {
-                                         openSettings();
-                                     }
-                                 }
+                                @Override
+                                public void onPermissionDenied(PermissionDeniedResponse response) {
+                                    if (response.isPermanentlyDenied()) {
+                                        openSettings();
+                                    }
+                                }
 
-                                 @Override
-                                 public void onPermissionRationaleShouldBeShown(com.karumi.dexter.listener.PermissionRequest permission, PermissionToken token) {
+                                @Override
+                                public void onPermissionRationaleShouldBeShown(com.karumi.dexter.listener.PermissionRequest permission, PermissionToken token) {
 
-                                 }
-                                 public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-                                     token.continuePermissionRequest();
-                                 }
-                             }).check();
+                                }
 
-                 }else if(o.equals("end")){
+                                public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                                    token.continuePermissionRequest();
+                                }
+                            }).check();
 
-                     start.setText("timer start");
-                     mRequestingLocationUpdates = false;
-                     stopLocationUpdates();
-                     start.setText("stop timer");
-                     startTime = System.currentTimeMillis();
-                     timerHandler.postDelayed(timerRunnable, 0);
+                } else if (o.equals("end")) {
 
-                 }
+                    start.setText("timer start");
+                    mRequestingLocationUpdates = false;
+                    stopLocationUpdates();
+                    start.setText("stop timer");
+                    startTime = System.currentTimeMillis();
+                    timerHandler.postDelayed(timerRunnable, 0);
 
-                 else if(o.equals("stop timer")) {
+                } else if (o.equals("stop timer")) {
 
-                     start.setText("upload data");
-                     timerHandler.removeCallbacks(timerRunnable);
-                     l1.setVisibility(View.GONE);
-                     l2.setVisibility(View.VISIBLE);
+                    start.setText("upload data");
+                    timerHandler.removeCallbacks(timerRunnable);
+                    l1.setVisibility(View.GONE);
+                    l2.setVisibility(View.VISIBLE);
 
-                 }
-
-                 else if(o.equals("upload data")) {
+                } else if (o.equals("upload data")) {
 //
-                     final api mApiService = network.getRetrofit().create(api.class);
-                     String userid= new sharedpreff(getApplicationContext()).login123();
-                     String g =null;String gg=null;
-                       String dfg=summary.getText().toString();
-                      int type= spinner.getSelectedIndex();
-                      int type1= spinner1.getSelectedIndex();
-                            System.out.println(mCurrentLocation);
+                    final api mApiService = network.getRetrofit().create(api.class);
+                    String userid = new sharedpreff(getApplicationContext()).login123();
+                    String g = null;
+                    String gg = null;
+                    String dfg = summary.getText().toString();
+                    int type = spinner.getSelectedIndex();
+                    int type1 = spinner1.getSelectedIndex();
+                    System.out.println(mCurrentLocation);
 //                     Toast.makeText(MapsActivity.this, t[type1], Toast.LENGTH_SHORT).show();
-                     if (mCurrentLocation!=null) {
+                    if (mCurrentLocation != null) {
 
-                        g= String.valueOf(mCurrentLocation.getLatitude());
-                       double i=  mCurrentLocation.getLongitude();
-                       gg= String.valueOf(i);
-                     }else{
+                        g = String.valueOf(mCurrentLocation.getLatitude());
+                        double i = mCurrentLocation.getLongitude();
+                        gg = String.valueOf(i);
+                    } else {
 
-                         g="";
-                         gg="";
+                        g = "";
+                        gg = "";
 
-                     }
-                   String hi=  accno.getText().toString();
-                if(dfg.length()>3){
+                    }
+                    String hi = accno.getText().toString();
+                    if (dfg.length() > 3) {
 
-                    start.setClickable(false);
-                    String e=amout.getText().toString();
-                    String ee=bank.getText().toString();
-                    String p=transid.getText().toString();
-                    String ttt=cheque.getText().toString();
-                    String tt=date.getText().toString();
+                       System.out.println("1");
+                        start.setClickable(false);
+                        String e = amout.getText().toString();
+                        String ee = bank.getText().toString();
+                        String p = transid.getText().toString();
+                        String ttt = cheque.getText().toString();
+                        String tt = date.getText().toString();
+
+                        String DispoCodedate = DispoCode.getText().toString();
 
 //         Toast.makeText(MapsActivity.this, id1, Toast.LENGTH_SHORT).show();
 
-                    String jg=null;
-                             if(dispo[type].equals("PAID")){
-                                 jg=   t[type1] ;
+                        String jg = null;
+                        if (dispo[type].equals("PAID")) {
+                            System.out.println("2");
+                            jg = t[type1];
+                            if (jg.equals("Cash")) {
+                                System.out.println("3");
+                                if (p.length() < 16) {
 
-                                 if(jg.equals("Cash")){
+                                    if(e.length() >2){
 
-                                     if(p.length()==14){
-
-
-                                         Call<exelist> call = mApiService.addlatlong1
-                                                 (userid, dispo[type],dfg,hi,g,gg,jg,id1,time,e,ee,p,ttt,tt);
-                                         call.enqueue(new Callback<exelist>(){
-                                             @Override
-                                             public void onResponse(Call<exelist> call, Response<exelist> response) {
+                                    System.out.println("4");
+                                    Call<exelist> call = mApiService.addlatlong1
+                                            (userid, dispo[type], dfg, hi, g, gg, jg, id1, time, e, ee, p, ttt, tt, "");
+                                    call.enqueue(new Callback<exelist>() {
+                                        @Override
+                                        public void onResponse(Call<exelist> call, Response<exelist> response) {
 //                    System.out.println(response.body());
 //                    progressDialog.dismiss();
-                                                 System.out.println(call.request().url());
-                                                 System.out.println(response.body().getResponse().getResponse_message() );
-//             System.out.println(response.body().getResponse().getResponse_message());
-                                                 Toast.makeText(MapsActivity.this, response.body().getResponse().getResponse_message(), Toast.LENGTH_SHORT).show();
+                                            System.out.println(call.request().url());
+                                            System.out.println(response.body().getResponse().getResponse_message());
+//                             System.out.println(response.body().getResponse().getResponse_message());
+                                            Toast.makeText(MapsActivity.this, response.body().getResponse().getResponse_message(), Toast.LENGTH_SHORT).show();
 
+
+
+                                            if (response.body().getResponse().getResponse_code().equals("1")) {
+                                                finish();
+
+                                            } else {
+
+                                                start.setClickable(true);
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<exelist> call, Throwable t) {
+//                    progressDialog.dismiss();
+                                            start.setClickable(true);
+                                            Log.d("Error", t.getMessage());
+
+                                        }
+                                    });
+
+                                    }else{
+
+                                        start.setClickable(true);
+                                        Toast.makeText(MapsActivity.this, "Check in  Amount", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                } else {
+                                    System.out.println("5");
+
+                                    start.setClickable(true);
+                                    Toast.makeText(MapsActivity.this, "check in transaction id", Toast.LENGTH_SHORT).show();
+                                }
+
+                            } else if (jg.equals("Online Transaction")) {
+                                System.out.println("6");
+
+                                if (p.length() < 16) {
+                                    if(e.length() >2) {
+                                        System.out.println("7");
+                                        Call<exelist> call = mApiService.addlatlong1
+                                                (userid, dispo[type], dfg, hi, g, gg, jg, id1, time, e, ee, p, ttt, tt, "");
+                                        call.enqueue(new Callback<exelist>() {
+                                            @Override
+                                            public void onResponse(Call<exelist> call, Response<exelist> response) {
+//                                              System.out.println(response.body());
+//                                              progressDialog.dismiss();
+                                                System.out.println(call.request().url());
+                                                System.out.println(response.body().getResponse().getResponse_message());
+//             System.out.println(response.body().getResponse().getResponse_message());
+                                                Toast.makeText(MapsActivity.this, response.body().getResponse().getResponse_message(), Toast.LENGTH_SHORT).show();
 
 //             Intent i = new Intent(getApplicationContext(),executelist.class);
 //             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //             startActivity(i);
 //             overridePendingTransition(R.anim.out, R.anim.in);
-                                                 if( response.body().getResponse().getResponse_code().equals("1")){
-                                                     finish();
+                                                if (response.body().getResponse().getResponse_code().equals("1")) {
+                                                    finish();
 
-                                                 }else{
+                                                } else {
 
-                                                     start.setClickable(true);
-                                                 }
+                                                    start.setClickable(true);
+                                                }
 
 
+                                            }
 
-                                             }
-                                             @Override
-                                             public void onFailure(Call<exelist> call, Throwable t) {
+                                            @Override
+                                            public void onFailure(Call<exelist> call, Throwable t) {
 //                    progressDialog.dismiss();
-                                                 start.setClickable(true);
-                                                 Log.d("Error", t.getMessage());
+                                                start.setClickable(true);
+                                                Log.d("Error", t.getMessage());
 
-                                             }
-                                         });
+                                            }
+                                        });
 
+                                    }else{
 
-
-                                     }else{
-
-                                         Toast.makeText(MapsActivity.this, "check in transaction id", Toast.LENGTH_SHORT).show();
-                                     }
-
-
-
-                                 }else if(jg.equals("Online Transaction")){
-
-                                     if(p.length()==12){
+                                        start.setClickable(true);
+                                        Toast.makeText(MapsActivity.this, "Check in  Amount", Toast.LENGTH_SHORT).show();
+                                    }
+                                } else {
 
 
-                                         Call<exelist> call = mApiService.addlatlong1
-                                                 (userid, dispo[type],dfg,hi,g,gg,jg,id1,time,e,ee,p,ttt,tt);
-                                         call.enqueue(new Callback<exelist>(){
-                                             @Override
-                                             public void onResponse(Call<exelist> call, Response<exelist> response) {
-//                    System.out.println(response.body());
-//                    progressDialog.dismiss();
-                                                 System.out.println(call.request().url());
-                                                 System.out.println(response.body().getResponse().getResponse_message() );
+                                    System.out.println("8");
+                                    start.setClickable(true);
+                                    Toast.makeText(MapsActivity.this, "check in transaction id", Toast.LENGTH_SHORT).show();
+                                }
+
+
+                            }else{
+
+                                if(ee.length()>2){
+
+
+                                if(ttt.length()<10&&ttt.length()>1){
+
+                                    if(tt.length()>1){
+
+                                  if(e.length()>1){
+
+
+                                    Call<exelist> call = mApiService.addlatlong1
+                                            (userid, dispo[type], dfg, hi, g, gg, jg, id1, time, e, ee, p, ttt, tt, "");
+                                    call.enqueue(new Callback<exelist>() {
+                                        @Override
+                                        public void onResponse(Call<exelist> call, Response<exelist> response) {
+//                                              System.out.println(response.body());
+//                                              progressDialog.dismiss();
+                                            System.out.println(call.request().url());
+                                            System.out.println(response.body().getResponse().getResponse_message());
 //             System.out.println(response.body().getResponse().getResponse_message());
-                                                 Toast.makeText(MapsActivity.this, response.body().getResponse().getResponse_message(), Toast.LENGTH_SHORT).show();
-
+                                            Toast.makeText(MapsActivity.this, response.body().getResponse().getResponse_message(), Toast.LENGTH_SHORT).show();
 
 //             Intent i = new Intent(getApplicationContext(),executelist.class);
 //             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //             startActivity(i);
 //             overridePendingTransition(R.anim.out, R.anim.in);
-                                                 if( response.body().getResponse().getResponse_code().equals("1")){
-                                                     finish();
+                                            if (response.body().getResponse().getResponse_code().equals("1")) {
+                                                finish();
 
-                                                 }else{
+                                            } else {
 
-                                                     start.setClickable(true);
-                                                 }
+                                                start.setClickable(true);
+                                            }
 
 
+                                        }
 
-                                             }
-                                             @Override
-                                             public void onFailure(Call<exelist> call, Throwable t) {
+                                        @Override
+                                        public void onFailure(Call<exelist> call, Throwable t) {
 //                    progressDialog.dismiss();
-                                                 start.setClickable(true);
-                                                 Log.d("Error", t.getMessage());
+                                            start.setClickable(true);
+                                            Log.d("Error", t.getMessage());
 
-                                             }
-                                         });
+                                        }
+                                    });
+                                  }else{
+                                      start.setClickable(true);
+                                      Toast.makeText(MapsActivity.this, "Check in  Amount", Toast.LENGTH_SHORT).show();
 
+                                  }
+                                    }else{
+                                        start.setClickable(true);
+                                        Toast.makeText(MapsActivity.this, "Check in Cheque date", Toast.LENGTH_SHORT).show();
 
+                                    }
+                                }else{
+                                    start.setClickable(true);
+                                    Toast.makeText(MapsActivity.this, "Check in Cheque no", Toast.LENGTH_SHORT).show();
+                                }
 
-
-
-
-                                     }else{
-                                         Toast.makeText(MapsActivity.this, "check in transaction id", Toast.LENGTH_SHORT).show();
-                                     }
-
-
-                                 }
-
-
-
-                             }else{
-
-                                 jg="";
-                                 e="";
-                                 ee="";
-                                 p="";
-                                 ttt="";
+                            }else{
+                                    start.setClickable(true);
+                                    Toast.makeText(MapsActivity.this, "Check in  bank name", Toast.LENGTH_SHORT).show();
+                                }
+                            }
 
 
-                                 Call<exelist> call = mApiService.addlatlong1
-                                         (userid, dispo[type],dfg,hi,g,gg,jg,id1,time,e,ee,p,ttt,tt);
-                                 call.enqueue(new Callback<exelist>(){
-                                     @Override
-                                     public void onResponse(Call<exelist> call, Response<exelist> response) {
-//                    System.out.println(response.body());
+                        }else {
+                            System.out.println("9");
+
+                            jg = "";
+                            e = "";
+                            ee = "";
+                            p = "";
+                            ttt = "";
+                            if (DispoCodedate.length() > 2) {
+
+                                System.out.println("10");
+                                Call<exelist> call = mApiService.addlatlong1
+                                        (userid, dispo[type], dfg, hi, g, gg, jg, id1, time, e, ee, p, ttt, tt, DispoCodedate);
+                                call.enqueue(new Callback<exelist>() {
+                                    @Override
+                                    public void onResponse(Call<exelist> call, Response<exelist> response) {
+//                                        System.out.println(response.body());
+//                                        progressDialog.dismiss();
+                                        System.out.println(call.request().url());
+                                        System.out.println(response.body().getResponse().getResponse_message());
+//                          System.out.println(response.body().getResponse().getResponse_message());
+                                        Toast.makeText(MapsActivity.this, response.body().getResponse().getResponse_message(), Toast.LENGTH_SHORT).show();
+
+
+//                          Intent i = new Intent(getApplicationContext(),executelist.class);
+//                          i. setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                          startActivity(i);
+//                          overridePendingTransition(R.anim.out, R.anim.in);
+                                        if (response.body().getResponse().getResponse_code().equals("1")) {
+                                            finish();
+
+                                        } else {
+
+                                            start.setClickable(true);
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<exelist> call, Throwable t) {
 //                    progressDialog.dismiss();
-                                         System.out.println(call.request().url());
-                                         System.out.println(response.body().getResponse().getResponse_message() );
-//             System.out.println(response.body().getResponse().getResponse_message());
-                                         Toast.makeText(MapsActivity.this, response.body().getResponse().getResponse_message(), Toast.LENGTH_SHORT).show();
+                                        start.setClickable(true);
+                                        System.out.println(call.request().url());
+                                        Log.d("Error", t.getMessage());
+
+                                    }
+                                });
 
 
-//             Intent i = new Intent(getApplicationContext(),executelist.class);
-//             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//             startActivity(i);
-//             overridePendingTransition(R.anim.out, R.anim.in);
-                                         if( response.body().getResponse().getResponse_code().equals("1")){
-                                             finish();
+                            } else {
+                                System.out.println("11");
+                                start.setClickable(true);
 
-                                         }else{
+                                Toast.makeText(MapsActivity.this, "Select End Date", Toast.LENGTH_SHORT).show();
 
-                                             start.setClickable(true);
-                                         }
+                            }
 
 
+                        }
 
-                                     }
-                                     @Override
-                                     public void onFailure(Call<exelist> call, Throwable t) {
-//                    progressDialog.dismiss();
-                                         start.setClickable(true);
-                                         Log.d("Error", t.getMessage());
+                    } else {
+                        System.out.println("12");
+                        start.setClickable(true);
+                        Toast.makeText(MapsActivity.this, "Enter Summary More Text ", Toast.LENGTH_SHORT).show();
 
-                                     }
-                                 });
+                    }
 
 
-                             }
-
-
-
-
-     }else{
-
-     Toast.makeText(MapsActivity.this, "Enter Summary More Text ", Toast.LENGTH_SHORT).show();
-
-     }
-
-
-                 }
-                 }
+                }
+            }
 
         });
 
@@ -562,45 +672,65 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
 
 
     private void ggg() {
+
         final api mApiService = network.getRetrofit().create(api.class);
         Call<discode> call = mApiService.discodw1();
         call.enqueue(new Callback<discode>() {
             @Override
             public void onResponse(Call<discode> call, Response<discode> response) {
 
+                transid.setVisibility(View.GONE);
+                cheque.setVisibility(View.GONE);
+                bank.setVisibility(View.GONE);
+                date.setVisibility(View.GONE);
+                amout.setVisibility(View.GONE);
+                spinner1.setVisibility(View.GONE);
+                DispoCode.setVisibility(View.VISIBLE);
+
                 data = new ArrayList<>(Arrays.asList(response.body().getDispoCodeList()));
 
-                dispo=   new String[data.size()];
-                for(int i=0;i<data.size();i++) {
-                    dispo[i]=data.get(i).getDis_code();
+                dispo = new String[data.size()];
+                for (int i = 0; i < data.size(); i++) {
+                    dispo[i] = data.get(i).getDis_code();
                 }
 
                 spinner.setItems(dispo);
                 spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
-                    @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-     //                 Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
-                        if(item.equals("PTP") ||item.equals("FLW") ||item.equals("ALC") ){
+                    @Override
+                    public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                        //                 Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
 
-                            DispoCode.setVisibility(View.VISIBLE);
 
-                        }else if (item.equals("PAID")) {
+                        if (item.equals("PTP") || item.equals("FLW") || item.equals("ALC")) {
+
+
+                        } else if (item.equals("PAID")) {
+
                             transid.setVisibility(View.VISIBLE);
+                            idtran.setVisibility(View.GONE);
                             cheque.setVisibility(View.GONE);
                             bank.setVisibility(View.GONE);
-                            date.setVisibility(View.VISIBLE);
+                            date.setVisibility(View.GONE);
                             amout.setVisibility(View.VISIBLE);
+                            spinner1.setVisibility(View.VISIBLE);
+
+
+                        } else {
+
+                            idtran.setVisibility(View.GONE);
+                            transid.setVisibility(View.GONE);
+                            cheque.setVisibility(View.GONE);
+                            bank.setVisibility(View.GONE);
+                            date.setVisibility(View.GONE);
+                            amout.setVisibility(View.GONE);
+
                         }
-                        else{
-
-
-                        }
-
-
                     }
                 });
 
                 System.out.println(response.body().getResponse().getResponse_message());
             }
+
             @Override
             public void onFailure(Call<discode> call, Throwable t) {
 //                    progressDialog.dismiss();
@@ -617,7 +747,7 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
         String origin = etOrigin.getText().toString();
         String destination = etDestination.getText().toString();
         if (origin.isEmpty()) {
-            Toast.makeText(this, "Please enter origin address!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter origin address!", Toast.LENGTH_SHORT).show();
             return;
         }
         if (destination.isEmpty()) {
@@ -626,7 +756,7 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
             return;
         }
         try {
-            new DirectionFinder(getApplicationContext(),origin,destination).execute();
+            new DirectionFinder(getApplicationContext(), origin, destination).execute();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -635,33 +765,31 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        getLocationFromAddress(getApplicationContext(),value);
+        getLocationFromAddress(getApplicationContext(), valueadd);
 
 
-      if(p1!=null) {
+        if (p1 != null) {
 
-    mMap.addMarker(new MarkerOptions().position(p1).title("Destination"));
-    mMap.moveCamera(CameraUpdateFactory.newLatLng(p1));
-    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(p1, 12));
+            mMap.addMarker(new MarkerOptions().position(p1).title("Destination"));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(p1));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(p1, 17));
 
-       }else{
+        } else {
 
-    Toast.makeText(this, "" +
-            "No Match in Location", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "" +
+                    "No Match in Location", Toast.LENGTH_SHORT).show();
 
         }
     }
-    public LatLng getLocationFromAddress(Context context, String strAddress)
-    {
-        Geocoder coder= new Geocoder(context);
+
+    public LatLng getLocationFromAddress(Context context, String strAddress) {
+        Geocoder coder = new Geocoder(context);
         List<Address> address;
 
 
-        try
-        {
+        try {
             address = coder.getFromLocationName(strAddress, 5);
-            if(address==null)
-            {
+            if (address == null) {
                 return null;
             }
             Address location = address.get(0);
@@ -669,9 +797,7 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
             location.getLongitude();
 
             p1 = new LatLng(location.getLatitude(), location.getLongitude());
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return p1;
@@ -721,19 +847,19 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
             }
         }
 
-    updateLocationUI();
+        updateLocationUI();
 
     }
 
     private void updateLocationUI() {
-        if (mCurrentLocation!=null) {
+        if (mCurrentLocation != null) {
 
 //            addlatlong
             final api mApiService = network.getRetrofit().create(api.class);
 
-            String userid= new sharedpreff(getApplicationContext()).login123();
-            Call<exelist> call = mApiService.addlatlong(userid,String.valueOf(mCurrentLocation.getLatitude()),String.valueOf(mCurrentLocation.getLongitude()),id1);
-            call.enqueue(new Callback<exelist>(){
+            String userid = new sharedpreff(getApplicationContext()).login123();
+            Call<exelist> call = mApiService.addlatlong(userid, String.valueOf(mCurrentLocation.getLatitude()), String.valueOf(mCurrentLocation.getLongitude()), id1);
+            call.enqueue(new Callback<exelist>() {
                 @Override
                 public void onResponse(Call<exelist> call, Response<exelist> response) {
 //                    System.out.println(response.body());
@@ -741,15 +867,16 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
 
                     System.out.println(response.body().getResponse().getResponse_message());
                 }
+
                 @Override
                 public void onFailure(Call<exelist> call, Throwable t) {
-                //  progressDialog.dismiss();
+                    //  progressDialog.dismiss();
                     Log.d("Error", t.getMessage());
 
                 }
             });
 //            System.out.println(mCurrentLocation);
-            p2=new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()) ;
+            p2 = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
 
 
 //            String str_origin = "origin=" + p1.latitude + "," + p1.longitude;
@@ -766,16 +893,17 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
             mMap.animateCamera(CameraUpdateFactory.zoomTo(7));
 
 
-            if(p1!=null){
+            if (p1 != null) {
+
                 Location delhi_location = new Location("Delhi");
                 delhi_location.setLatitude(p1.latitude);
                 delhi_location.setLongitude(p1.longitude);
                 Location chandigarh_location = new Location("Chandigarh");
                 chandigarh_location.setLatitude(mCurrentLocation.getLatitude());
                 chandigarh_location.setLongitude(mCurrentLocation.getLongitude());
-                double distance = (delhi_location.distanceTo(chandigarh_location))/1000;
-                String j=  new DecimalFormat("##.##").format(distance);
-                dis.setText("Distance  : "+j +" KM");
+                double distance = (delhi_location.distanceTo(chandigarh_location)) / 1000;
+                String j = new DecimalFormat("##.##").format(distance);
+                dis.setText("Distance  : " + j + " KM");
             }
 
 
@@ -825,11 +953,10 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
 //            btnStopUpdates.setEnabled(false);
 
 
-
         }
     }
 
-    private void startLocationUpdates(){
+    private void startLocationUpdates() {
         mSettingsClient
                 .checkLocationSettings(mLocationSettingsRequest)
                 .addOnSuccessListener(MapsActivity.this, new OnSuccessListener<LocationSettingsResponse>() {
@@ -838,7 +965,7 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
                     public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
                         Toast.makeText(getApplicationContext(), "Started location updates!", Toast.LENGTH_SHORT).show();
                         mFusedLocationClient.requestLocationUpdates(mLocationRequest,
-                             mLocationCallback, Looper.myLooper());
+                                mLocationCallback, Looper.myLooper());
 
                         updateLocationUI();
                     }
@@ -851,19 +978,18 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
                         switch (statusCode) {
                             case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
 
-                                    try {
+                                try {
                                     // Show the dialog by calling startResolutionForResult(), and check the
                                     // result in onActivityResult().
-                                                     ResolvableApiException rae = (ResolvableApiException) e;
-                                                                            rae . startResolutionForResult(MapsActivity.this, REQUEST_CHECK_SETTINGS);
+                                    ResolvableApiException rae = (ResolvableApiException) e;
+                                    rae.startResolutionForResult(MapsActivity.this, REQUEST_CHECK_SETTINGS);
 
 
-                                              }
-                                              catch (IntentSender.SendIntentException sie) {
+                                } catch (IntentSender.SendIntentException sie) {
 
                                 }
                                 break;
-                            case  LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                            case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
 
                                 Toast.makeText(MapsActivity.this, "error", Toast.LENGTH_LONG).show();
                         }
@@ -876,7 +1002,6 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
     }
 
 
-
 //    @OnClick(R.id.btn_stop_location_updates)
 //    public void stopLocationButtonClick() {
 //
@@ -886,7 +1011,7 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
         // Removing location updates
         mFusedLocationClient
                 .removeLocationUpdates(mLocationCallback)
-                .addOnCompleteListener(this,new OnCompleteListener<Void>() {
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
 //                        Toast.makeText(getApplicationContext(), "Location updates stopped!", Toast.LENGTH_SHORT).show();
@@ -907,8 +1032,9 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            // Check for the integer request code originally supplied to startResolutionForResult().
+            // Check fort the integer request code originally supplied to startResolutionForResult().
             case REQUEST_CHECK_SETTINGS:
                 switch (resultCode) {
                     case Activity.RESULT_OK:
@@ -936,10 +1062,13 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
     @Override
     public void onResume() {
         super.onResume();
+
         if (mRequestingLocationUpdates && checkPermissions()) {
             startLocationUpdates();
         }
+
         updateLocationUI();
+
     }
 
     @Override
@@ -947,7 +1076,7 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
 
         super.onPause();
 
-        if(mRequestingLocationUpdates) {
+        if (mRequestingLocationUpdates) {
             //pausing location updates
             stopLocationUpdates();
         }
@@ -956,23 +1085,24 @@ String t[]={"Cash" , "Cheque" , "Online Transaction"};
 
     @Override
     public void onBackPressed() {
-           //        super.onBackPressed();
-            AlertDialog alertDialog = new AlertDialog.Builder(MapsActivity.this).create();
-            alertDialog.setTitle("Info");
-            alertDialog.setMessage("Sure exit  page" );
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            finish();
-                        }
+        //        super.onBackPressed();
+        AlertDialog alertDialog = new AlertDialog.Builder(MapsActivity.this).create();
+        alertDialog.setTitle("Info");
+        alertDialog.setMessage("Sure exit  page");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        finish();
                     }
-                    );
+                }
+        );
 
-            alertDialog.show();
+        alertDialog.show();
 
 
     }
+
     private boolean checkPermissions() {
 
 
