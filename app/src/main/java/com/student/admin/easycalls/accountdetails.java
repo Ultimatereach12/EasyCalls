@@ -10,10 +10,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.crashlytics.android.Crashlytics;
-
-import io.fabric.sdk.android.Fabric;
-
 public class accountdetails   extends AppCompatActivity {
 
 
@@ -24,7 +20,6 @@ public class accountdetails   extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.detailaccount);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool);

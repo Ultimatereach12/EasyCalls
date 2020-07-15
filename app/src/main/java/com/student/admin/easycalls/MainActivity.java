@@ -27,13 +27,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
 import com.student.admin.easycalls.gettersetter.login;
 import com.student.admin.easycalls.model.api;
 import com.student.admin.easycalls.model.network;
 import com.student.admin.easycalls.shared.sharedpreff;
 
-import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.login);
         final TextView forget=findViewById(R.id.forget);
         forget.setOnClickListener(new View.OnClickListener() {
@@ -101,8 +98,6 @@ public class MainActivity extends AppCompatActivity implements CompoundButton.On
 
         String userid= new sharedpreff(getApplicationContext()).login123();
         String getname= new sharedpreff(getApplicationContext()).getname();
-        Crashlytics.setUserIdentifier(userid);
-        Crashlytics.setUserName(getname);
 
         if (new sharedpreff(getApplicationContext()).isUserLogedOut()) {
                 // System.out.println("dsffffffffffffffffffffffffffff");

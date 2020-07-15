@@ -20,7 +20,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.crashlytics.android.Crashlytics;
 import com.student.admin.easycalls.gettersetter.enddate;
 import com.student.admin.easycalls.gettersetter.searchem;
 import com.student.admin.easycalls.model.api;
@@ -30,8 +29,6 @@ import com.student.admin.easycalls.shared.sharedpreff;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-
-import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,7 +44,6 @@ public class search  extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.search);
 
         LinearLayout l1=findViewById(R.id.l1);
@@ -60,8 +56,6 @@ public class search  extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycleview);
         final String userid= new sharedpreff(getApplicationContext()).login123();
         String getname= new sharedpreff(getApplicationContext()).getname();
-        Crashlytics.setUserIdentifier(userid);
-        Crashlytics.setUserName(getname);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         TextView toolbar_title = findViewById(R.id.toolbar_title);

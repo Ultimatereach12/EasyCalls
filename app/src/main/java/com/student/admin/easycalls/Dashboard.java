@@ -34,7 +34,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.student.admin.easycalls.gettersetter.login;
 import com.student.admin.easycalls.gettersetter.password;
@@ -45,7 +44,6 @@ import com.student.admin.easycalls.shared.sharedpreff;
 
 import java.util.Calendar;
 
-import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -83,7 +81,6 @@ public  class Dashboard  extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.dashboard);
         askForPermission(Manifest.permission.ACCESS_FINE_LOCATION,LOCATION);
         askForPermission(Manifest.permission.CALL_PHONE,REQUEST_PHONE_CALL);
@@ -93,8 +90,6 @@ public  class Dashboard  extends AppCompatActivity {
         String y=new sharedpreff(getApplicationContext()).getname();
         name.setText(y);
 //        Toast.makeText(this, y, Toast.LENGTH_SHORT).show();
-        Crashlytics.setUserIdentifier(userid1);
-        Crashlytics.setUserName(getname);
         if (ContextCompat.checkSelfPermission(Dashboard.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(Dashboard.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
         }

@@ -20,7 +20,6 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
 import com.student.admin.easycalls.gettersetter.exelist;
 import com.student.admin.easycalls.gettersetter.tllist;
 import com.student.admin.easycalls.model.api;
@@ -33,7 +32,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
-import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,14 +46,11 @@ public class detail extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.details);
         Toolbar toolbar = (Toolbar)findViewById(R.id.tool);
         setSupportActionBar(toolbar);
         String userid= new sharedpreff(getApplicationContext()).login123();
         String getname= new sharedpreff(getApplicationContext()).getname();
-        Crashlytics.setUserIdentifier(userid);
-        Crashlytics.setUserName(getname);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         recyclerView=findViewById(R.id.recycleview);

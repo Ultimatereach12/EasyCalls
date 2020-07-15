@@ -24,7 +24,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.crashlytics.android.Crashlytics;
 import com.student.admin.easycalls.gettersetter.customernotpaidlist;
 import com.student.admin.easycalls.gettersetter.exelist;
 import com.student.admin.easycalls.gettersetter.list;
@@ -35,7 +34,6 @@ import com.student.admin.easycalls.model.network;
 import com.student.admin.easycalls.shared.sharedpreff;
 import java.util.ArrayList;
 import java.util.Arrays;
-import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,12 +58,9 @@ public class executelist extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.executivelist);
         String userid1 = new sharedpreff(getApplicationContext()).login123();
         String getname = new sharedpreff(getApplicationContext()).getname();
-        Crashlytics.setUserIdentifier(userid1);
-        Crashlytics.setUserName(getname);
         bb = findViewById(R.id.nodata);
         bar = findViewById(R.id.bar);
         recyclerView1 = findViewById(R.id.recycleview);

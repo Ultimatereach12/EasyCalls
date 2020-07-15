@@ -36,9 +36,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import io.fabric.sdk.android.Fabric;
-
-import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -146,16 +143,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_maps);
         String userid = new sharedpreff(getApplicationContext()).login123();
 
         String getname = new sharedpreff(getApplicationContext()).getname();
-
-
-        Crashlytics.setUserIdentifier(userid);
-
-        Crashlytics.setUserName(getname);
 
 
         valueadd = getIntent().getExtras().getString("address");
